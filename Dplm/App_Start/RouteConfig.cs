@@ -20,8 +20,16 @@ namespace Dplm
                 {
                     controller = "Start",
                     action = "StartPage",
-                }
-            );
+                });
+
+            routes.MapRoute(
+                name: "Registration",
+                url: "Registration/",
+                defaults: new
+                {
+                    controller = "Start",
+                    action = "RegistrationPage"
+                });
         }
     }
 }
