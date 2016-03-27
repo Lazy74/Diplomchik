@@ -1,4 +1,11 @@
-﻿
+﻿var model = {
+    createUser: function (pass, repetPass) {
+        if (pass != repetPass) {
+            alert("Пароли не совпадают!");
+        }
+    }
+}
+
 var viewModel = new ViewModel();
 
 function loadPage() {
@@ -14,9 +21,9 @@ function ViewModel() {
     this.phoneNumber = ko.observable();
     this.email = ko.observable();
 
-
     this.createUser = function () {
         console.log("Ok");
+        model.createUser(this.userPass(), this.repetUserPass());
         alert("пользователь создан!");
     }
 

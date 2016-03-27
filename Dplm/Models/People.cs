@@ -22,5 +22,7 @@ namespace Dplm
         public string Birthday { get; set; }
 
         public string LinkVK { get; set; }
+
+       // Не забыть про аватарку
     }
 }
