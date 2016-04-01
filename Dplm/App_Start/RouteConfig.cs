@@ -30,6 +30,15 @@ namespace Dplm
                     controller = "Start",
                     action = "RegistrationPage"
                 });
+
+            routes.MapRoute(
+                name: "UserPage",
+                url: "User/",
+                defaults: new
+                {
+                    controller = "Start",
+                    action = "UserPage"
+                });
         }
     }
 }
