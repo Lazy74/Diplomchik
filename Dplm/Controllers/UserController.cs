@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Mime;
 using System.Web;
+using System.Web.Configuration;
 using System.Web.Http;
 using System.Web.Services.Description;
 using Newtonsoft.Json.Linq;
@@ -18,12 +19,14 @@ namespace Dplm.Controllers
         //}
 
         [HttpGet]
-        public void AuthorizeUser(string login, string pass)
+        public string AuthorizeUser(string Pass, string Login)
         {
-            if (login == pass)
+            Login = Login.ToLower();
+            if (Login == "логин" && Pass=="Пароль")
             {
-                return;
+                return Guid.NewGuid().ToString("N");
             }
+            return null;
         }
     }
 }

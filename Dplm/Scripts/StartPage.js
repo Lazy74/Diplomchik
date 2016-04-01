@@ -1,7 +1,15 @@
 ﻿var model = {
     authorizeUser: function (login, pass) {
         console.log("AuthorizeUser");
-        $.get("/api/User/AuthorizeUser/", {Login: login, Pass: pass});
+        $.get("/api/User/AuthorizeUser/", { Login: login, Pass: pass })
+            .success(function(dataResult) {
+                if (dataResult) {
+                    setCookie("hash", dataResult);
+                } else {
+                    alert("Пользователь не найден!");
+                }
+            });
+        //.error;       если будет ошибка
     }
 }
 
@@ -22,6 +30,10 @@ function ViewModel() {
 
     this.createUser = function () {
         location.href = "/Registration/";
+    }
+
+    this.toUserPage = function() {
+        location.href = "/User/";
     }
 }
 

@@ -12,6 +12,7 @@
 
     <script src="/Scripts/jquery-1.10.2.min.js"></script>
     <script src="/Scripts/knockout-3.4.0.js"></script>
+    <script src="/Scripts/cookie.js"></script>
     <script src="/Scripts/StartPage.js"></script>
 </head>
 
@@ -19,7 +20,7 @@
 <div class="unknownUser">
     <button id="input-site" data-bind="click: authorizeUser">Вход на сайт</button>
     <input type="text" id="userLogin" class="form-control" placeholder="Логин" data-bind="value: userLogin"/>
-    <input type="text" id="userPass" class="form-control" placeholder="Пароль" data-bind="value: userPass"/>
+    <input type="password" id="userPass" class="form-control" placeholder="Пароль" data-bind="value: userPass"/>
     <button id="registration" data-bind="click: createUser">Регистрация</button>
     @* Возможно стоит сделать кнопку востановления пароля *@
 </div>
