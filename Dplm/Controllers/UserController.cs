@@ -5,12 +5,15 @@ using System.Net.Mime;
 using System.Web;
 using System.Web.Configuration;
 using System.Web.Http;
+using System.Web.Mvc;
+using System.Web;
 using System.Web.Services.Description;
 using Newtonsoft.Json.Linq;
 
-namespace Dplm.Controllers
+namespace Dplm.Models
 {
-    public class UserController : ApiController
+    //public class UserController : ApiController
+    public class UserController : Controller
     {
         // GET: User
         //public ActionResult Index()
@@ -18,13 +21,25 @@ namespace Dplm.Controllers
         //    return View();
         //}
 
-        [HttpGet]
+        [System.Web.Mvc.HttpGet]
         public string AuthorizeUser(string Pass, string Login)
         {
             Login = Login.ToLower();
             if (Login == "логин" && Pass=="Пароль")
             {
-                return Guid.NewGuid().ToString("N");
+                string guid = Guid.NewGuid().ToString("N");
+                Authorizated.Data.Add(guid, new People());
+
+                var cookie = new HttpCookie("123")
+                {
+                    Name = "hash_v2",
+                    Value = guid,
+                    Expires = DateTime.Now.AddDays(5),
+                };
+
+                Response.SetCookie(cookie);
+
+                return guid;
             }
             return null;
         }

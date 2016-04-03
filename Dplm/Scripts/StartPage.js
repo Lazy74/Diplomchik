@@ -1,10 +1,12 @@
 ﻿var model = {
     authorizeUser: function (login, pass) {
         console.log("AuthorizeUser");
-        $.get("/api/User/AuthorizeUser/", { Login: login, Pass: pass })
+        //$.get("/api/User/AuthorizeUser/", { Login: login, Pass: pass })
+        $.get("/AuthorizeUser/", { Login: login, Pass: pass })
             .success(function(dataResult) {
                 if (dataResult) {
                     setCookie("hash", dataResult);
+                    alert("Авторизация прошла успешно!")
                 } else {
                     alert("Пользователь не найден!");
                 }
@@ -17,6 +19,12 @@ var viewModel = new ViewModel();
 
 function loadPage() {
     ko.applyBindings(viewModel);
+    var hash = getCookie("hash");
+    if (!hash) {
+        alert("hash нет");
+    } else {
+        alert("hash: " + hash);
+    }
 }
 
 function ViewModel() {

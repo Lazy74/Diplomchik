@@ -7,6 +7,8 @@ namespace Dplm
 {
     public class People
     {
+        public  int Id { get; set; }
+
         public string UserLogin { get; set; }
 
         public string UserPass { get; set; }

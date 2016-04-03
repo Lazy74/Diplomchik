@@ -39,6 +39,15 @@ namespace Dplm
                     controller = "Start",
                     action = "UserPage"
                 });
+
+            routes.MapRoute(
+                name: "AuthorizeUser",
+                url: "AuthorizeUser/",
+                defaults: new
+                {
+                    controller = "User",
+                    action = "AuthorizeUser"
+                });
         }
     }
 }
