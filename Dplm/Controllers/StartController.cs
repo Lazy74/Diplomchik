@@ -32,46 +32,17 @@ namespace Dplm.Controllers
 
         public void AuthorizeUser(string Login, string Pass)
         {
-            var cookie = Request.Cookies["hash"];
-            string guid;
-
-            if (cookie != null)
-            {   
-                // guid есть
-
-                if (Authorizated.Data.ContainsKey(cookie.Values.ToString()))
-                {
-                    // мы знаем этот guid
-                }
-
-            }
-            
-
-
-            if (cookie == null)
+            Login = Login.ToLower();
+            if (Login == "qwe" && Pass == "asd")    // TODO здесь будет запрос в базу данных. Проверка есть ли такой user
             {
-                Login = Login.ToLower();
-                if (Login == "qwe" && Pass == "asd")
+                var cookieNew = new HttpCookie("hash")
                 {
-                    guid = Guid.NewGuid().ToString("N");
-                    var cookieNew = new HttpCookie("hash")
-                    {
-                        Name = "hash",
-                        Value = guid,
-                        Expires = DateTime.Now.AddDays(7),
-                    };
+                    Value = Authorizated.Auth(new People()),
+                    Expires = DateTime.Now.AddDays(7)
+                };
 
-                    Authorizated.Data.Add(guid, new People());
-                    Response.SetCookie(cookieNew);
-                }
-                //return null;
+            Response.SetCookie(cookieNew);
             }
-            else
-            {
-
-            }
-
-            //return ViewBag.ToString("кук есть");
         }
     }
 }
