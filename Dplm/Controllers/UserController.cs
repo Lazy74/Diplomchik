@@ -13,7 +13,7 @@ using Newtonsoft.Json.Linq;
 namespace Dplm.Models
 {
     //public class UserController : ApiController
-    public class UserController : Controller
+    public class UserController : ApiController
     {
         // GET: User
         //public ActionResult Index()
@@ -29,15 +29,6 @@ namespace Dplm.Models
             {
                 string guid = Guid.NewGuid().ToString("N");
                 Authorizated.Data.Add(guid, new People());
-
-                var cookie = new HttpCookie("123")
-                {
-                    Name = "hash_v2",
-                    Value = guid,
-                    Expires = DateTime.Now.AddDays(5),
-                };
-
-                Response.SetCookie(cookie);
 
                 return guid;
             }
