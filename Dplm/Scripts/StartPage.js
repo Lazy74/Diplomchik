@@ -3,15 +3,17 @@
         console.log("AuthorizeUser");
         //$.get("/api/User/AuthorizeUser/", { Login: login, Pass: pass })
         $.get("/AuthorizeUser/", { Login: login, Pass: pass })
-            .success(function(dataResult) {
-                if (dataResult) {
-                    setCookie("hash", dataResult);
-                    alert("Авторизация прошла успешно!")
-                } else {
-                    alert("Пользователь не найден!");
-                }
-            });
+            //.success(function(dataResult) {
+            //    if (dataResult) {
+            //        setCookie("hash", dataResult);
+            //        alert("Авторизация прошла успешно!")
+            //    } else {
+            //        alert("Пользователь не найден!");
+            //    }
+            //});
         //.error;       если будет ошибка
+
+
     }
 }
 
