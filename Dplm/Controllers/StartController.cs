@@ -26,7 +26,26 @@ namespace Dplm.Controllers
 
         public ActionResult UserPage()
         {
-            //var cookie = Request.Cookies["hash"];
+            var cookie = Request.Cookies["hash"];
+            People authorizationPeople = Authorizated.AuthorizationCheck(cookie.Value);
+
+            if (authorizationPeople != null)
+            {
+                cookie = new HttpCookie("hash")
+                {
+                    Value = Authorizated.Auth(new People()),
+                    Expires = DateTime.Now.AddDays(7)
+                };
+            }
+            else
+            {
+                cookie = new HttpCookie("hash")
+                {
+                    Expires = DateTime.Now.AddDays(-1)
+                };
+            }
+
+            Response.SetCookie(cookie);
             return View();
         }
 
