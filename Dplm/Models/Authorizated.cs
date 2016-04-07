@@ -17,13 +17,20 @@ namespace Dplm.Models
             return guid;
         }
 
-        public static People AuthorizationCheck(string guide)
+        public static People AuthorizationCheck(string guid)
         {
+            if (guid==null)
+            {
+                return null;
+            }
+
             People people = new People();
-            if (Data.TryGetValue(guide, out people))
+
+            if (Data.TryGetValue(guid, out people))
             {
                 return people;
             }
+
             return null;
         }
 

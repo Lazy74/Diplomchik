@@ -122,12 +122,15 @@
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\RegistrationController.cs" />
     <Compile Include="Controllers\StartController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Authorizated.cs" />
+    <Compile Include="Models\DatabaseND.cs" />
+    <Compile Include="Models\MyCookies.cs" />
     <Compile Include="Models\People.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

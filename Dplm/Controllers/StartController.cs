@@ -14,6 +14,7 @@ namespace Dplm.Controllers
         // GET: Start
         public ActionResult StartPage()
         {
+            Response.SetCookie(MyCookies.UpdateCookieSession(Request.Cookies["hash"]));
             //var cookie = Request.Cookies["hash"];
             return View();
         }
@@ -26,26 +27,7 @@ namespace Dplm.Controllers
 
         public ActionResult UserPage()
         {
-            var cookie = Request.Cookies["hash"];
-            People authorizationPeople = Authorizated.AuthorizationCheck(cookie.Value);
-
-            if (authorizationPeople != null)
-            {
-                cookie = new HttpCookie("hash")
-                {
-                    Value = Authorizated.Auth(new People()),
-                    Expires = DateTime.Now.AddDays(7)
-                };
-            }
-            else
-            {
-                cookie = new HttpCookie("hash")
-                {
-                    Expires = DateTime.Now.AddDays(-1)
-                };
-            }
-
-            Response.SetCookie(cookie);
+            Response.SetCookie(MyCookies.UpdateCookieSession(Request.Cookies["hash"]));
             return View();
         }
 
@@ -54,13 +36,7 @@ namespace Dplm.Controllers
             Login = Login.ToLower();
             if (Login == "qwe" && Pass == "asd")    // TODO здесь будет запрос в базу данных. Проверка есть ли такой user
             {
-                var cookieNew = new HttpCookie("hash")
-                {
-                    Value = Authorizated.Auth(new People()),
-                    Expires = DateTime.Now.AddDays(7)
-                };
-
-            Response.SetCookie(cookieNew);
+                Response.SetCookie(MyCookies.CreateCookie("hash"));
             }
         }
     }
