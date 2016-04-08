@@ -21,15 +21,14 @@ namespace Dplm.Models
         public static HttpCookie UpdateCookieSession(HttpCookie oldCookie)
         {
             People authorizationPeople = Authorizated.AuthorizationCheck(oldCookie?.Value);
-            //People authorizationPeople = null;
-
+            
             HttpCookie updateCookie;
 
             if (authorizationPeople != null)
             {
                 updateCookie = new HttpCookie("hash")
                 {
-                    Value = Authorizated.Auth(new People()),
+                    //Value = Authorizated.Auth(new People()),
                     Expires = DateTime.Now.AddDays(7)
                 };
             }

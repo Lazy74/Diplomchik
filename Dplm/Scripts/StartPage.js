@@ -2,18 +2,31 @@
     authorizeUser: function (login, pass) {
         console.log("AuthorizeUser");
         //$.get("/api/User/AuthorizeUser/", { Login: login, Pass: pass })
-        $.get("/AuthorizeUser/", { Login: login, Pass: pass })
-            //.success(function(dataResult) {
-            //    if (dataResult) {
-            //        setCookie("hash", dataResult);
-            //        alert("Авторизация прошла успешно!")
-            //    } else {
-            //        alert("Пользователь не найден!");
-            //    }
-            //});
-        //.error;       если будет ошибка
-
-
+        $.get("/AuthorizeUser/", {
+                Login: login,
+                Pass: pass
+            })
+            .success(function (r) {
+                alert("Авторизация прошла успешно");
+            })
+            .error(function (r) {
+                alert("Пользователь не найден!");
+            });
+        //$.ajax({
+        //    url: "/AuthorizeUser/",
+        //    type: "POST",
+        //    //contentType: "json",
+        //    data: {
+        //        Login: login,
+        //        Pass: pass
+        //    },
+        //    success: function(rec) {
+        //        debugger;
+        //    },
+        //    error: function(rec) {
+        //        debugger;
+        //    }
+        //});
     }
 }
 
@@ -23,9 +36,9 @@ function loadPage() {
     ko.applyBindings(viewModel);
     var hash = getCookie("hash");
     if (!hash) {
-        alert("hash нет");
+        //alert("hash нет");
     } else {
-        alert("hash: " + hash);
+        //alert("hash: " + hash);
     }
 }
 

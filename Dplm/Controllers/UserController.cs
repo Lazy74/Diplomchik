@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
+using System.Net.Http;
 using System.Net.Mime;
 using System.Web;
 using System.Web.Configuration;
@@ -15,24 +17,21 @@ namespace Dplm.Models
     //public class UserController : ApiController
     public class UserController : ApiController
     {
-        // GET: User
-        //public ActionResult Index()
+        //public HttpResponseMessage AuthorizeUser(string Pass, string Login)
         //{
-        //    return View();
+        //    Login = Login.ToLower();
+
+        //    if (Login == "qwe" && Pass == "asd")    // TODO здесь будет запрос в базу данных. Проверка есть ли такой user
+        //    {
+        //        //Response.SetCookie(MyCookies.CreateCookie("hash"));
+        //        //return new HttpResponseMessage(HttpStatusCode.OK);
+        //        var response = Request.CreateResponse(HttpStatusCode.OK);
+        //        response.Headers.AddCookies(new MyCookies.CreateCookie("hash"))
+        //    }
+        //    else
+        //    {
+        //        return new HttpResponseMessage(HttpStatusCode.BadRequest);
+        //    }
         //}
-
-        [System.Web.Mvc.HttpGet]
-        public string AuthorizeUser(string Pass, string Login)
-        {
-            Login = Login.ToLower();
-            if (Login == "логин" && Pass=="Пароль")
-            {
-                string guid = Guid.NewGuid().ToString("N");
-                Authorizated.Data.Add(guid, new People());
-
-                return guid;
-            }
-            return null;
-        }
     }
 }

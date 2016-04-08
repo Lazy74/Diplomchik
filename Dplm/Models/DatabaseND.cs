@@ -48,5 +48,41 @@ namespace Dplm.Models
                 }
             }
         }
+
+        public static People SearchPeople(string Login)
+        {
+            using (var connection = new SqlConnection(ConnectionString))
+            {
+                connection.Open();
+
+                using (var cmd = connection.CreateCommand())
+                {
+                    cmd.CommandType = CommandType.Text;
+
+                    cmd.CommandText = "SELECT * " + 
+                        "FROM [users] " + 
+                        " WHERE userLogin = @login";
+
+                    cmd.Parameters.AddWithValue("@login", Login);
+
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            var a = reader["userLogin"].ToString();
+                            a = a.Trim();
+                        }
+                        People people;
+
+
+                    }
+                }
+            }
+                return null; 
+        }
     }
 }
+
+
+//DELETE FROM ND.dbo.users
+//WHERE Id = 2

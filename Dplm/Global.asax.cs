@@ -7,6 +7,7 @@ using System.Web.Routing;
 using System.Web.Security;
 using System.Web.SessionState;
 using System.Web.Http;
+using Dplm.Models;
 
 namespace Dplm
 {
@@ -18,6 +19,7 @@ namespace Dplm
             AreaRegistration.RegisterAllAreas();
             GlobalConfiguration.Configure(WebApiConfig.Register);
             RouteConfig.RegisterRoutes(RouteTable.Routes);            
+            Authorizated.Data.Clear();
         }
     }
 }
