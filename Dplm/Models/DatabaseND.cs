@@ -69,12 +69,31 @@ namespace Dplm.Models
                     {
                         if (reader.Read())
                         {
-                            var a = reader["userLogin"].ToString();
-                            a = a.Trim();
+                            People people = new People();
+
+                            int id;
+
+                            try
+                            {
+                                id = Convert.ToInt32(reader["Id"]);
+                            }
+                            catch (Exception)
+                            {
+                                id = 0;
+                            }
+
+                            people.Id = id;
+                            people.UserLogin = reader["userLogin"].ToString().Trim();
+                            people.UserPass = reader["userPass"].ToString().Trim();
+                            people.PhoneNumber = reader["phoneNumber"].ToString().Trim();
+                            people.Email = reader["email"].ToString().Trim();
+                            people.Name = reader["lastName"].ToString().Trim();
+                            people.FamiluName = reader["firstName"].ToString().Trim();
+                            people.Birthday = reader["birthday"].ToString().Trim();
+                            people.LinkVK = reader["linkVK"].ToString().Trim();
+
+                            return people;
                         }
-                        People people;
-
-
                     }
                 }
             }

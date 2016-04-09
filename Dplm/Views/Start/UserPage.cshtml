@@ -3,33 +3,32 @@
     ViewBag.Title = "UserPage";
 }
 
-<h2>UserPage</h2>
+<h2>Id User: @ViewBag.id</h2>
 
 <html>
 <head>
-    <title>Игрок: "Логин"</title>
+    <title>Игрок: @ViewBag.userLogin</title>
 </head>
 <body>
 <div class="userPage">
     <div>
-        <span>Имя: </span>
+        <span>Имя: @ViewBag.firstName</span>
     </div>
     <div>
-        <span>Фамилия: </span>
+        <span>Фамилия: @ViewBag.lastName</span>
     </div>
     <div>
-        <span>Номер телефона: </span>
+        <span>Номер телефона: @ViewBag.phoneNumber</span>
     </div>
     <div>
-        <span>Электронная почта: </span>
+        <span>Электронная почта: @ViewBag.email</span>
     </div>
     <div>
-        <span>Дата рождения: </span>
+        <span>Дата рождения: @ViewBag.birthday</span>
     </div>
     <div>
-        <span>Ссылка ВКонтакте: </span>
+        <span>Ссылка ВКонтакте: @ViewBag.linkVK</span>
     </div>
     </div>
 </body>
 </html>
-
