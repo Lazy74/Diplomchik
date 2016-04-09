@@ -9,7 +9,13 @@ namespace Dplm
     {
         public  int Id { get; set; }
 
-        public string UserLogin { get; set; }
+        public string UserLogin
+        {
+            get { return login; }
+            set { login = value.ToLower(); }
+        }
+
+        private string login;
 
         public string UserPass { get; set; }
 
