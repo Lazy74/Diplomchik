@@ -8,6 +8,7 @@
             })
             .success(function (r) {
                 alert("Авторизация прошла успешно");
+                location.pathname = "";    // строка пути (относительно хоста)
             })
             .error(function (r) {
                 alert("Пользователь не найден!");

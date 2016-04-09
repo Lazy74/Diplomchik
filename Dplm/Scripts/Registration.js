@@ -28,11 +28,10 @@ function ViewModel() {
     this.email = ko.observable();
 
     this.createUser = function () {
-        console.log("Ok");
         model.createUser(this.userPass(), this.confirmUserPass(), this.userLogin(), this.phoneNumber(), this.email())
             .success(function () {
                 alert("пользователь создан!");
-                //debugger;
+                location.pathname = "";    // строка пути (относительно хоста)
             })
             .error(function () {
                 alert("Все пропало :(");

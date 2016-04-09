@@ -7,11 +7,11 @@ namespace Dplm.Models
 {
     public class MyCookies
     {
-        public static HttpCookie CreateCookie(string Name)
+        public static HttpCookie CreateCookie(string Name, People people)
         {
             var newCookie = new HttpCookie(Name)
             {
-                Value = Authorizated.Auth(new People()),
+                Value = Authorizated.Auth(people),
                 Expires = DateTime.Now.AddDays(7)
             };
 
@@ -28,7 +28,7 @@ namespace Dplm.Models
             {
                 updateCookie = new HttpCookie("hash")
                 {
-                    //Value = Authorizated.Auth(new People()),
+                    Value = oldCookie.Value,
                     Expires = DateTime.Now.AddDays(7)
                 };
             }
@@ -36,7 +36,8 @@ namespace Dplm.Models
             {
                 updateCookie = new HttpCookie("hash")
                 {
-                    Expires = DateTime.Now.AddDays(-1)
+                    Expires = DateTime.Now.AddDays(-1),
+                    Value = "null"
                 };
             }
 
