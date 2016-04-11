@@ -82,5 +82,34 @@ namespace Dplm.Controllers
                 return new HttpResponseMessage(HttpStatusCode.BadRequest);      // TODO это не работает! 
             }
         }
+
+        public ActionResult updateUserPage()
+        {
+            var cookie = MyCookies.UpdateCookieSession(Request.Cookies["hash"]);
+
+            Response.SetCookie(cookie);
+
+            if (cookie.Value != "null")
+            {
+                People people = new People();
+                Authorizated.Data.TryGetValue(cookie.Value, out people);
+
+                ViewBag.userLogin = people.UserLogin;
+                //ViewBag.UserPass = people.UserPass;       // а надо ли видеть пароль на странице?
+                ViewBag.firstName = people.Name;
+                ViewBag.lastName = people.FamiluName;
+                ViewBag.id = people.Id;
+                ViewBag.phoneNumber = people.PhoneNumber;
+                ViewBag.email = people.Email;
+                ViewBag.birthday = people.Birthday;
+                ViewBag.linkVK = people.LinkVK;
+
+                return View();
+            }
+            else
+            {
+                return View("StartPage");
+            }
+        }
     }
 }

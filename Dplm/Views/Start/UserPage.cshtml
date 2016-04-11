@@ -8,6 +8,13 @@
 <html>
 <head>
     <title>Игрок: @ViewBag.userLogin</title>
+
+    <link href="/Content/bootstrap.min.css" rel="stylesheet" />
+    <link href="/Content/Site.css" rel="stylesheet" />
+
+    <script src="/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="/Scripts/knockout-3.4.0.js"></script>
+    <script src="/Scripts/UserPage.js"></script>
 </head>
 <body>
 <div class="userPage">
@@ -29,6 +36,11 @@
     <div>
         <span>Ссылка ВКонтакте: @ViewBag.linkVK</span>
     </div>
-    </div>
+    <button id="btn-update" class="btn btn-success" data-bind="click: updateUser">Изменить данные</button>
+</div>
+
+    <script>
+        loadPage();
+    </script>
 </body>
 </html>

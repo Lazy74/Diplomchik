@@ -117,6 +117,8 @@
     <Content Include="Scripts\knockout-3.4.0.js" />
     <Content Include="Scripts\Registration.js" />
     <Content Include="Scripts\StartPage.js" />
+    <Content Include="Scripts\UserPage.js" />
+    <Content Include="Scripts\userUpdate.js" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -124,6 +126,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\RegistrationController.cs" />
     <Compile Include="Controllers\StartController.cs" />
+    <Compile Include="Controllers\UpdateUserController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -145,6 +148,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Views\Start\RegistrationPage.cshtml" />
     <Content Include="Views\Start\UserPage.cshtml" />
+    <Content Include="Views\Start\updateUserPage.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

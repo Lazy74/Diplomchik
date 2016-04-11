@@ -99,6 +99,97 @@ namespace Dplm.Models
             }
                 return null; 
         }
+
+        public static bool UpdateUser(People oldPeople, People updatePeople)
+        {
+            if (!string.IsNullOrEmpty(updatePeople.UserLogin))
+            {
+                oldPeople.UserLogin = updatePeople.UserLogin;
+            }
+
+            // TODO нужно проверять вводилось ли что-то в поля для замены пароля и проверять введеный пароль для изменения данных
+            //if (!string.IsNullOrEmpty(updatePeople.UserPass))
+            //{
+            //    oldPeople.UserPass = updatePeople.UserPass;
+            //}
+
+            if (!string.IsNullOrEmpty(updatePeople.PhoneNumber))
+            {
+                oldPeople.PhoneNumber = updatePeople.PhoneNumber;
+            }
+
+            if (!string.IsNullOrEmpty(updatePeople.Email))
+            {
+                oldPeople.Email = updatePeople.Email;
+            }
+
+            if (!string.IsNullOrEmpty(updatePeople.FamiluName))
+            {
+                oldPeople.FamiluName = updatePeople.FamiluName;
+            }
+
+            if (!string.IsNullOrEmpty(updatePeople.Name))
+            {
+                oldPeople.Name = updatePeople.Name;
+            }
+
+            if (!string.IsNullOrEmpty(updatePeople.Birthday))
+            {
+                oldPeople.Birthday = updatePeople.Birthday;
+            }
+
+            if (!string.IsNullOrEmpty(updatePeople.LinkVK))
+            {
+                oldPeople.LinkVK = updatePeople.LinkVK;
+            }
+
+
+            using (var connection = new SqlConnection(ConnectionString))
+            {
+                connection.Open();
+
+                using (var cmd = connection.CreateCommand())
+                {
+                    cmd.CommandType = CommandType.Text;
+
+                    cmd.CommandText = "UPDATE [users] " +
+                                      "SET " +
+                                            "userLogin = @login, " +
+                                            "userPass = @pass, " +
+                                            "phoneNumber = @phone, " +
+                                            "email = @email, " +
+                                            "lastName = @lastName, " +
+                                            "firstName = @firstName, " +
+                                            "linkVK = @vk, " +
+                                            "birthday = @birth " +
+                                      "WHERE Id = @Id;";
+
+                    cmd.Parameters.AddWithValue("@login", oldPeople.UserLogin);
+                    cmd.Parameters.AddWithValue("@pass", oldPeople.UserPass);
+                    cmd.Parameters.AddWithValue("@phone", oldPeople.PhoneNumber);
+                    cmd.Parameters.AddWithValue("@email", oldPeople.Email);
+                    cmd.Parameters.AddWithValue("@lastName", oldPeople.FamiluName);
+                    cmd.Parameters.AddWithValue("@firstName", oldPeople.Name);
+                    cmd.Parameters.AddWithValue("@birth", oldPeople.Birthday);
+                    cmd.Parameters.AddWithValue("@vk", oldPeople.LinkVK);
+                    cmd.Parameters.AddWithValue("@Id", oldPeople.Id);
+                    
+
+                    try
+                    {
+                        cmd.ExecuteNonQuery();     // синхронно
+                        return true;
+                    }
+                    catch(Exception e)
+                    {
+                        return false;
+                        // TODO сделать лог
+                    }
+
+                }
+            }
+        }
+
     }
 }
 
