@@ -60,26 +60,31 @@ namespace Dplm.Controllers
 
         }
 
-        public HttpResponseMessage AuthorizeUser(string Login, string Pass)
+        public ActionResult AuthorizeUser(string Login, string Pass)
         {
             if (Login == null && Pass == null)
             {
-		// TODO возможно стоит говорить пользователю что он не ввел
-                return new HttpResponseMessage(HttpStatusCode.ExpectationFailed);
+		        // TODO возможно стоит говорить пользователю что он не ввел
+                //return new HttpResponseMessage(HttpStatusCode.ExpectationFailed);
             }
 
             Login = Login.ToLower();
             People people = DatabaseND.SearchPeople(Login);     //Попытка вернуть из базы Игрока
-            
+
+            if (people == null)
+            {
+                return new HttpUnauthorizedResult();
+            }
+
             if (people.UserLogin == Login && people.UserPass == Pass)    //
             //if ("qwe" == Login && "qwe" == Pass)    // TODO здесь будет запрос в базу данных. Проверка есть ли такой user
             {
                 Response.SetCookie(MyCookies.CreateCookie("hash", people));
-                return new HttpResponseMessage(HttpStatusCode.OK);      // TODO это не работает! 
+                return new HttpStatusCodeResult(200);
             }
             else
             {
-                return new HttpResponseMessage(HttpStatusCode.BadRequest);      // TODO это не работает! 
+                return new HttpUnauthorizedResult();
             }
         }
 

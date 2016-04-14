@@ -6,11 +6,11 @@
                 Login: login,
                 Pass: pass
             })
-            .success(function (r) {
+            .done(function () {
                 alert("Авторизация прошла успешно");
                 location.pathname = "";    // строка пути (относительно хоста)
             })
-            .error(function (r) {
+            .fail(function () {
                 alert("Пользователь не найден!");
             });
         //$.ajax({
