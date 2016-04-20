@@ -58,6 +58,16 @@ namespace Dplm
                     controller = "Start",
                     action = "updateUserPage"
                 });
+
+
+            routes.MapRoute(
+                name: "GameplayPage",
+                url: "Gameplay",
+                defaults: new
+                {
+                    controller = "Gameplay",
+                    action = "GameplayPage"
+                });
         }
     }
 }

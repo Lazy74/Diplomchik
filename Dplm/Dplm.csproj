@@ -124,6 +124,7 @@
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\GameplayController.cs" />
     <Compile Include="Controllers\RegistrationController.cs" />
     <Compile Include="Controllers\StartController.cs" />
     <Compile Include="Controllers\UpdateUserController.cs" />
@@ -149,6 +150,7 @@
     <Content Include="Views\Start\RegistrationPage.cshtml" />
     <Content Include="Views\Start\UserPage.cshtml" />
     <Content Include="Views\Start\updateUserPage.cshtml" />
+    <Content Include="Views\Gameplay\GameplayPage.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
