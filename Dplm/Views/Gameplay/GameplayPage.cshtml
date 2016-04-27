@@ -13,53 +13,26 @@
 <body>
 
     <div class="content">
-        <h1>НАЗВАНИЕ ИГРЫ</h1>
-        <h2>Уровень <span>i</span> из N</h2>
+        <h1>@ViewBag.nameGame</h1>
+        <h2>Уровень @ViewBag.lvl из @ViewBag.lvlLength</h2>
 
         <input type="text" id="answer" class="form-control" placeholder="Ваш ответ" data-bind="value: xxx" />
+        <span>Ваш ответ или код</span>
 
-        <p>
-            Здесь коментарий от автора, который поможет в игре!
-        </p>
+        <p>@ViewBag.commentAuthor</p>
 
         <div class="spacer"></div>
         <h3 class="timer">
             <strong>Автопереход</strong> на следующий уровень через: <span class="bold_off" id="time44554340"><b>n</b> м <b>m</b> с</span>
-
         </h3>
 
         <span>штраф N минут (Если он есть)</span>
 
         <div class="spacer"></div>
         <h3>Задание</h3>
-        <p>
-            Текст интересного задания
-        </p>
-
-        <div class="spacer"></div>
-        <span class="color_dis">
-            <b>Подсказка 1 </b>будет через: <span class="bold_off" id="time53688024"><b>2</b> м <b>8</b> с</span>
-            <script type="text/javascript">
-
-            </script>
-        </span>
-        <div class="spacer"></div>
-        <span class="color_dis">
-            <b>Подсказка: 2 </b>будет через: <span class="bold_off" id="time28084685"><b>10</b> м <b>8</b> с</span>
-            <script type="text/javascript">
-
-            </script>
-        </span>
-
-        <div class="spacer"></div>
-        <h3 class="color_bonus">
-            Бонус 1
-        </h3>
-
-        <div class="spacer"></div>
-        <h3 class="color_bonus">
-            Бонус 2
-        </h3>
+        <p>@ViewBag.quest</p>
+        
+        @*не забыть про подсказки и бонусы!*@
     </div>
 
 </body>
