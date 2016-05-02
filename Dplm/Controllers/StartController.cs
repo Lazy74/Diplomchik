@@ -34,7 +34,7 @@ namespace Dplm.Controllers
 
             Response.SetCookie(cookie);
 
-            if (cookie.Value != "null")
+            if (cookie.Value != null)
             {
                 People people = new People();
                 Authorizated.Data.TryGetValue(cookie.Value, out people);
@@ -68,8 +68,10 @@ namespace Dplm.Controllers
                 //return new HttpResponseMessage(HttpStatusCode.ExpectationFailed);
             }
 
+
+            // TODO если строки логина и пароля пустые, то предыдущий if не срабатывает (ms Edge)
             Login = Login.ToLower();
-            People people = DatabaseND.SearchPeople(Login);     //Попытка вернуть из базы Игрока
+            People people = DatabaseND.SearchPeopleByLogin(Login);     //Попытка вернуть из базы Игрока
 
             if (people == null)
             {
@@ -94,7 +96,7 @@ namespace Dplm.Controllers
 
             Response.SetCookie(cookie);
 
-            if (cookie.Value != "null")
+            if (cookie.Value != null)
             {
                 People people = new People();
                 Authorizated.Data.TryGetValue(cookie.Value, out people);

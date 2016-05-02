@@ -37,7 +37,7 @@ namespace Dplm.Models
                 updateCookie = new HttpCookie("hash")
                 {
                     Expires = DateTime.Now.AddDays(-1),
-                    Value = "null"
+                    Value = null
                 };
             }
 
