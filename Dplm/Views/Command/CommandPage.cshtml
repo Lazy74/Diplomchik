@@ -1,0 +1,31 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>CommandPage</title>
+</head>
+<body>
+<div>
+    <span>Название команды: @ViewBag.teamName</span>
+    <br/>
+    <span>@ViewBag.commander</span>
+    <br/>
+    <span>id команды: @ViewBag.teamId</span>
+    
+    <table>
+        @{
+            foreach (var name in ViewBag.playerName)
+            {
+                <tr><td>@name</td></tr>
+            }
+        }
+    </table>
+</div>
+</body>
+</html>
