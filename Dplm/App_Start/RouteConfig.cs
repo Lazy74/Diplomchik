@@ -13,6 +13,7 @@ namespace Dplm
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
+            // Стартовая страница
             routes.MapRoute(
                 name: "Default",
                 url: "",
@@ -22,6 +23,7 @@ namespace Dplm
                     action = "StartPage",
                 });
 
+            // Страница регистрации
             routes.MapRoute(
                 name: "Registration",
                 url: "Registration/",
@@ -31,6 +33,7 @@ namespace Dplm
                     action = "RegistrationPage"
                 });
 
+            // Исраница игрока
             routes.MapRoute(
                 name: "UserPage",
                 url: "User/",
@@ -40,6 +43,7 @@ namespace Dplm
                     action = "UserPage"
                 });
 
+            // ?
             routes.MapRoute(
                 name: "AuthorizeUser",
                 url: "AuthorizeUser/",
@@ -50,6 +54,7 @@ namespace Dplm
                 });
 
 
+            // Страница обновления данных игрока
             routes.MapRoute(
                 name: "updateUserPage",
                 url: "User/update/",
@@ -59,7 +64,7 @@ namespace Dplm
                     action = "updateUserPage"
                 });
 
-
+            // Страница процесса игры
             routes.MapRoute(
                 name: "GameplayPage",
                 url: "Gameplay",
@@ -68,6 +73,48 @@ namespace Dplm
                     controller = "Gameplay",
                     action = "GameplayPage"
                 });
+
+            // Страница команды
+            routes.MapRoute(
+                name: "CreatePage",
+                url: "User/Command/",
+                defaults: new
+                {
+                    controller = "Command",
+                    action = "CommandPage"
+                });
+
+            // Проверка на авторизацию 
+            routes.MapRoute(
+                name: "AuthorizationCheck",
+                url: "User/CommandСheck/",
+                defaults: new
+                {
+                    controller = "Command",
+                    action = "AuthorizationCheck"
+                });
+
+            // Страница регистрации команды
+            // Возможно она мне и не нужна
+            //routes.MapRoute(
+            //    name: "CreateCommandPage",
+            //    url: "User/NewCommand",
+            //    defaults: new
+            //    {
+            //        controller = "Command",
+            //        action = "CommandCreatePage"
+            //    });
+
+            // TODO Страница изменения данных о команде
+            //routes.MapRoute(
+            //    name: "CreateCommandPage",
+            //    url: "User/NewCommand",
+            //    defaults: new
+            //    {
+            //        controller = "Command",
+            //        action = "CommandUpdatePage"
+            //    });
+
         }
     }
 }
