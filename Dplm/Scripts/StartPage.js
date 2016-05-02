@@ -28,6 +28,16 @@
         //        debugger;
         //    }
         //});
+    },
+
+    toUserTeam: function() {
+        $.get("/User/CommandСheck/")
+            .done(function() {
+                location.href = "/User/Command/";
+            })
+            .fail(function() {
+                alert("Для начала авторизуйтесь!");
+            });
     }
 }
 
@@ -58,6 +68,10 @@ function ViewModel() {
 
     this.toUserPage = function() {
         location.href = "/User/";
+    }
+
+    this.toUserTeam = function() {
+        model.toUserTeam();
     }
 }
 
