@@ -7,10 +7,16 @@ using System.Web;
 
 namespace Dplm.Models
 {
+    /// <summary>
+    /// Работа с базой данных
+    ///</summary>
     public class DatabaseND
     {
         private readonly static string ConnectionString = @"Data Source=.\SQLEXPRESS;Initial Catalog=ND;Integrated Security=SSPI;";
 
+        /// <summary>
+        /// Добавить в базу нового пользователя
+        ///</summary>
         public static bool AddUser(People people)
         {
             using (var connection = new SqlConnection(ConnectionString))
@@ -49,7 +55,10 @@ namespace Dplm.Models
             }
         }
 
-        public static People SearchPeople(string Login)
+        /// <summary>
+        ///Найти человека по его логину
+        ///</summary>
+        public static People SearchPeopleByLogin(string Login)
         {
             using (var connection = new SqlConnection(ConnectionString))
             {
@@ -100,6 +109,63 @@ namespace Dplm.Models
                 return null; 
         }
 
+        /// <summary>
+        /// Найти человека по его ID
+        ///</summary>
+        public static People SearchPeopleById(int Id)
+        {
+            using (var connection = new SqlConnection(ConnectionString))
+            {
+                connection.Open();
+
+                using (var cmd = connection.CreateCommand())
+                {
+                    cmd.CommandType = CommandType.Text;
+
+                    cmd.CommandText = "SELECT * " +
+                        "FROM [users] " +
+                        " WHERE Id = @Id";
+
+                    cmd.Parameters.AddWithValue("@Id", Id);
+
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            People people = new People();
+
+                            int id;
+
+                            try
+                            {
+                                id = Convert.ToInt32(reader["Id"]);
+                            }
+                            catch (Exception)
+                            {
+                                id = 0;
+                            }
+
+                            people.Id = id;
+                            people.UserLogin = reader["userLogin"].ToString().Trim();
+                            people.UserPass = reader["userPass"].ToString().Trim();
+                            people.PhoneNumber = reader["phoneNumber"].ToString().Trim();
+                            people.Email = reader["email"].ToString().Trim();
+                            people.Name = reader["lastName"].ToString().Trim();
+                            people.FamiluName = reader["firstName"].ToString().Trim();
+                            people.Birthday = reader["birthday"].ToString().Trim();
+                            people.LinkVK = reader["linkVK"].ToString().Trim();
+
+                            return people;
+                        }
+                    }
+                }
+            }
+            return null;
+        }
+        
+        /// <summary>
+        /// Обновить данные о игроке
+        ///</summary>
         public static bool UpdateUser(People oldPeople, People updatePeople)
         {
             if (!string.IsNullOrEmpty(updatePeople.UserLogin))
@@ -189,7 +255,131 @@ namespace Dplm.Models
                 }
             }
         }
+        
+        /// <summary>
+        /// Получить соотношение игрока к команде. -1 если нигде не состоит
+        ///</summary>
+        public static int ComplianceTeamPlayer(int idPeople)
+        {
+            using (var connection = new SqlConnection(ConnectionString))
+            {
+                connection.Open();
 
+                using (var cmd = connection.CreateCommand())
+                {
+                    cmd.CommandType = CommandType.Text;
+
+                    cmd.CommandText = "SELECT [playerTeam].[teamId] " +
+                                      "FROM [playerTeam] " +
+                                      "WHERE [playerId] = @idPeople";
+
+                    cmd.Parameters.AddWithValue("@idPeople", idPeople);
+
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            int teamId;
+
+                            try
+                            {
+                                teamId = Convert.ToInt32(reader["teamId"]);
+                            }
+                            catch (Exception)
+                            {
+                                teamId = -1;
+                            }
+
+                            return teamId;
+                        }
+                    }
+                }
+            }
+            return -1;    // На случай если что-то пойдет не так
+        }
+
+        /// <summary>
+        /// Получить данные о команде
+        ///</summary>
+        public static Team GetTeam(int teamId)
+        {
+            using (var connection = new SqlConnection(ConnectionString))
+            {
+                connection.Open();
+
+                using (var cmd = connection.CreateCommand())
+                {
+                    cmd.CommandType = CommandType.Text;
+
+                    cmd.CommandText = "SELECT * " +
+                                      "FROM [team] " +
+                                      "WHERE [Id] = @teamId";
+
+                    cmd.Parameters.AddWithValue("@teamId", teamId);
+
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            Team team = new Team();
+
+                            try
+                            {
+                                team.Id = Convert.ToInt32(reader["Id"]);
+                                team.IdCommander = Convert.ToInt32(reader["teamComanderId"]);
+                            }
+                            catch (Exception)
+                            {
+                                team.Id = 0;
+                                team.IdCommander = 0;
+                                team.Name = "Ошибка в базе данных!";
+                            }
+
+                            team.Name = reader["teamName"].ToString().Trim();
+
+                            return team;
+                        }
+                    }
+                }
+            }
+            return null;    // На случай если что-то пойдет не так
+        }
+
+        /// <summary>
+        /// Получить список ID игроков в команде
+        ///</summary>
+        public static List<int> GetArrayPlayer(int teamId)
+        {
+            using (var connection = new SqlConnection(ConnectionString))
+            {
+                connection.Open();
+
+                using (var cmd = connection.CreateCommand())
+                {
+                    cmd.CommandType = CommandType.Text;
+
+                    cmd.CommandText = "SELECT [playerTeam].[playerId] " +
+                                      "FROM [playerTeam] " +
+                                      "WHERE teamId = @teamId";
+
+                    cmd.Parameters.AddWithValue("@teamId", teamId);
+
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        var result = new List<int>();
+
+                        while (reader.Read())
+                        {
+                            result.Add(Convert.ToInt32(reader["playerId"]));
+                        }
+
+                        return result;
+                    }
+                }
+            }
+
+            return null;    // На случай если что-то пойдет не так
+        }
     }
 }
 
