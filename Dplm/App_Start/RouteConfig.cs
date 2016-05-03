@@ -64,6 +64,16 @@ namespace Dplm
                     action = "updateUserPage"
                 });
 
+            // Страница информации об игре
+            routes.MapRoute(
+                name: "GamePage",
+                url: "Game",
+                defaults: new
+                {
+                    controller = "Gameplay",
+                    action = "GamePage"
+                });
+
             // Страница процесса игры
             routes.MapRoute(
                 name: "GameplayPage",

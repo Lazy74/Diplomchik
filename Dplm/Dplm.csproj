@@ -134,6 +134,7 @@
     </Compile>
     <Compile Include="Models\Authorizated.cs" />
     <Compile Include="Models\DatabaseND.cs" />
+    <Compile Include="Models\Game.cs" />
     <Compile Include="Models\MyCookies.cs" />
     <Compile Include="Models\People.cs" />
     <Compile Include="Models\Team.cs" />
@@ -155,6 +156,7 @@
     <Content Include="Views\Gameplay\GameplayPage.cshtml" />
     <Content Include="Views\Command\CommandCreatePage.cshtml" />
     <Content Include="Views\Command\CommandPage.cshtml" />
+    <Content Include="Views\Gameplay\GamePage.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

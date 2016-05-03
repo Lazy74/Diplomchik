@@ -19,5 +19,10 @@ namespace Dplm.Controllers
             // придумать как выводить N количество подсказок
             return View();
         }
+
+        public ActionResult GamePage()
+        {
+            return View();
+        }
     }
 }
