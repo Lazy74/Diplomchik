@@ -347,7 +347,9 @@ namespace Dplm.Models
 
         /// <summary>
         /// Получить список ID игроков в команде
-        ///</summary>
+        /// </summary>
+        /// <param name="teamId">Id команды, по которой будет поиск</param>
+        /// <returns></returns>
         public static List<int> GetArrayPlayer(int teamId)
         {
             using (var connection = new SqlConnection(ConnectionString))
@@ -379,6 +381,41 @@ namespace Dplm.Models
             }
 
             return null;    // На случай если что-то пойдет не так
+        }
+
+        /// <summary>
+        /// Заглушка метода получения игры из БД
+        /// </summary>
+        /// <param name="gameId">ID игры</param>
+        /// <returns></returns>
+        public static Game GetGame(int gameId)
+        {
+            Game game = new Game();
+
+            #region
+
+            // Тут запрос в БД!
+
+            #endregion
+
+            game.Id = gameId;
+            game.NameGame = "Первая игра \"движка\"";
+            game.IdАuthor = new[] {1, 5};
+            game.Sequence = "Линейная";
+            game.Distance = 50;
+
+            DateTime dateTime = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day+1, 22, 35, 00);
+            game.StartGame = dateTime;
+
+            // TODO Не забывать, что переносы в THML не работают! весь текст нужно как-то конвертировать в формат HTML
+            game.Info = "появившаяся в 2005 году российская командная игра в формате ночных поисковых игр, включающая в себя " +
+                        "соревнование по городскому ориентированию, актерские и ролевые уровни, экстремальные и логические " +
+                        "задания. В основе лежит американский паззлхант и его вариации (Форт Боярд, Fear Factor, и др.) \n" +
+                        "Игра состоит из 10 основных заданий, в каждом из которых зашифровано местоположение локации " +
+                        "(заброса), где находятся коды или человек в городе. " +
+                        "Задача — пройти последовательно все 10 уровней раньше других команд, выполнить все дополнительные задания";
+
+            return game;
         }
     }
 }

@@ -23,6 +23,11 @@ namespace Dplm.Models
         public int[] IdАuthor { get; set; }
 
         /// <summary>
+        /// Последовательность заданий
+        /// </summary>
+        public string Sequence { get; set; }
+
+        /// <summary>
         /// Пробег
         /// </summary>
         public int Distance { get; set; }

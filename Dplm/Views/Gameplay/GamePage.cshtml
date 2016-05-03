@@ -8,23 +8,23 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
-    <title>Game</title>
+    <title>Game: @ViewBag.Id</title>
 </head>
 <body>
     <div>
-        <h2>Название Игры: </h2>
+        <h2>Название Игры: @ViewBag.NameGame</h2>
     </div>
     <div>
-        <span>Автор(ы): </span>
+        <span>Автор(ы): @ViewBag.IdАuthor</span>
     </div>
     <div>
-        <span>последовательность игры: Линейная</span>
+        <span>последовательность игры: @ViewBag.Sequence</span>
     </div>
     <div>
-        <span>Минимальный пробег: 50км</span>
+        <span>Минимальный пробег: @ViewBag.Distance км</span>
     </div>
     <div>
-        <span>Начало игры: (дата начала)</span>
+        <span>Начало игры: @ViewBag.StartGame</span>
     </div>
     <div>
         <span>Время окончания игры: (время по автопереходу)</span>
@@ -33,8 +33,9 @@
         <h2>Информация об игре от авторов</h2>
     </div>
     <div>
-        <span>Тут сама информация</span>
+        <span>@ViewBag.Info</span>
     </div>
     <button>Вход в игру</button>
 </body>
 </html>
+@*Может быть здесь сделать кномпку редактирования для автора игры. Кнопка появляется если на странице АВТОР!*@
