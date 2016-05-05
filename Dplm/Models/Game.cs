@@ -42,5 +42,10 @@ namespace Dplm.Models
         /// </summary>
         public string Info { get; set; }
 
+        /// <summary>
+        /// Количество уровней в игре (ФОРМИРОВАТЬ АВТОМАТИЧЕСКИ ПРИ КАЖДОМ ИЗМЕНЕНИИ ЗАДАНИЙ)
+        /// </summary>
+        public int AmountLevels { get; set; }
+
     }
 }
