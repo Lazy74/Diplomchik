@@ -18,12 +18,13 @@ namespace Dplm.Models
         public string NameGame { get; set; }
 
         /// <summary>
-        /// Массив ID авторов
+        /// Переделать в массив ID авторов, а пока щдесь будет 1 автор!
         /// </summary>
-        public int[] IdАuthor { get; set; }
+        public int IdАuthor { get; set; }
+        //public int[] IdАuthor { get; set; }
 
         /// <summary>
-        /// Последовательность заданий
+        /// Последовательность заданий (линейная, не линейная, указанная)
         /// </summary>
         public string Sequence { get; set; }
 

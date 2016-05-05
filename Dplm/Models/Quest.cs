@@ -24,7 +24,7 @@ namespace Dplm.Models
         public string AuthorComment { get; set; }
 
         /// <summary>
-        /// Время автоперехода
+        /// Время автоперехода в минутах
         /// </summary>
         public int TimeOut { get; set; }
 
