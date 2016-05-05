@@ -12,11 +12,14 @@ namespace Dplm.Controllers
         // GET: Gameplay
         public ActionResult GameplayPage()
         {
-            ViewBag.nameGame = "Название игры";
-            ViewBag.lvl = 5.ToString();     // номер текущего уровня
-            ViewBag.lvlLength = 10.ToString();  // Общее количество уровней
-            ViewBag.commentAuthor = "Здесь коментарий от автора, который поможет в игре!";  // Коментарий автора
-            ViewBag.quest = "Текст интересного задания";    // Текст задания
+            Quest quest = DatabaseND.GetQuest(1, 1);
+            Game game = DatabaseND.GetGame(1);
+
+            ViewBag.nameGame = game.NameGame;
+            ViewBag.lvl = quest.NumberLevel;     // номер текущего уровня
+            ViewBag.lvlLength = game.AmountLevels;  // Общее количество уровней
+            ViewBag.commentAuthor = quest.AuthorComment;  // Коментарий автора
+            ViewBag.quest = quest.TextQuest;    // Текст задания
             // придумать как выводить N количество подсказок
             return View();
         }

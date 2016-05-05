@@ -392,7 +392,7 @@ namespace Dplm.Models
         {
             Game game = new Game();
 
-            #region
+            #region БД
 
             // Тут запрос в БД!
 
@@ -403,6 +403,7 @@ namespace Dplm.Models
             game.IdАuthor = new[] {1, 5};
             game.Sequence = "Линейная";
             game.Distance = 50;
+            game.AmountLevels = 10;
 
             DateTime dateTime = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day+1, 22, 35, 00);
             game.StartGame = dateTime;
@@ -416,6 +417,31 @@ namespace Dplm.Models
                         "Задача — пройти последовательно все 10 уровней раньше других команд, выполнить все дополнительные задания";
 
             return game;
+        }
+
+        /// <summary>
+        /// Заглушка метода получения игрового задания
+        /// </summary>
+        /// <param name="gameId">ID игры</param>
+        /// <param name="NumberLevel">Порядковый номер задания</param>
+        /// <returns></returns>
+        public static Quest GetQuest(int gameId, int NumberLevel)
+        {
+            Quest quest = new Quest();
+
+            #region БД
+
+            // Тут запрос в БД!
+
+            #endregion
+
+            quest.Id = 1;
+            quest.AuthorComment = "Код синим маркером<br>Подробности по телефону 8-909-076-75-06";
+            quest.NumberLevel = NumberLevel;
+            quest.TextQuest = "\"...Мы с сестрой с детства мечтали о своём бизнесе. Эми помогла нам осуществить нашу мечту. И вот несколько месяцев назад мы открылись.Удалось ухватить площадь на месте бывшего гальванического цеха...\" <br /> <br />  Примечание: спросить мою сестру Марго.";
+            quest.TimeOut = 40;
+
+            return quest;
         }
     }
 }

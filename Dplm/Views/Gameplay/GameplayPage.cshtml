@@ -19,19 +19,21 @@
         <input type="text" id="answer" class="form-control" placeholder="Ваш ответ" data-bind="value: xxx" />
         <span>Ваш ответ или код</span>
 
-        <p>@ViewBag.commentAuthor</p>
+        <p>
+            @Html.Raw(ViewBag.commentAuthor)
+        </p>
 
         <div class="spacer"></div>
         <h3 class="timer">
-            <strong>Автопереход</strong> на следующий уровень через: <span class="bold_off" id="time44554340"><b>n</b> м <b>m</b> с</span>
+            <strong>Автопереход</strong> на следующий уровень через: <span class="bold_off" id="time44554340"><b>n</b> м<b>m</b> с</span>
         </h3>
 
         <span>штраф N минут (Если он есть)</span>
 
         <div class="spacer"></div>
         <h3>Задание</h3>
-        <p>@ViewBag.quest</p>
-        
+        <p>@Html.Raw(ViewBag.quest)</p>
+
         @*не забыть про подсказки и бонусы!*@
     </div>
 
