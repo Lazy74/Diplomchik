@@ -29,6 +29,11 @@ namespace Dplm.Models
         public int TimeOut { get; set; }
 
         /// <summary>
+        /// Id игры
+        /// </summary>
+        public int GameId { get; set; }
+
+        /// <summary>
         /// Текст задания
         /// </summary>
         public string TextQuest { get; set; }
