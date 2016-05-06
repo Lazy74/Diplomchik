@@ -400,7 +400,7 @@ namespace Dplm.Models
 
             game.Id = gameId;
             game.NameGame = "Первая игра \"движка\"";
-            game.IdАuthor = new[] {1, 5};
+            game.IdАuthor = 1;
             game.Sequence = "Линейная";
             game.Distance = 50;
             game.AmountLevels = 10;
@@ -420,7 +420,7 @@ namespace Dplm.Models
         }
 
         /// <summary>
-        /// Заглушка метода получения игрового задания
+        /// Получение игрового задания
         /// </summary>
         /// <param name="gameId">ID игры</param>
         /// <param name="NumberLevel">Порядковый номер задания</param>
@@ -431,17 +431,127 @@ namespace Dplm.Models
 
             #region БД
 
-            // Тут запрос в БД!
+            using (var connection = new SqlConnection(ConnectionString))
+            {
+                connection.Open();
+
+                using (var cmd = connection.CreateCommand())
+                {
+                    cmd.CommandType = CommandType.Text;
+
+                    cmd.CommandText = "SELECT * " +
+                                      "FROM [Quest] " +
+                                      "WHERE numberLevel = @numberLevel and gameId = @gameId";
+
+                    cmd.Parameters.AddWithValue("@numberLevel", NumberLevel);
+                    cmd.Parameters.AddWithValue("@gameId", gameId);
+
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        int result = 0;
+
+                        if (reader.Read())
+                        {
+                            //result = int.Parse((string) reader["numberLevel"]);
+
+                            quest.Id = (int)reader["Id"];
+                            quest.GameId = (int)reader["gameId"];
+                            quest.NumberLevel = (int)reader["numberLevel"];
+                            quest.AuthorComment = (string)reader["authorComment"];
+                            quest.TimeOut = (int)reader["Timeout"];
+                            quest.TextQuest = (string)reader["TextQuest"];
+                        }
+                        return quest;
+                    }
+                }
+            }
 
             #endregion
 
-            quest.Id = 1;
-            quest.AuthorComment = "Код синим маркером<br>Подробности по телефону 8-909-076-75-06";
-            quest.NumberLevel = NumberLevel;
-            quest.TextQuest = "\"...Мы с сестрой с детства мечтали о своём бизнесе. Эми помогла нам осуществить нашу мечту. И вот несколько месяцев назад мы открылись.Удалось ухватить площадь на месте бывшего гальванического цеха...\" <br /> <br />  Примечание: спросить мою сестру Марго.";
-            quest.TimeOut = 40;
+            //quest.Id = 1;
+            //quest.AuthorComment = "Код синим маркером<br>Подробности по телефону 8-909-076-75-06";
+            //quest.NumberLevel = NumberLevel;
+            //quest.TextQuest = "\"...Мы с сестрой с детства мечтали о своём бизнесе. Эми помогла нам осуществить нашу мечту. И вот несколько месяцев назад мы открылись.Удалось ухватить площадь на месте бывшего гальванического цеха...\" <br /> <br />  Примечание: спросить мою сестру Марго.";
+            //quest.TimeOut = 40;
 
             return quest;
+        }
+
+        /// <summary>
+        /// Получить список команд, которые играют в эту игру
+        /// </summary>
+        /// <param name="gameId">ID игры</param>
+        /// <returns></returns>
+        public static List<int> GetGameTeamId(int gameId)
+        {
+            using (var connection = new SqlConnection(ConnectionString))
+            {
+                connection.Open();
+
+                using (var cmd = connection.CreateCommand())
+                {
+                    cmd.CommandType = CommandType.Text;
+
+                    cmd.CommandText = "SELECT [GamingTeam].[teamId] " +
+                                      "FROM [GamingTeam] " +
+                                      "WHERE access = @access and gameId = @gameId";
+
+                    cmd.Parameters.AddWithValue("@access", 1);
+                    cmd.Parameters.AddWithValue("@gameId", gameId);
+
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        var result = new List<int>();
+
+                        while (reader.Read())
+                        {
+                            result.Add(Convert.ToInt32(reader["teamId"]));
+                        }
+
+                        return result;
+                    }
+                }
+            }
+
+            return null;
+        }
+
+        /// <summary>
+        /// Получить номер уровня, на котором сейчас находится команда
+        /// </summary>
+        /// <param name="teamId"></param>
+        /// <param name="gameId"></param>
+        /// <returns></returns>
+        public static int GetPositionInGame(int teamId, int gameId)
+        {
+            using (var connection = new SqlConnection(ConnectionString))
+            {
+                connection.Open();
+
+                using (var cmd = connection.CreateCommand())
+                {
+                    cmd.CommandType = CommandType.Text;
+
+                    cmd.CommandText = "SELECT [numberLevel] " +
+                                      "FROM [PositionInTheGame] " +
+                                      "WHERE teamId = @teamId and gameId = @gameId";
+
+                    cmd.Parameters.AddWithValue("@teamId", teamId);
+                    cmd.Parameters.AddWithValue("@gameId", gameId);
+
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        List<int> foo = new List<int>();
+
+                        while (reader.Read())
+                        {
+                            foo.Add((int) reader["numberLevel"]);
+                        }
+
+                        return foo.Max();
+                    }
+                }
+            }
         }
     }
 }
