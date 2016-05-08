@@ -7,7 +7,13 @@
 
 <html>
 <head>
-    <meta name="viewport" content="width=device-width" />
+    @*<meta name="viewport" content="width=device-width"/>*@
+    
+    <script src="/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="/Scripts/knockout-3.4.0.js"></script>
+
+    <script src="/Scripts/GameplayPage.js"></script>
+
     <title>GameplayPage</title>
 </head>
 <body>
@@ -16,7 +22,9 @@
         <h1>@ViewBag.nameGame</h1>
         <h2>Уровень @ViewBag.lvl из @ViewBag.lvlLength</h2>
 
-        <input type="text" id="answer" class="form-control" placeholder="Ваш ответ" data-bind="value: xxx" />
+        <input type="text" id="id-answer" class="form-control" placeholder="Ваш ответ" data-bind="value: playerAnswer"/>
+        <button id="btn-answer" data-bind="click:toAnswer">Ответить</button>
+        <br>
         <span>Ваш ответ или код</span>
 
         <p>
@@ -36,6 +44,10 @@
 
         @*не забыть про подсказки и бонусы!*@
     </div>
+
+    <script>
+        loadPage();
+    </script>
 
 </body>
 </html>

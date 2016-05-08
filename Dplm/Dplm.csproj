@@ -116,6 +116,7 @@
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <Content Include="Scripts\knockout-3.4.0.js" />
     <Content Include="Scripts\Registration.js" />
+    <Content Include="Scripts\GameplayPage.js" />
     <Content Include="Scripts\StartPage.js" />
     <Content Include="Scripts\UserPage.js" />
     <Content Include="Scripts\userUpdate.js" />
