@@ -384,7 +384,7 @@ namespace Dplm.Models
         }
 
         /// <summary>
-        /// Заглушка метода получения игры из БД
+        /// Получить полную информацию информацию об игре
         /// </summary>
         /// <param name="gameId">ID игры</param>
         /// <returns></returns>
@@ -392,31 +392,61 @@ namespace Dplm.Models
         {
             Game game = new Game();
 
-            #region БД
-
             // Тут запрос в БД!
+            using (var connection = new SqlConnection(ConnectionString))
+            {
+                connection.Open();
 
-            #endregion
+                using (var cmd = connection.CreateCommand())
+                {
+                    cmd.CommandType = CommandType.Text;
 
-            game.Id = gameId;
-            game.NameGame = "Первая игра \"движка\"";
-            game.IdАuthor = 1;
-            game.Sequence = "Линейная";
-            game.Distance = 50;
-            game.AmountLevels = 10;
+                    cmd.CommandText = "SELECT * " +
+                                      "FROM [Game] " +
+                                      "WHERE Id = @gameId";
 
-            DateTime dateTime = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day+1, 22, 35, 00);
-            game.StartGame = dateTime;
+                    cmd.Parameters.AddWithValue("@gameId", gameId);
 
-            // TODO Не забывать, что переносы в THML не работают! весь текст нужно как-то конвертировать в формат HTML
-            game.Info = "появившаяся в 2005 году российская командная игра в формате ночных поисковых игр, включающая в себя " +
-                        "соревнование по городскому ориентированию, актерские и ролевые уровни, экстремальные и логические " +
-                        "задания. В основе лежит американский паззлхант и его вариации (Форт Боярд, Fear Factor, и др.) \n" +
-                        "Игра состоит из 10 основных заданий, в каждом из которых зашифровано местоположение локации " +
-                        "(заброса), где находятся коды или человек в городе. " +
-                        "Задача — пройти последовательно все 10 уровней раньше других команд, выполнить все дополнительные задания";
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            //result.Add(Convert.ToInt32(reader["playerId"]));
+
+                            game.Id = (int)reader["Id"];
+                            game.NameGame = reader["nameGame"].ToString();
+                            game.IdАuthor = (int)reader["authorId"];
+                            game.Sequence = reader["sequence"].ToString();
+                            game.Distance = (int)reader["distance"];
+                            game.StartGame = (DateTime)reader["startGame"];
+                            game.Info = reader["info"].ToString();
+                            game.AmountLevels = (int)reader["amountLevels"];
+                        }
+                    }
+                }
+            }
 
             return game;
+
+            //game.Id = gameId;
+            //game.NameGame = "Первая игра \"движка\"";
+            //game.IdАuthor = new[] {1, 5};
+            //game.Sequence = "Линейная";
+            //game.Distance = 50;
+            //game.AmountLevels = 10;
+
+            //DateTime dateTime = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day+1, 22, 35, 00);
+            //game.StartGame = dateTime;
+
+            //// TODO Не забывать, что переносы в THML не работают! весь текст нужно как-то конвертировать в формат HTML
+            //game.Info = "появившаяся в 2005 году российская командная игра в формате ночных поисковых игр, включающая в себя " +
+            //            "соревнование по городскому ориентированию, актерские и ролевые уровни, экстремальные и логические " +
+            //            "задания. В основе лежит американский паззлхант и его вариации (Форт Боярд, Fear Factor, и др.) \n" +
+            //            "Игра состоит из 10 основных заданий, в каждом из которых зашифровано местоположение локации " +
+            //            "(заброса), где находятся коды или человек в городе. " +
+            //            "Задача — пройти последовательно все 10 уровней раньше других команд, выполнить все дополнительные задания";
+
+            //return game;
         }
 
         /// <summary>
