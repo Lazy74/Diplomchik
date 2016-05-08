@@ -70,6 +70,12 @@ namespace Dplm.Controllers
                 numberLevel = lvlDB;
             }
 
+            if (numberLevel > game.AmountLevels)
+            {
+                ViewBag.Message = "Игра окончена";
+                return View("NoGamePage");
+            }
+
             Quest quest = DatabaseND.GetQuest(gameId, numberLevel);        // Получаем информацию о задании
 
             ViewBag.nameGame = game.NameGame;
