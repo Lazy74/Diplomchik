@@ -122,18 +122,27 @@ namespace Dplm.Controllers
                 new HttpResponseMessage(HttpStatusCode.BadRequest);
             }
 
-            People people = Authorizated.AuthorizationCheck(cookie.Value);      // получаем человека по его guid
+            People people = Authorizated.AuthorizationCheck(cookie.Value);  // получаем человека по его guid
 
             int teamId = DatabaseND.ComplianceTeamPlayer(people.Id);        // получаем его команду
 
-            int numberLVL = DatabaseND.GetPositionInGame(teamId, gameId);     // Получаем номер уровня на котором находится команда
+            int numberLVL = DatabaseND.GetPositionInGame(teamId, gameId);   // Получаем номер уровня на котором находится команда
 
-            int questId = DatabaseND.GetQuest(gameId, numberLVL).Id;
+            int questId = DatabaseND.GetQuest(gameId, numberLVL).Id;        //Получаем игровое задание
 
-            return DatabaseND.AnswerCheck(questId, answer)
-                ? new HttpStatusCodeResult(200)
-                : new HttpStatusCodeResult(403, "incorrect unswer");
-            
+            if (DatabaseND.AnswerCheck(questId, answer))
+            {
+                DatabaseND.SetCurrentLevelForTeam(gameId, numberLVL, teamId, people.Id);
+                return new HttpStatusCodeResult(200);
+            }
+            else
+            {
+                return new HttpStatusCodeResult(403, "incorrect unswer");
+            }
+
+            //return DatabaseND.AnswerCheck(questId, answer)
+            //    ? new HttpStatusCodeResult(200)
+            //    : new HttpStatusCodeResult(403, "incorrect unswer");
 
             //Forbidden
             //Эквивалентен HTTP - состоянию 403.Forbidden указывает, что сервер отказывается выполнять запрос.

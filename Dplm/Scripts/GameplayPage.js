@@ -5,13 +5,12 @@
         $.get("/GamePlay/AnswerСheck/", {
             answer: answer
         })
-            .done(function (r) {
-                debugger;
-                alert("Верный");
+            .done(function () {
+                window.location.reload();
+                alert("Ответ \"" + answer + "\" верный");
                 //location.pathname = "";    // строка пути (относительно хоста)
             })
-            .fail(function (r) {
-                debugger;
+            .fail(function () {
                 alert("Ответ \"" + answer + "\" не верный");
             });
     }
