@@ -104,6 +104,16 @@ namespace Dplm
                     action = "AuthorizationCheck"
                 });
 
+            // Провернка ответа
+            routes.MapRoute(
+                name: "AnswerСheck",
+                url: "GamePlay/AnswerСheck/",
+                defaults: new
+                {
+                    controller = "Gameplay",
+                    action = "AnswerСheck"
+                });
+
             // Страница регистрации команды
             // Возможно она мне и не нужна
             //routes.MapRoute(
