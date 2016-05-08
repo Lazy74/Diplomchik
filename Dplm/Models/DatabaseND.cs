@@ -488,8 +488,8 @@ namespace Dplm.Models
                             quest.GameId = (int)reader["gameId"];
                             quest.NumberLevel = (int)reader["numberLevel"];
                             quest.AuthorComment = (string)reader["authorComment"];
-                            quest.TimeOut = (int)reader["Timeout"];
-                            quest.TextQuest = (string)reader["TextQuest"];
+                            quest.TimeOut = (int)reader["timeout"];
+                            quest.TextQuest = (string)reader["textQuest"];
                         }
                         return quest;
                     }
@@ -624,6 +624,42 @@ namespace Dplm.Models
                         {
                             return false;
                         }
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Полный список автопереходов одной игры
+        /// </summary>
+        /// <param name="gameId">ID игры</param>
+        /// <returns></returns>
+        public static List<int> GetTimeoutAllQuest (int gameId)
+        {
+            using (var connection = new SqlConnection(ConnectionString))
+            {
+                connection.Open();
+
+                using (var cmd = connection.CreateCommand())
+                {
+                    cmd.CommandType = CommandType.Text;
+
+                    cmd.CommandText = "SELECT [timeout] " +
+                                      "FROM [Quest] " +
+                                      "WHERE gameId = @gameId";
+
+                    cmd.Parameters.AddWithValue("@gameId", gameId);
+
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        var result = new List<int>();
+
+                        while (reader.Read())
+                        {
+                            result.Add(Convert.ToInt32(reader["timeout"]));
+                        }
+
+                        return result;
                     }
                 }
             }
