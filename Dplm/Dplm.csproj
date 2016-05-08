@@ -158,6 +158,7 @@
     <Content Include="Views\Command\CommandCreatePage.cshtml" />
     <Content Include="Views\Command\CommandPage.cshtml" />
     <Content Include="Views\Gameplay\GamePage.cshtml" />
+    <Content Include="Views\Gameplay\NoGamePage.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
