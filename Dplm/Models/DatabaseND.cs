@@ -664,6 +664,46 @@ namespace Dplm.Models
                 }
             }
         }
+
+        /// <summary>
+        /// Задать текущий уровень в игре для команды и сделать пометку того, кто сделал правильный ответ
+        /// </summary>
+        /// <param name="gameId">ID игры</param>
+        /// <param name="numberLevel">Номер игрового уровня</param>
+        /// <param name="teamId">ID команды</param>
+        /// <param name="playerId">ID игрока, сделавший правильный ответ. ПО УМОЛЧАНИЮ 0 ЕСЛИ ПО АВТОПЕРЕХОДУ</param>
+        /// <returns></returns>
+        public static bool SetCurrentLevelForTeam(int gameId, int numberLevel, int teamId, int playerId = 0)
+        {
+            using (var connection = new SqlConnection(ConnectionString))
+            {
+                connection.Open();
+
+                using (var cmd = connection.CreateCommand())
+                {
+                    cmd.CommandType = CommandType.Text;
+
+                    cmd.CommandText = "INSERT INTO [PositionInTheGame] (gameId, numberLevel, teamId, playerId) " +
+                        " VALUES (@gameId, @numberLevel, @teamId, @playerId);";
+
+                    cmd.Parameters.AddWithValue("@gameId", gameId);
+                    cmd.Parameters.AddWithValue("@numberLevel", numberLevel);
+                    cmd.Parameters.AddWithValue("@teamId", teamId);
+                    cmd.Parameters.AddWithValue("@playerId", playerId);
+
+                    //command.ExecuteNonQueryAsync();     // асинхронно
+                    try
+                    {
+                        cmd.ExecuteNonQuery();     // синхронно
+                        return true;
+                    }
+                    catch
+                    {
+                        return false;
+                    }
+                }
+            }
+        }
     }
 }
 
