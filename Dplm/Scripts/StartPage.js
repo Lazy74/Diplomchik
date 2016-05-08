@@ -45,12 +45,14 @@ var viewModel = new ViewModel();
 
 function loadPage() {
     ko.applyBindings(viewModel);
-    var hash = getCookie("hash");
-    if (!hash) {
-        //alert("hash нет");
-    } else {
-        //alert("hash: " + hash);
-    }
+
+    // Не нужно!
+    //var hash = getCookie("hash");
+    //if (!hash) {
+    //    //alert("hash нет");
+    //} else {
+    //    //alert("hash: " + hash);
+    //}
 }
 
 function ViewModel() {
