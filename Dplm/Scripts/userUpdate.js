@@ -20,7 +20,7 @@
             FamiluName: lastName,
             Name: firstName,
             //Birthday, 
-            LinkVK: linkVK,
+            LinkVK: linkVK
         });
     }
 }
