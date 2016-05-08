@@ -49,9 +49,28 @@ namespace Dplm.Controllers
                 return View("NoGamePage");
             }
 
-            int numberLvl = DatabaseND.GetPositionInGame(teamId, gameId);        // Узнаем на каком уровне сейчас команда
+            int lvlCL = GameEngine.CorrectionLevel(game);
 
-            Quest quest = DatabaseND.GetQuest(gameId, numberLvl);        // Получаем информацию о задании
+            if (lvlCL == -1)
+            {
+                ViewBag.Message = "Игра окончена";
+                return View("NoGamePage");
+            }
+
+            int lvlDB = DatabaseND.GetPositionInGame(teamId, gameId);        // Узнаем на каком уровне сейчас команда
+
+            int numberLevel;
+            if (lvlCL > lvlDB)
+            {
+                // Сделать корректировку в таблице прогресса каждой команды
+                numberLevel = lvlCL;
+            }
+            else
+            {
+                numberLevel = lvlDB;
+            }
+
+            Quest quest = DatabaseND.GetQuest(gameId, numberLevel);        // Получаем информацию о задании
 
             ViewBag.nameGame = game.NameGame;
             ViewBag.lvl = quest.NumberLevel;     // номер текущего уровня
@@ -92,6 +111,8 @@ namespace Dplm.Controllers
         /// <returns></returns>
         public ActionResult AnswerСheck(string answer)
         {
+            answer = GameEngine.RemoveExtraCharacters(answer);      // Удалене лишних символов
+
             int gameId = 2;     // TODO эту инфу получаем из браузера!
 
             var cookie = MyCookies.UpdateCookieSession(Request.Cookies["hash"]);
