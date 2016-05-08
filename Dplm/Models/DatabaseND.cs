@@ -505,7 +505,7 @@ namespace Dplm.Models
             //quest.TimeOut = 40;
 
             return quest;
-        }
+            }
 
         /// <summary>
         /// Получить список команд, которые играют в эту игру
@@ -578,7 +578,52 @@ namespace Dplm.Models
                             foo.Add((int) reader["numberLevel"]);
                         }
 
-                        return foo.Max();
+                        if (foo.Count == 0)
+                        {
+                            return 1;
+                        }
+                        else
+                        {
+                            return foo.Max()+1;
+                        }
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Проверить существует ли такой ответ на задание
+        /// </summary>
+        /// <param name="questId">ID задания</param>
+        /// <param name="answer">Ответ</param>
+        /// <returns></returns>
+        public static bool AnswerCheck(int questId, string answer)
+        {
+            using (var connection = new SqlConnection(ConnectionString))
+            {
+                connection.Open();
+
+                using (var cmd = connection.CreateCommand())
+                {
+                    cmd.CommandType = CommandType.Text;
+
+                    cmd.CommandText = "SELECT [id] " +
+                                      "FROM [Answers] " +
+                                      "WHERE questId = @questId and answer = @answer";
+
+                    cmd.Parameters.AddWithValue("@questId", questId);
+                    cmd.Parameters.AddWithValue("@answer", answer);
+
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        if(reader.Read())
+                        {
+                            return true;
+                        }
+                        else
+                        {
+                            return false;
+                        }
                     }
                 }
             }
