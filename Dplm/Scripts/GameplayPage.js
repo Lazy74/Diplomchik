@@ -6,7 +6,7 @@
             answer: answer
         })
             .done(function () {
-                window.location.reload();
+                ReloadPage();
                 alert("Ответ \"" + answer + "\" верный");
                 //location.pathname = "";    // строка пути (относительно хоста)
             })
@@ -16,16 +16,41 @@
     }
 }
 
+function ReloadPage() {
+    window.location.reload();
+}
+
 var viewModel = new ViewModel();
 
 function loadPage() {
+    viewModel.myMessage("Test");
     ko.applyBindings(viewModel);
 }
 
 function ViewModel() {
     this.playerAnswer = ko.observable();
+    this.myMessage = ko.observable();
+
 
     this.toAnswer = function () {
         model.Answer(this.playerAnswer());
     }
 }
+
+
+//var timerId = setTimeout(function () {
+//    //window.location.reload();
+//    alert("Перезагрузка!");
+//}, 5000);
+
+
+var sec = 300;
+// Это работает
+var timerId = setTimeout(function tick() {
+    timerId = setTimeout(tick, 1000);
+    sec = sec - 1;
+    viewModel.myMessage(sec);
+    var now = new Date();
+    console.log(now);
+    //window.location.reload();
+}, 0);
