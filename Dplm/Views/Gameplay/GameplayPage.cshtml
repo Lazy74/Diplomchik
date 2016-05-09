@@ -18,7 +18,7 @@
 </head>
 <body>
 
-    <span data-bind="text: myMessage"></span>
+    
 @*<asp:Timer ID="Timer1" runat="server" Interval="1000"/>*@
 
     <div class="content">
@@ -36,7 +36,11 @@
 
         <div class="spacer"></div>
         <h3 class="timer">
-            <strong>Автопереход</strong> на следующий уровень через: <span class="bold_off" id="time44554340"><b>n</b> м<b>m</b> с</span>
+            <strong>Автопереход</strong> на следующий уровень через: <span data-bind="text: timeNextLvl"></span>
+            @*<strong>Автопереход</strong> на следующий уровень через: <span class="bold_off" id="time44554340"><b>n</b> м<b>m</b> с</span>*@
+            <script>
+                var sec = 10;       // Здесь из контроллера получаем время до автоперехода
+            </script>
         </h3>
 
         <span>штраф N минут (Если он есть)</span>

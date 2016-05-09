@@ -23,13 +23,16 @@ function ReloadPage() {
 var viewModel = new ViewModel();
 
 function loadPage() {
-    viewModel.myMessage("Test");
     ko.applyBindings(viewModel);
 }
 
 function ViewModel() {
     this.playerAnswer = ko.observable();
-    this.myMessage = ko.observable();
+
+    this.timeNextLvl = ko.observable();
+    //this.timeHour = ko.observable();
+    //this.timeMinute = ko.observable();
+    //this.timeSecond = ko.observable();
 
 
     this.toAnswer = function () {
@@ -44,13 +47,43 @@ function ViewModel() {
 //}, 5000);
 
 
-var sec = 300;
+//var sec = 7205;
 // Это работает
+
+// Таймер выводящий время до автоперехода и делающий автопереход
 var timerId = setTimeout(function tick() {
-    timerId = setTimeout(tick, 1000);
-    sec = sec - 1;
-    viewModel.myMessage(sec);
-    var now = new Date();
-    console.log(now);
-    //window.location.reload();
+    if (sec - 1 > 0) {
+        timerId = setTimeout(tick, 1000);
+        sec = sec - 1;
+        viewModel.timeNextLvl(ConvertSecondInTime(sec));
+    } else {
+        ReloadPage();
+    }
 }, 0);
+
+// Вывод оставшегося времени до автоперехода
+function ConvertSecondInTime(sec) {
+    var result = "";
+
+    n = Math.ceil(sec / 3600) - 1;    // Получаем часы
+
+    if (n !== 0) {
+        sec = sec % 3600;
+        result = result + n + "ч ";
+    }
+    if (sec !== 0) {
+        n = Math.ceil(sec / 60) - 1;    // Получаем минуты
+
+        if (n !== 0) {
+            sec = sec % 60;
+            result = result + n + "м ";
+        }
+
+        if (sec !== 0) {
+            result = result + sec + "c";
+        }
+    }
+
+
+    return result;
+}
