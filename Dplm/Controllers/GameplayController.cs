@@ -114,7 +114,6 @@ namespace Dplm.Controllers
         /// Контроллер отвечающий за отображение общей информации об игре
         /// </summary>
         /// <returns></returns>
-        //TODO этот контроллер должен принимать на вход ID игры!
         public ActionResult GamePage(string id)
         {
             int gameId = Convert.ToInt32(id);
@@ -168,6 +167,7 @@ namespace Dplm.Controllers
 
             if (lvlDB == null)
             {
+                lvlDB = new LvlAndTime();
                 lvlDB.numburLVL = 1;
                 lvlDB.StartLVL = game.StartGame;
             }
