@@ -5,7 +5,7 @@ using System.Web;
 
 namespace Dplm.Models
 {
-    public class GameEngine
+    public class Helper
     {
         /// <summary>
         /// Удаление не нужных символов из ответа. Пока удаляет только пробелы в начале и в конце строки
@@ -87,5 +87,15 @@ namespace Dplm.Models
 
             return ts.Seconds + ts.Minutes * 60 + ts.Hours * 60 * 60;
         }
+
+        //public static List<string> ConvertGameInListName(List<Game> games)
+        //{
+        //    List<string> fooList = new List<string>();
+
+        //    foreach (Game game in games)
+        //    {
+                
+        //    }
+        //}
     }
 }
