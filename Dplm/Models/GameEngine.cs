@@ -53,5 +53,10 @@ namespace Dplm.Models
                 return -1;
             }
         }
+
+        public static DateTime GeTimeTransition()
+        {
+            return DateTime.Now;
+        }
     }
 }

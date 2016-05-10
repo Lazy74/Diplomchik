@@ -49,26 +49,48 @@ namespace Dplm.Controllers
                 return View("NoGamePage");
             }
 
-            int lvlCL = GameEngine.CorrectionLevel(game);
+#region получаем текущий уровень и время до автоперехода
 
-            if (lvlCL == -1)
+            LvlAndTime lvlDB = DatabaseND.GetPositionInGame(teamId, gameId);        // Узнаем на каком уровне сейчас команда по данным из БД
+
+            DateTime time;
+
+            if (lvlDB == null) 
             {
-                ViewBag.Message = "Игра окончена";
-                return View("NoGamePage");
-            }
-
-            int lvlDB = DatabaseND.GetPositionInGame(teamId, gameId);        // Узнаем на каком уровне сейчас команда
-
-            int numberLevel;
-            if (lvlCL > lvlDB)
-            {
-                // Сделать корректировку в таблице прогресса каждой команды
-                numberLevel = lvlCL;
+                time = game.StartGame;
             }
             else
             {
-                numberLevel = lvlDB;
+                if (lvlDB.numburLVL == 0)
+                {
+                    ViewBag.Message = "Номер уровня вернулся 0!";
+                    return View("NoGamePage");
+                }
+                time = lvlDB.StartLVL;
             }
+
+
+            //int lvlCL = GameEngine.CorrectionLevel(game);
+
+            //if (lvlCL == -1)
+            //{
+            //    ViewBag.Message = "Игра окончена";
+            //    return View("NoGamePage");
+            //}
+
+            //int numberLevel;
+            //if (lvlCL > lvlDB)
+            //{
+            //    // Сделать корректировку в таблице прогресса каждой команды
+            //    numberLevel = lvlCL;
+            //}
+            //else
+            //{
+            //    numberLevel = lvlDB;
+            //}
+#endregion
+
+            int numberLevel = 2;
 
             if (numberLevel > game.AmountLevels)
             {
@@ -132,7 +154,7 @@ namespace Dplm.Controllers
 
             int teamId = DatabaseND.ComplianceTeamPlayer(people.Id);        // получаем его команду
 
-            int numberLVL = DatabaseND.GetPositionInGame(teamId, gameId);   // Получаем номер уровня на котором находится команда
+            int numberLVL = DatabaseND.GetPositionInGame(teamId, gameId).numburLVL;   // Получаем номер уровня на котором находится команда
 
             int questId = DatabaseND.GetQuest(gameId, numberLVL).Id;        //Получаем игровое задание
 

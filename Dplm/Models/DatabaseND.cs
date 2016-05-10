@@ -547,12 +547,12 @@ namespace Dplm.Models
         }
 
         /// <summary>
-        /// Получить номер уровня, на котором сейчас находится команда
+        /// Получить время начала следующего уровня и номер уровня, на котором сейчас находится команда
         /// </summary>
-        /// <param name="teamId"></param>
-        /// <param name="gameId"></param>
+        /// <param name="teamId">ID команды</param>
+        /// <param name="gameId">ID игры</param>
         /// <returns></returns>
-        public static int GetPositionInGame(int teamId, int gameId)
+        public static LvlAndTime GetPositionInGame(int teamId, int gameId)
         {
             using (var connection = new SqlConnection(ConnectionString))
             {
@@ -562,7 +562,7 @@ namespace Dplm.Models
                 {
                     cmd.CommandType = CommandType.Text;
 
-                    cmd.CommandText = "SELECT [numberLevel] " +
+                    cmd.CommandText = "SELECT [numberLevel], [answerTime] " +
                                       "FROM [PositionInTheGame] " +
                                       "WHERE teamId = @teamId and gameId = @gameId";
 
@@ -571,20 +571,38 @@ namespace Dplm.Models
 
                     using (var reader = cmd.ExecuteReader())
                     {
-                        List<int> foo = new List<int>();
+                        List<LvlAndTime> foo =new List<LvlAndTime>();
 
                         while (reader.Read())
                         {
-                            foo.Add((int) reader["numberLevel"]);
+                            //foo.Add((int) reader["numberLevel"]);
+                            LvlAndTime buff = new LvlAndTime();
+                            buff.numburLVL = 1 + (int) reader["numberLevel"];
+                            buff.StartLVL = (DateTime) reader["answerTime"];
+                            foo.Add(buff);
                         }
 
                         if (foo.Count == 0)
                         {
-                            return 1;
+                            return null;
                         }
                         else
                         {
-                            return foo.Max()+1;
+                            int max = 0;
+                            int maxi = 0;
+
+                            // Поиск максимального уровня
+                            for (int i = 0; i < foo.Count; i++)
+                            {
+                                if (foo[i].numburLVL >= max)
+                                {
+                                    max = foo[i].numburLVL;
+                                    maxi = i;
+                                }
+                            }
+
+                            return foo[maxi];
+                            // TODO Найти максимальный уровень и вернуть это значение!
                         }
                     }
                 }
@@ -666,7 +684,7 @@ namespace Dplm.Models
         }
 
         /// <summary>
-        /// Задать текущий уровень в игре для команды и сделать пометку того, кто сделал правильный ответ
+        /// Задать текущий уровень в игре для команды и сделать пометку того, кто сделал правильный ответ и время ответа
         /// </summary>
         /// <param name="gameId">ID игры</param>
         /// <param name="numberLevel">Номер игрового уровня</param>
@@ -683,13 +701,14 @@ namespace Dplm.Models
                 {
                     cmd.CommandType = CommandType.Text;
 
-                    cmd.CommandText = "INSERT INTO [PositionInTheGame] (gameId, numberLevel, teamId, playerId) " +
-                        " VALUES (@gameId, @numberLevel, @teamId, @playerId);";
+                    cmd.CommandText = "INSERT INTO [PositionInTheGame] (gameId, numberLevel, teamId, playerId, answerTime) " +
+                        " VALUES (@gameId, @numberLevel, @teamId, @playerId, @answerTime);";
 
                     cmd.Parameters.AddWithValue("@gameId", gameId);
                     cmd.Parameters.AddWithValue("@numberLevel", numberLevel);
                     cmd.Parameters.AddWithValue("@teamId", teamId);
                     cmd.Parameters.AddWithValue("@playerId", playerId);
+                    cmd.Parameters.AddWithValue("@answerTime", DateTime.Now);
 
                     //command.ExecuteNonQueryAsync();     // асинхронно
                     try
