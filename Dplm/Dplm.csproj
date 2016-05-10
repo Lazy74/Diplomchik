@@ -136,7 +136,7 @@
     <Compile Include="Models\Authorizated.cs" />
     <Compile Include="Models\DatabaseND.cs" />
     <Compile Include="Models\Game.cs" />
-    <Compile Include="Models\GameEngine.cs" />
+    <Compile Include="Models\Helper.cs" />
     <Compile Include="Models\LvlAndTime.cs" />
     <Compile Include="Models\MyCookies.cs" />
     <Compile Include="Models\People.cs" />
