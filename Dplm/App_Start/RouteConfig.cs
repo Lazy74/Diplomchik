@@ -89,7 +89,7 @@ namespace Dplm
             // Страница процесса игры
             routes.MapRoute(
                 name: "GameplayPage",
-                url: "Gameplay",
+                url: "Gameplay/{id}",
                 defaults: new
                 {
                     controller = "Gameplay",

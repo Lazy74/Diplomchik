@@ -21,11 +21,11 @@ namespace Dplm.Controllers
         /// Контроллер отвечающий за выдачу пользователю игровой странички
         /// </summary>
         /// <returns></returns>
-        public ActionResult GameplayPage()
+        public ActionResult GameplayPage(string id)
         {
-            int gameId = 2;     // TODO эту инфу получаем из браузера!
+            //int gameId = 2;     // TODO эту инфу получаем из браузера!
 
-            //int gameId = Convert.ToInt32(setGameId);
+            int gameId = Convert.ToInt32(id);
 
             var cookie = MyCookies.UpdateCookieSession(Request.Cookies["hash"]);
 
@@ -65,6 +65,7 @@ namespace Dplm.Controllers
 
             if (lvlDB == null)
             {
+                lvlDB = new LvlAndTime();
                 lvlDB.numburLVL = 1;
                 lvlDB.StartLVL = game.StartGame;
             }
@@ -98,11 +99,7 @@ namespace Dplm.Controllers
             ViewBag.commentAuthor = quest.AuthorComment;  // Коментарий автора
             ViewBag.quest = quest.TextQuest;    // Текст задания
 
-            ViewBag.TimeTransition = "< script >" +
-                                     "var sec =" + Helper.GetTimeTransition(lvlDB.EndLVL) + ";" +
-                                     "</ script >";
-
-            ViewBag.TimeTransition2 = Helper.GetTimeTransition(lvlDB.EndLVL);
+            ViewBag.TimeTransition = Helper.GetTimeTransition(lvlDB.EndLVL);
             // TODO придумать как выводить N количество подсказок
             return View();
         }
