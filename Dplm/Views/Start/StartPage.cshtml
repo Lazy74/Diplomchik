@@ -24,13 +24,38 @@
     <input type="password" id="userPass" class="form-control" placeholder="Пароль" data-bind="value: userPass"/>
     <button id="registration" data-bind="click: createUser">Регистрация</button>
     <button id="command" data-bind="click: createUser">Регистрация</button>
-     @*Возможно стоит сделать кнопку востановления пароля*@ 
+    @*Возможно стоит сделать кнопку востановления пароля*@
 </div>
 
 <div class="User">
     <button id="toUserPage" data-bind="click: toUserPage">Моя страница</button>
     <button id="toUserTeam" data-bind="click: toUserTeam">МояКоманда</button>
 </div>
+    <br>
+    <table border="1">
+        <caption>Предстоящие игры</caption>
+        <tr>
+            <th>Название</th>
+            <th>Дата начала</th>
+        </tr>
+
+        @{
+            foreach (var tableRow in ViewBag.TableRows)
+            {
+                @Html.Raw(tableRow)
+            }
+        }
+
+    </table>
+
+    @*@{
+        foreach (var name in ViewBag.playerName)
+        {
+            <tr><td>@name</td></tr>
+        }
+    }*@
+
+
 <script>
     loadPage();
 </script>

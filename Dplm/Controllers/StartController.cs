@@ -20,6 +20,18 @@ namespace Dplm.Controllers
         {
             Response.SetCookie(MyCookies.UpdateCookieSession(Request.Cookies["hash"]));     // Обновлениее кука (Если мы его не знаем, то идет удаление)
             ViewBag.cookieHash = Response.Cookies["hash"].Value;
+
+            List<Game> games = DatabaseND.GetListGames();
+
+            List<string> tableRows = new List<string>();
+
+            foreach (Game game in games)
+            {
+                tableRows.Add("<tr><td><a href=\"/Game/" + game.Id+ "\">" + game.NameGame + "</a></td><td>" + game.StartGame + "</td></tr>");
+            }
+
+            ViewBag.TableRows = tableRows;
+
             return View();
         }
 
