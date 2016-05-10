@@ -39,6 +39,11 @@ namespace Dplm.Models
         public DateTime StartGame { get; set; }
 
         /// <summary>
+        /// Дата и время конца игры
+        /// </summary>
+        public DateTime EndGame { get; set; }
+
+        /// <summary>
         /// Информация об игре
         /// </summary>
         public string Info { get; set; }
