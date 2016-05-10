@@ -27,7 +27,7 @@ namespace Dplm.Controllers
 
             foreach (Game game in games)
             {
-                tableRows.Add("<tr><td><a href=\"/Game/" + game.Id+ "\">" + game.NameGame + "</a></td><td>" + game.StartGame + "</td></tr>");
+                tableRows.Add("<tr><td><a href=\"/Game/id=" + game.Id+ "\">" + game.NameGame + "</a></td><td>" + game.StartGame + "</td></tr>");
             }
 
             ViewBag.TableRows = tableRows;

@@ -1,7 +1,7 @@
 ﻿var model = {
     EnterTheGame: function () {
         console.log("2");
-        location.pathname = "Gameplay/" + window.currentGameId;
+        location.pathname = "Gameplay/id=" + window.currentGameId;
     }
 }
 
