@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Routing;
 
@@ -64,14 +65,25 @@ namespace Dplm
                     action = "updateUserPage"
                 });
 
+            //// Страница информации об игре
+            //routes.MapRoute(
+            //    name: "GamePage",
+            //    url: "Game",
+            //    defaults: new
+            //    {
+            //        controller = "Gameplay",
+            //        action = "GamePage"
+            //    });
+
             // Страница информации об игре
             routes.MapRoute(
                 name: "GamePage",
-                url: "Game",
+                url: "Game/{id}",
                 defaults: new
                 {
                     controller = "Gameplay",
                     action = "GamePage"
+                    //id = RouteParameter.Optional
                 });
 
             // Страница процесса игры
