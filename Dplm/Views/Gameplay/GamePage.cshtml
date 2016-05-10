@@ -9,6 +9,12 @@
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>Game: @ViewBag.Id</title>
+
+    <script src="/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="/Scripts/knockout-3.4.0.js"></script>
+
+    <script src="/Scripts/GamePage.js"></script>
+
 </head>
 <body>
     <div>
@@ -35,7 +41,12 @@
     <div>
         <span>@ViewBag.Info</span>
     </div>
-    <button>Вход в игру</button>
+    <button id="btn-game" data-bind="click: enterTheGame">Вход в игру</button>
+
+    <script>
+        loadPage();
+        window.currentGameId = @ViewBag.Id
+    </script>
 </body>
 </html>
 @*Может быть здесь сделать кномпку редактирования для автора игры. Кнопка появляется если на странице АВТОР!*@
