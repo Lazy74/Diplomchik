@@ -11,6 +11,12 @@ namespace Dplm.Controllers
 {
     public class GameplayController : Controller
     {
+        //public ActionResult GameplayPage()
+        //{
+        //    return View();
+        //}
+
+
         /// <summary>
         /// Контроллер отвечающий за выдачу пользователю игровой странички
         /// </summary>
@@ -18,6 +24,8 @@ namespace Dplm.Controllers
         public ActionResult GameplayPage()
         {
             int gameId = 2;     // TODO эту инфу получаем из браузера!
+
+            //int gameId = Convert.ToInt32(setGameId);
 
             var cookie = MyCookies.UpdateCookieSession(Request.Cookies["hash"]);
 
@@ -70,7 +78,7 @@ namespace Dplm.Controllers
                 //time = lvlDB.StartLVL;
             }
 
-            LvlAndTime currentLvl = GameEngine.CorrectionLevel(game, lvlDB);
+            LvlAndTime currentLvl = Helper.CorrectionLevel(game, lvlDB);
 
 #endregion
 
@@ -91,24 +99,32 @@ namespace Dplm.Controllers
             ViewBag.quest = quest.TextQuest;    // Текст задания
 
             ViewBag.TimeTransition = "< script >" +
-                                     "var sec =" + GameEngine.GetTimeTransition(lvlDB.EndLVL) + ";" +
+                                     "var sec =" + Helper.GetTimeTransition(lvlDB.EndLVL) + ";" +
                                      "</ script >";
 
-            ViewBag.TimeTransition2 = GameEngine.GetTimeTransition(lvlDB.EndLVL);
+            ViewBag.TimeTransition2 = Helper.GetTimeTransition(lvlDB.EndLVL);
             // TODO придумать как выводить N количество подсказок
             return View();
         }
+
+        //public ActionResult GamePage()
+        //{
+        //    return View();
+        //}
+
 
         /// <summary>
         /// Контроллер отвечающий за отображение общей информации об игре
         /// </summary>
         /// <returns></returns>
         //TODO этот контроллер должен принимать на вход ID игры!
-        public ActionResult GamePage()
+        public ActionResult GamePage(string id)
         {
+            int gameId = Convert.ToInt32(id);
+
             var cookie = MyCookies.UpdateCookieSession(Request.Cookies["hash"]);
 
-            int gameId = 2;     // TODO эту инфу получаем из браузера!
+            //int gameId = 2;     // TODO эту инфу получаем из браузера!
             Game game = DatabaseND.GetGame(gameId);
 
             ViewBag.NameGame = game.NameGame;
@@ -129,7 +145,7 @@ namespace Dplm.Controllers
         /// <returns></returns>
         public ActionResult AnswerСheck(string answer)
         {
-            answer = GameEngine.RemoveExtraCharacters(answer);      // Удалене лишних символов
+            answer = Helper.RemoveExtraCharacters(answer);      // Удалене лишних символов
 
             int gameId = 2;     // TODO эту инфу получаем из браузера!
 
@@ -168,7 +184,7 @@ namespace Dplm.Controllers
                 //time = lvlDB.StartLVL;
             }
 
-            LvlAndTime currentLvl = GameEngine.CorrectionLevel(game, lvlDB);
+            LvlAndTime currentLvl = Helper.CorrectionLevel(game, lvlDB);
             #endregion
 
             int questId = DatabaseND.GetQuest(gameId, lvlDB.numburLVL).Id;        //Получаем игровое задание
