@@ -61,6 +61,8 @@ var timerId = setTimeout(function tick() {
     }
 }, 0);
 
+
+// TODO ВРЕМЯ ИДЕТ БЫСТРЕЕ ЧЕМ НАДО!!!
 // Вывод оставшегося времени до автоперехода
 function ConvertSecondInTime(sec) {
     var result = "";
