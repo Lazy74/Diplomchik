@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Web;
 
 namespace Dplm.Models
@@ -15,6 +16,26 @@ namespace Dplm.Models
         public static string RemoveExtraCharacters(string str)
         {
             str = str.Trim();   // Убираем все пробелы в начале и в конце слова
+            str = str.ToLower();
+
+            StringBuilder sb = new StringBuilder();
+
+            foreach (char c in str)     // удаление всех лишних символов
+            {
+                if (
+                  (c >= '0' && c <= '9') ||
+                  //(c >= 'A' && c <= 'Z') ||
+                  (c >= 'a' && c <= 'z') ||
+                  //(c >= 'А' && c <= 'Я') ||
+                  (c >= 'а' && c <= 'я')
+                )
+                {
+                    sb.Append(c);
+                }
+            }
+
+            str = sb.ToString();
+
             return str;
         }
 
