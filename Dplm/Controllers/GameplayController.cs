@@ -55,57 +55,47 @@ namespace Dplm.Controllers
 
             DateTime time;
 
-            if (lvlDB == null) 
+            if (lvlDB == null)
             {
-                time = game.StartGame;
+                lvlDB.numburLVL = 1;
+                lvlDB.StartLVL = game.StartGame;
             }
             else
             {
                 if (lvlDB.numburLVL == 0)
                 {
-                    ViewBag.Message = "Номер уровня вернулся 0!";
+                    ViewBag.Message = "Номер уровня вернулся 0! C этим надо что-то сделать!";
                     return View("NoGamePage");
                 }
-                time = lvlDB.StartLVL;
+                //time = lvlDB.StartLVL;
             }
 
+            LvlAndTime currentLvl = GameEngine.CorrectionLevel(game, lvlDB);
 
-            //int lvlCL = GameEngine.CorrectionLevel(game);
-
-            //if (lvlCL == -1)
-            //{
-            //    ViewBag.Message = "Игра окончена";
-            //    return View("NoGamePage");
-            //}
-
-            //int numberLevel;
-            //if (lvlCL > lvlDB)
-            //{
-            //    // Сделать корректировку в таблице прогресса каждой команды
-            //    numberLevel = lvlCL;
-            //}
-            //else
-            //{
-            //    numberLevel = lvlDB;
-            //}
 #endregion
 
-            int numberLevel = 2;
+            //int numberLevel = 2;
 
-            if (numberLevel > game.AmountLevels)
+            if (currentLvl.numburLVL > game.AmountLevels)
             {
                 ViewBag.Message = "Игра окончена";
                 return View("NoGamePage");
             }
 
-            Quest quest = DatabaseND.GetQuest(gameId, numberLevel);        // Получаем информацию о задании
+            Quest quest = DatabaseND.GetQuest(gameId, currentLvl.numburLVL);        // Получаем информацию о задании
 
             ViewBag.nameGame = game.NameGame;
             ViewBag.lvl = quest.NumberLevel;     // номер текущего уровня
             ViewBag.lvlLength = game.AmountLevels;  // Общее количество уровней
             ViewBag.commentAuthor = quest.AuthorComment;  // Коментарий автора
             ViewBag.quest = quest.TextQuest;    // Текст задания
-            // придумать как выводить N количество подсказок
+
+            ViewBag.TimeTransition = "< script >" +
+                                     "var sec =" + GameEngine.GetTimeTransition(lvlDB.EndLVL) + ";" +
+                                     "</ script >";
+
+            ViewBag.TimeTransition2 = GameEngine.GetTimeTransition(lvlDB.EndLVL);
+            // TODO придумать как выводить N количество подсказок
             return View();
         }
 
@@ -143,6 +133,8 @@ namespace Dplm.Controllers
 
             int gameId = 2;     // TODO эту инфу получаем из браузера!
 
+            Game game = DatabaseND.GetGame(gameId);
+
             var cookie = MyCookies.UpdateCookieSession(Request.Cookies["hash"]);
 
             if (cookie.Value == null)
@@ -154,13 +146,36 @@ namespace Dplm.Controllers
 
             int teamId = DatabaseND.ComplianceTeamPlayer(people.Id);        // получаем его команду
 
-            int numberLVL = DatabaseND.GetPositionInGame(teamId, gameId).numburLVL;   // Получаем номер уровня на котором находится команда
+            //int numberLVL = DatabaseND.GetPositionInGame(teamId, gameId).numburLVL;   // Получаем номер уровня на котором находится команда
 
-            int questId = DatabaseND.GetQuest(gameId, numberLVL).Id;        //Получаем игровое задание
+            #region Узнаем где сейчас команда
+            LvlAndTime lvlDB = DatabaseND.GetPositionInGame(teamId, gameId);        // Узнаем на каком уровне сейчас команда по данным из БД
+
+            DateTime time;
+
+            if (lvlDB == null)
+            {
+                lvlDB.numburLVL = 1;
+                lvlDB.StartLVL = game.StartGame;
+            }
+            else
+            {
+                if (lvlDB.numburLVL == 0)
+                {
+                    ViewBag.Message = "Номер уровня вернулся 0! C этим надо что-то сделать!";
+                    return View("NoGamePage");
+                }
+                //time = lvlDB.StartLVL;
+            }
+
+            LvlAndTime currentLvl = GameEngine.CorrectionLevel(game, lvlDB);
+            #endregion
+
+            int questId = DatabaseND.GetQuest(gameId, lvlDB.numburLVL).Id;        //Получаем игровое задание
 
             if (DatabaseND.AnswerCheck(questId, answer))
             {
-                DatabaseND.SetCurrentLevelForTeam(gameId, numberLVL, teamId, people.Id);
+                DatabaseND.SetCurrentLevelForTeam(gameId, lvlDB.numburLVL, teamId, people.Id);
                 return new HttpStatusCodeResult(200);
             }
             else
