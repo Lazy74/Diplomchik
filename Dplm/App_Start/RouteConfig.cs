@@ -119,7 +119,7 @@ namespace Dplm
             // Провернка ответа
             routes.MapRoute(
                 name: "AnswerСheck",
-                url: "GamePlay/AnswerСheck/",
+                url: "GamePlay/AnswerСheck/id={id}",
                 defaults: new
                 {
                     controller = "Gameplay",

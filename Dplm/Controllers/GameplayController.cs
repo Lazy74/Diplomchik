@@ -85,7 +85,7 @@ namespace Dplm.Controllers
 
             //int numberLevel = 2;
 
-            if (currentLvl.numburLVL > game.AmountLevels)
+            if (currentLvl.numburLVL > game.AmountLevels || currentLvl.EndLVL < DateTime.Now)
             {
                 ViewBag.Message = "Игра окончена";
                 return View("NoGamePage");
@@ -98,6 +98,7 @@ namespace Dplm.Controllers
             ViewBag.lvlLength = game.AmountLevels;  // Общее количество уровней
             ViewBag.commentAuthor = quest.AuthorComment;  // Коментарий автора
             ViewBag.quest = quest.TextQuest;    // Текст задания
+            ViewBag.Id = game.Id;
 
             ViewBag.TimeTransition = Helper.GetTimeTransition(lvlDB.EndLVL);
             // TODO придумать как выводить N количество подсказок
@@ -139,11 +140,13 @@ namespace Dplm.Controllers
         /// </summary>
         /// <param name="answer">Ответ</param>
         /// <returns></returns>
-        public ActionResult AnswerСheck(string answer)
+        public ActionResult AnswerСheck(string answer, string id)
         {
+            int gameId = Convert.ToInt32(id);
+
             answer = Helper.RemoveExtraCharacters(answer);      // Удалене лишних символов
 
-            int gameId = 2;     // TODO эту инфу получаем из браузера!
+            //int gameId = 2;     // TODO эту инфу получаем из браузера!
 
             Game game = DatabaseND.GetGame(gameId);
 

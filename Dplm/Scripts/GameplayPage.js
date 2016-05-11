@@ -2,7 +2,7 @@
     Answer: function (answer) {
         console.log("toAnswer");
         //debugger;
-        $.get("/GamePlay/AnswerСheck/", {
+        $.get("/GamePlay/AnswerСheck/id=" + window.currentGameId, {
             answer: answer
         })
             .done(function () {
