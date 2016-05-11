@@ -66,6 +66,8 @@ namespace Dplm.Models
                 i = lvlAndTime.numburLVL - 1;
                 timeStartLvl = lvlAndTime.StartLVL;
                 timeEndLvl = timeStartLvl.AddMinutes(timeout[i]);
+
+                // Ошибка если последнее задание в игре
             }
 
 
