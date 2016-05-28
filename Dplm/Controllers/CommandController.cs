@@ -76,6 +76,44 @@ namespace Dplm.Views
             return View();
         }
 
+        public ActionResult AddPlayer(string Login)
+        {
+            var cookie = MyCookies.UpdateCookieSession(Request.Cookies["hash"]);
+
+            Login = Login.ToLower();
+
+            // TODO Возвращать адекватные ответы
+            People people = DatabaseND.SearchPeopleByLogin(Login);
+            if (people == null)
+            {
+                // Если такого логина нет в базе
+                return new HttpUnauthorizedResult();
+            }
+
+            int teamId = DatabaseND.ComplianceTeamPlayer(people.Id);
+
+            if (teamId != -1)
+            {
+                // Игрок уже состоит в команде
+                return new HttpUnauthorizedResult();
+            }
+
+            if (cookie.Value != null)
+            {
+                People commanderPeople = new People();
+                Authorizated.Data.TryGetValue(cookie.Value, out commanderPeople);
+
+                teamId = DatabaseND.ComplianceTeamPlayer(commanderPeople.Id);
+
+                return DatabaseND.AddPlayerTeam(people.Id, teamId) 
+                    ? new HttpStatusCodeResult(200)     // Удалось добавить
+                    : new HttpUnauthorizedResult();     // не удалось добавить
+            }
+
+            // Если не удалось добавить игрока
+            return new HttpUnauthorizedResult();
+        }
+
         //public ActionResult CommandCreatePage()
         //{
         //    return View();

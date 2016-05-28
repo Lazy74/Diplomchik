@@ -770,6 +770,35 @@ namespace Dplm.Models
                 }
             }
         }
+
+        public static bool AddPlayerTeam(int peopleId, int teamId)
+        {
+            using (var connection = new SqlConnection(ConnectionString))
+            {
+                connection.Open();
+
+                using (var cmd = connection.CreateCommand())
+                {
+                    cmd.CommandType = CommandType.Text;
+                    cmd.CommandText = "INSERT INTO [playerTeam] (playerId, teamId)" +
+                        " VALUES(@playerId, @teamId);";
+
+                    cmd.Parameters.AddWithValue("@playerId", peopleId);
+                    cmd.Parameters.AddWithValue("@teamId", teamId);
+                    
+                    try
+                    {
+                        cmd.ExecuteNonQuery();
+                        return true;
+                    }
+                    catch
+                    {
+                        return false;
+                        // TODO сделать лог
+                    }
+                }
+            }
+        }
     }
 }
 

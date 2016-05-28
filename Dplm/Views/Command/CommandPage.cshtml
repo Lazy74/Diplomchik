@@ -9,9 +9,19 @@
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>CommandPage</title>
+
+    <script src="/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="/Scripts/knockout-3.4.0.js"></script>
+    <script src="/Scripts/CommandPage.js"></script>
 </head>
 <body>
 <div>
+
+    <div class="add-player">
+        <input type="text" id="player-name" placeholder="Логин игрока" data-bind="value: addNewPlayer"/>
+        <button id="btn-add-player" data-bind="click: addPlayer">Добавить игрока</button>
+    </div>
+
     <span>Название команды: @ViewBag.teamName</span>
     <br/>
     <span>@ViewBag.commander</span>
@@ -27,5 +37,9 @@
         }
     </table>
 </div>
+
+    <script>
+        loadPage();
+    </script>
 </body>
 </html>
