@@ -9,12 +9,20 @@
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>Новая команда</title>
+
+    <script src="/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="/Scripts/knockout-3.4.0.js"></script>
+    <script src="/Scripts/Command/CommandCreatePage.js"></script>
 </head>
 <body>
 <div>
     <h2>Введите название команды:</h2>
-    <input type="text" id="input-command-name" class="form-control" placeholder="Название команды" data-bind="value: inputCommandName" />
+    <input type="text" id="input-command-name" class="form-control" placeholder="Название команды" data-bind="value: inputNewCommandName"/>
     <button id="btn-create-command" data-bind="click: createCommand">Создать</button>
 </div>
+
+    <script>
+        loadPage();
+    </script>
 </body>
 </html>

@@ -106,6 +106,16 @@ namespace Dplm
                     action = "CommandPage"
                 });
 
+            // Создание команды
+            routes.MapRoute(
+                name: "CreateCommand",
+                url: "User/Command/CreateTeam/",
+                defaults: new
+                {
+                    controller = "Command",
+                    action = "CreateTeam"
+                });
+
             // Добавление игрока в команду
             routes.MapRoute(
                 name: "AddPlayer",

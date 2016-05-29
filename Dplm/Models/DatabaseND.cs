@@ -771,6 +771,12 @@ namespace Dplm.Models
             }
         }
 
+        /// <summary>
+        /// Добавить игрока в команду
+        /// </summary>
+        /// <param name="peopleId">Id Игрока</param>
+        /// <param name="teamId">Id Команды</param>
+        /// <returns></returns>
         public static bool AddPlayerTeam(int peopleId, int teamId)
         {
             using (var connection = new SqlConnection(ConnectionString))
@@ -795,6 +801,43 @@ namespace Dplm.Models
                     {
                         return false;
                         // TODO сделать лог
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Создать команду
+        /// </summary>
+        /// <param name="teamName">Название команды</param>
+        /// <param name="teamComanderId">Id Командира</param>
+        /// <returns></returns>
+        public static int CreateTeam(string teamName, int teamComanderId)
+        {
+            using (var connection = new SqlConnection(ConnectionString))
+            {
+                connection.Open();
+
+                using (var cmd = connection.CreateCommand())
+                {
+                    cmd.CommandType = CommandType.Text;
+                    cmd.CommandText = "INSERT INTO [team] (teamName, teamComanderId) " +
+                        "VALUES(@teamName, @teamComanderId) " +
+                        "SELECT SCOPE_IDENTITY() as 'Id'";
+
+                    cmd.Parameters.AddWithValue("@teamName", teamName);
+                    cmd.Parameters.AddWithValue("@teamComanderId", teamComanderId);
+
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        int teamId = -1;
+
+                        if (reader.Read())
+                        {
+                            teamId = Convert.ToInt32(reader["Id"]);
+                            return teamId;
+                        }
+                        return teamId;
                     }
                 }
             }

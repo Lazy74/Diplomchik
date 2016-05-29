@@ -114,6 +114,23 @@ namespace Dplm.Views
             return new HttpUnauthorizedResult();
         }
 
+        public ActionResult CreateTeam(string Name)
+        {
+            var cookie = MyCookies.UpdateCookieSession(Request.Cookies["hash"]);
+
+            People people = new People();
+            Authorizated.Data.TryGetValue(cookie.Value, out people);
+
+            int teamId = DatabaseND.CreateTeam(Name, people.Id);
+            if (teamId != -1)
+            {
+                DatabaseND.AddPlayerTeam(people.Id, teamId);
+                return new HttpStatusCodeResult(200);   // Удалось добавить
+            }
+
+            return new HttpUnauthorizedResult();        // не удалось добавить
+        }
+
         //public ActionResult CommandCreatePage()
         //{
         //    return View();
