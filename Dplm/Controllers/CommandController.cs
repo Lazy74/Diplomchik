@@ -7,6 +7,7 @@ using Dplm.Models;
 
 namespace Dplm.Views
 {
+    [CookieFilter]
     public class CommandController : Controller
     {
         // GET: Command

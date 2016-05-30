@@ -57,7 +57,7 @@ namespace Dplm.Models
             if (lvlAndTime.numburLVL == 1)
             {
                 // Если команда на 1 уровне, старт берем от начала игры
-                timeStartLvl = game.StartGame;
+                timeStartLvl = game.StartGame; 
                 timeEndLvl = timeStartLvl.AddMinutes(timeout[i]);
             }
             else

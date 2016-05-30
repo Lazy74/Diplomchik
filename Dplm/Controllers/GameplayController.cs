@@ -9,6 +9,7 @@ using Dplm.Models;
 
 namespace Dplm.Controllers
 {
+    [CookieFilter]
     public class GameplayController : Controller
     {
         //public ActionResult GameplayPage()

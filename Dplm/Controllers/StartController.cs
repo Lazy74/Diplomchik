@@ -13,12 +13,13 @@ using Newtonsoft.Json.Linq;
 
 namespace Dplm.Controllers
 {
+    [CookieFilter]
     public class StartController : Controller
     {
         // GET: Start
         public ActionResult StartPage()
         {
-            Response.SetCookie(MyCookies.UpdateCookieSession(Request.Cookies["hash"]));     // Обновлениее кука (Если мы его не знаем, то идет удаление)
+            //Response.SetCookie(MyCookies.UpdateCookieSession(Request.Cookies["hash"]));     // Обновлениее кука (Если мы его не знаем, то идет удаление)
             ViewBag.cookieHash = Response.Cookies["hash"].Value;
 
             List<Game> games = DatabaseND.GetListGames();
@@ -42,9 +43,11 @@ namespace Dplm.Controllers
 
         public ActionResult UserPage()
         {
-            var cookie = MyCookies.UpdateCookieSession(Request.Cookies["hash"]);
+            //var cookie = MyCookies.UpdateCookieSession(Request.Cookies["hash"]);
 
-            Response.SetCookie(cookie);
+            //Response.SetCookie(cookie);
+
+            var cookie = Response.Cookies["hash"];
 
             if (cookie.Value != null)
             {
@@ -67,9 +70,6 @@ namespace Dplm.Controllers
             {
                 return View("StartPage");
             }
-
-            //ViewBag.
-
         }
 
         public ActionResult AuthorizeUser(string Login, string Pass)
@@ -104,9 +104,10 @@ namespace Dplm.Controllers
 
         public ActionResult updateUserPage()
         {
-            var cookie = MyCookies.UpdateCookieSession(Request.Cookies["hash"]);
+            //var cookie = MyCookies.UpdateCookieSession(Request.Cookies["hash"]);
 
-            Response.SetCookie(cookie);
+            //Response.SetCookie(cookie);
+            var cookie = Response.Cookies["hash"];
 
             if (cookie.Value != null)
             {

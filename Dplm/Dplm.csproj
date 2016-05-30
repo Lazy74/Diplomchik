@@ -137,6 +137,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Authorizated.cs" />
+    <Compile Include="Models\CookieFilterAttribute.cs" />
     <Compile Include="Models\DatabaseND.cs" />
     <Compile Include="Models\Game.cs" />
     <Compile Include="Models\Helper.cs" />
