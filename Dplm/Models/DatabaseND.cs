@@ -31,7 +31,7 @@ namespace Dplm.Models
                     command.CommandText = "INSERT INTO [users] (userLogin, userPass, phoneNumber, email)" +
                         " VALUES(@login, @pass, @phone, @email);";
 
-                    command.Parameters.AddWithValue("@login", people.UserLogin);
+                    command.Parameters.AddWithValue("@login", people.UserLogin.ToLower());
                     command.Parameters.AddWithValue("@pass", people.UserPass);
                     command.Parameters.AddWithValue("@phone", people.PhoneNumber);
                     command.Parameters.AddWithValue("@email", people.Email);
@@ -72,7 +72,7 @@ namespace Dplm.Models
                         "FROM [users] " + 
                         " WHERE userLogin = @login";
 
-                    cmd.Parameters.AddWithValue("@login", Login);
+                    cmd.Parameters.AddWithValue("@login", Login.ToLower());
 
                     using (var reader = cmd.ExecuteReader())
                     {
@@ -230,7 +230,7 @@ namespace Dplm.Models
                                             "birthday = @birth " +
                                       "WHERE Id = @Id;";
 
-                    cmd.Parameters.AddWithValue("@login", oldPeople.UserLogin);
+                    cmd.Parameters.AddWithValue("@login", oldPeople.UserLogin.ToLower());
                     cmd.Parameters.AddWithValue("@pass", oldPeople.UserPass);
                     cmd.Parameters.AddWithValue("@phone", oldPeople.PhoneNumber);
                     cmd.Parameters.AddWithValue("@email", oldPeople.Email);
