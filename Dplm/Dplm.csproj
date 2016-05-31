@@ -114,15 +114,15 @@
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\Command\CommandCreatePage.js" />
     <Content Include="Scripts\cookie.js" />
-    <Content Include="Scripts\GamePage.js" />
+    <Content Include="Scripts\Game\GamePage.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <Content Include="Scripts\knockout-3.4.0.js" />
-    <Content Include="Scripts\CommandPage.js" />
-    <Content Include="Scripts\Registration.js" />
-    <Content Include="Scripts\GameplayPage.js" />
-    <Content Include="Scripts\StartPage.js" />
-    <Content Include="Scripts\UserPage.js" />
-    <Content Include="Scripts\userUpdate.js" />
+    <Content Include="Scripts\Command\CommandPage.js" />
+    <Content Include="Scripts\User\Registration.js" />
+    <Content Include="Scripts\Game\GameplayPage.js" />
+    <Content Include="Scripts\Start\StartPage.js" />
+    <Content Include="Scripts\User\UserPage.js" />
+    <Content Include="Scripts\User\userUpdate.js" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
