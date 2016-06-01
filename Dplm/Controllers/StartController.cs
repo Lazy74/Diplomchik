@@ -68,13 +68,23 @@ namespace Dplm.Controllers
             }
             else
             {
+                List<Game> games = DatabaseND.GetListGames();
+
+                List<string> tableRows = new List<string>();
+
+                foreach (Game game in games)
+                {
+                    tableRows.Add("<tr><td><a href=\"/Game/id=" + game.Id + "\">" + game.NameGame + "</a></td><td>" + game.StartGame + "</td></tr>");
+                }
+
+                ViewBag.TableRows = tableRows;
                 return View("StartPage");
             }
         }
 
         public ActionResult AuthorizeUser(string Login, string Pass)
         {
-            if (Login == null && Pass == null)
+            if (Login == null || Pass == null)
             {
 		        // TODO возможно стоит говорить пользователю что он не ввел
                 //return new HttpResponseMessage(HttpStatusCode.ExpectationFailed);
