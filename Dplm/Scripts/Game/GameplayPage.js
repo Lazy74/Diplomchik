@@ -8,6 +8,7 @@
             .done(function () {
                 ReloadPage();
                 alert("Ответ \"" + answer + "\" верный");
+                location.reload();
                 //location.pathname = "";    // строка пути (относительно хоста)
             })
             .fail(function () {
