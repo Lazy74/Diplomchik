@@ -156,27 +156,50 @@ namespace Dplm
                     action = "HomePage"
                 });
 
-            // Страница регистрации команды
-            // Возможно она мне и не нужна
-            //routes.MapRoute(
-            //    name: "CreateCommandPage",
-            //    url: "User/NewCommand",
-            //    defaults: new
-            //    {
-            //        controller = "Command",
-            //        action = "CommandCreatePage"
-            //    });
+            // Настройка описания игры (начальная страница)
+            routes.MapRoute(
+                name: "EditGameInformation",
+                url: "EditGameInformation/id={id}",
+                defaults: new
+                {
+                    controller = "AdminGame",
+                    action = "ViewGamePage"
+                });
 
-            // TODO Страница изменения данных о команде
-            //routes.MapRoute(
-            //    name: "CreateCommandPage",
-            //    url: "User/NewCommand",
-            //    defaults: new
-            //    {
-            //        controller = "Command",
-            //        action = "CommandUpdatePage"
-            //    });
-
+            // Получить объект игры
+            routes.MapRoute(
+                name: "GetFullInfoGame",
+                url: "GetFullInfoGame/id={id}",
+                defaults: new
+                {
+                    controller = "AdminGame",
+                    action = "GetFullInfoGame"
+                });
         }
     }
 }
+
+
+
+
+
+// Страница регистрации команды
+// Возможно она мне и не нужна
+//routes.MapRoute(
+//    name: "CreateCommandPage",
+//    url: "User/NewCommand",
+//    defaults: new
+//    {
+//        controller = "Command",
+//        action = "CommandCreatePage"
+//    });
+
+// TODO Страница изменения данных о команде
+//routes.MapRoute(
+//    name: "CreateCommandPage",
+//    url: "User/NewCommand",
+//    defaults: new
+//    {
+//        controller = "Command",
+//        action = "CommandUpdatePage"
+//    });

@@ -1,0 +1,80 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Основная информация</title>
+
+    <script src="/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="/Scripts/knockout-3.4.0.js"></script>
+
+    <script src="/Scripts/AdminGame/ViewGamePage.js"></script>
+</head>
+<body>
+    <style>
+        div {
+            margin: 10px;
+        }
+
+        input {
+            margin-left: 10px;
+        }
+
+        textarea {
+            width: 100%;
+        }
+    </style>
+    <div>
+        @*TODO Сделать добавление авторов*@
+        <span>//Сделать добавление авторов</span>
+    </div>
+
+    <div>
+        <span>Название игры</span>
+        <input type="text" class="form-control" placeholder="Название игры" data-bind="value: nameGame" />
+    </div>
+
+    <div>
+        <span>Последовательность</span>
+        <input type="text" class="form-control" placeholder="Последовательность" data-bind="value: sequence" />
+    </div>
+
+    <div>
+        <span>Пробег</span>
+        <input type="text" class="form-control" placeholder="Пробег" data-bind="value: distance" />
+    </div>
+
+    <div>
+        @*TODO Врмя не выводится*@
+        <span>Начало игры</span>
+        <input type="datetime" name="startGame">
+    </div>
+
+    <div>
+        <span>Окончание игры</span>
+        <input type="datetime" name="endGame">
+    </div>
+
+    <div>
+        <span>Информация по игре от авторов</span>
+        <div>
+            <textarea rows="18" data-bind="value: infoContent" class="form-control"></textarea>
+        </div>
+    </div>
+
+    <div>
+        <button>Сохранить</button>
+    </div>
+
+    <script>
+        window.currentGameId = @ViewBag.Id;
+        loadPage();
+        loadContent();
+    </script>
+</body>
+</html>
