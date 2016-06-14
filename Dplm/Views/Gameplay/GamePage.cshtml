@@ -42,7 +42,7 @@
         <h2>Информация об игре от авторов</h2>
     </div>
     <div>
-        <span>@ViewBag.Info</span>
+        <span>@Html.Raw(ViewBag.Info)</span>
     </div>
     <button id="btn-game" data-bind="click: enterTheGame">Вход в игру</button>
 

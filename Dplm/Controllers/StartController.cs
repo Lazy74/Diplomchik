@@ -86,7 +86,8 @@ namespace Dplm.Controllers
         {
             if (Login == null || Pass == null)
             {
-		        // TODO возможно стоит говорить пользователю что он не ввел
+                // TODO возможно стоит говорить пользователю что он не ввел
+                return new HttpStatusCodeResult(417);
                 //return new HttpResponseMessage(HttpStatusCode.ExpectationFailed);
             }
 
