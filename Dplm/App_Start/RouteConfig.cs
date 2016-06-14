@@ -146,6 +146,16 @@ namespace Dplm
                     action = "AnswerСheck"
                 });
 
+            // Администраторская игр (начальная страница)
+            routes.MapRoute(
+                name: "Administration",
+                url: "Administration",
+                defaults: new
+                {
+                    controller = "AdminGame",
+                    action = "HomePage"
+                });
+
             // Страница регистрации команды
             // Возможно она мне и не нужна
             //routes.MapRoute(

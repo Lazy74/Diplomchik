@@ -75,6 +75,10 @@ function ViewModel() {
     this.toUserTeam = function() {
         model.toUserTeam();
     }
+
+    this.toAdminGame = function () {
+        location.href = "/Administration/";
+    }
 }
 
 //var model = {

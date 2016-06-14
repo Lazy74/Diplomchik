@@ -842,6 +842,53 @@ namespace Dplm.Models
                 }
             }
         }
+
+        /// <summary>
+        /// Получить список игр по id автора
+        /// </summary>
+        /// <returns></returns>
+        public static List<Game> GetListGameForPeopleId(int idAuthor)
+        {
+            using (var connection = new SqlConnection(ConnectionString))
+            {
+                connection.Open();
+
+                using (var cmd = connection.CreateCommand())
+                {
+                    cmd.CommandType = CommandType.Text;
+
+                    cmd.CommandText = "SELECT Game.* " +
+                                      "FROM ND.dbo.users INNER JOIN (ND.dbo.Game INNER JOIN ND.dbo.AuthorGame ON Game.Id = AuthorGame.idGame) ON users.Id = AuthorGame.idAuthor " +
+                                      "WHERE users.Id = @idAuthor;";
+
+                    cmd.Parameters.AddWithValue("@idAuthor", idAuthor);
+
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        var result = new List<Game>();
+
+                        while (reader.Read())
+                        {
+                            Game game = new Game();
+
+                            game.Id = (int)reader["Id"];
+                            game.NameGame = (string)reader["nameGame"];
+                            game.AmountLevels = (int)reader["authorId"];
+                            game.Sequence = (string)reader["sequence"];
+                            game.Distance = (int)reader["distance"];
+                            game.StartGame = (DateTime)reader["startGame"];
+                            game.EndGame = (DateTime)reader["endGame"];
+                            game.Info = (string)reader["info"];
+                            game.AmountLevels = (int)reader["amountLevels"];
+
+                            result.Add(game);
+                        }
+
+                        return result;
+                    }
+                }
+            }
+        }
     }
 }
 
