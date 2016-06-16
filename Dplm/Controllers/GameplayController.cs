@@ -131,6 +131,7 @@ namespace Dplm.Controllers
             ViewBag.Sequence = game.Sequence;
             ViewBag.Distance = game.Distance;
             ViewBag.StartGame = game.StartGame;
+            ViewBag.EndGame = game.EndGame;
             ViewBag.Info = game.Info;
 
             return View();

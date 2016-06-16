@@ -162,7 +162,7 @@ namespace Dplm.Models
             }
             return null;
         }
-        
+
         /// <summary>
         /// Обновить данные о игроке
         ///</summary>
@@ -419,6 +419,7 @@ namespace Dplm.Models
                             game.Sequence = reader["sequence"].ToString();
                             game.Distance = (int)reader["distance"];
                             game.StartGame = (DateTime)reader["startGame"];
+                            game.EndGame = (DateTime)reader["endGame"];
                             game.Info = reader["info"].ToString();
                             game.AmountLevels = (int)reader["amountLevels"];
                         }
@@ -886,6 +887,86 @@ namespace Dplm.Models
 
                         return result;
                     }
+                }
+            }
+        }
+
+
+        /// <summary>
+        /// Обновить информацию об игре
+        ///</summary>
+        public static bool UpdateInfoGame(Game oldGame, Game updateGame)
+        {
+            // Не должно меняться
+            // oldGame.Id;
+
+            // TODO Доделать изменения
+            //oldGame.AmountLevels;
+
+
+            oldGame.Distance = updateGame.Distance;
+
+            if (!string.IsNullOrEmpty(updateGame.Info))
+            {
+                oldGame.Info = updateGame.Info;
+            }
+
+            if (!string.IsNullOrEmpty(updateGame.NameGame))
+            {
+                oldGame.NameGame = updateGame.NameGame;
+            }
+
+            if (!string.IsNullOrEmpty(updateGame.Sequence))
+            {
+                oldGame.Sequence = updateGame.Sequence;
+            }
+
+            // TODO Для начала сделать передачу времени на клиента, а уже потом изменения 
+            oldGame.StartGame = updateGame.StartGame;
+            oldGame.EndGame = updateGame.EndGame;
+            //oldGame.StartGame;
+            //oldGame.EndGame;
+
+            using (var connection = new SqlConnection(ConnectionString))
+            {
+                connection.Open();
+
+                using (var cmd = connection.CreateCommand())
+                {
+                    cmd.CommandType = CommandType.Text;
+
+                    cmd.CommandText = "UPDATE [Game] " +
+                                      "SET " +
+                                            "nameGame = @nameGame, " +
+                                            "sequence = @sequence, " +
+                                            "distance = @distance, " +
+                                            "startGame = @startGame, " +
+                                            "endGame = @endGame, " +
+                                            "info = @info, " +
+                                            "amountLevels = @amountLevels " +
+                                      "WHERE Id = @Id;";
+
+                    cmd.Parameters.AddWithValue("@nameGame", oldGame.NameGame);
+                    cmd.Parameters.AddWithValue("@sequence", oldGame.Sequence);
+                    cmd.Parameters.AddWithValue("@distance", oldGame.Distance);
+                    cmd.Parameters.AddWithValue("@startGame", oldGame.StartGame);
+                    cmd.Parameters.AddWithValue("@endGame", oldGame.EndGame);
+                    cmd.Parameters.AddWithValue("@info", oldGame.Info);
+                    cmd.Parameters.AddWithValue("@amountLevels", oldGame.AmountLevels);
+                    cmd.Parameters.AddWithValue("@Id", oldGame.Id);
+
+
+                    try
+                    {
+                        cmd.ExecuteNonQuery();     // синхронно
+                        return true;
+                    }
+                    catch (Exception e)
+                    {
+                        return false;
+                        // TODO сделать лог
+                    }
+
                 }
             }
         }

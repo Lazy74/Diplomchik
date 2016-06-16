@@ -23,6 +23,7 @@ namespace Dplm.Models
         public int IdАuthor { get; set; }
         //public int[] IdАuthor { get; set; }
 
+        //TODO Возможно последовательность заданий нужно убрать (если будет только линейная)
         /// <summary>
         /// Последовательность заданий (линейная, не линейная, указанная)
         /// </summary>

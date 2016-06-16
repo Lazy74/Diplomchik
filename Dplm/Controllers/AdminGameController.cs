@@ -1,15 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Mime;
+using System.Text;
 using System.Web;
 using System.Web.Mvc;
 using Dplm.Models;
+using Newtonsoft.Json.Linq;
 
 namespace Dplm.Controllers
 {
     [CookieFilter]
     public class AdminGameController : Controller
     {
+        // TODO ВО ВСЕХ КОНТРОЛЛЕРАХ ПРОВЕРЯТЬ МОЖЕТ ЛИ ЭТОТ ПОЛЬЗОВАТЕЛЬ ИМЕТЬ АДМИНИСТРАТИВНЫЕ ПРАВА В ЭТОЙ ИГРЕ
         // GET: AdminGame
         public ActionResult HomePage()
         {
@@ -43,9 +47,9 @@ namespace Dplm.Controllers
         {
             int gameId = Convert.ToInt32(id);
 
-            var res = Json(DatabaseND.GetGame(gameId));
+            //var res = Json(DatabaseND.GetGame(gameId));
 
-            ViewBag.game = res.Data;
+            //ViewBag.game = res.Data;
 
             ViewBag.Id = gameId;
 
@@ -57,9 +61,36 @@ namespace Dplm.Controllers
         {
             int gameId = Convert.ToInt32(id);
 
-            var data = DatabaseND.GetGame(gameId);
+            Game data = DatabaseND.GetGame(gameId);
 
-            return Json(data, JsonRequestBehavior.AllowGet);
+            // TODO Сделать отправку времени с сервера!!!
+
+            //string strData = "{" +
+            //                 "'test': 'test'}";
+
+            //var jddata = Json(strData);
+
+            //string json = @"{
+            //    'Email': 'james@example.com',
+            //    'Active': true,
+            //    'CreatedDate': '2013-01-20T00:00:00Z',
+            //}";
+
+            var jData = Json(data, JsonRequestBehavior.AllowGet);
+
+            return jData;
+        }
+
+        [ValidateInput(false)]
+        public ActionResult UpdateInfoGame(Game game)
+        {
+            //byte[] buffer = Convert.FromBase64String(game.Info);
+            //game.Info = Encoding.UTF8.GetString(buffer);
+
+            // TODO переделать логику получения старой информации об игре (или же обновлять ВСЕ и полностью!!!)
+            return DatabaseND.UpdateInfoGame(DatabaseND.GetGame(game.Id), game) 
+                ? new HttpStatusCodeResult(200) 
+                : new HttpStatusCodeResult(500);
         }
     }
 }

@@ -166,7 +166,7 @@ namespace Dplm
                     action = "ViewGamePage"
                 });
 
-            // Получить объект игры
+            // Отправить полную информацию об игре
             routes.MapRoute(
                 name: "GetFullInfoGame",
                 url: "GetFullInfoGame/id={id}",
@@ -174,6 +174,16 @@ namespace Dplm
                 {
                     controller = "AdminGame",
                     action = "GetFullInfoGame"
+                });            
+            
+            // Получить обновленную информацию об игре 
+            routes.MapRoute(
+                name: "UpdateInfoGame",
+                url: "UpdateInfoGame",
+                defaults: new
+                {
+                    controller = "AdminGame",
+                    action = "UpdateInfoGame"
                 });
         }
     }

@@ -8,10 +8,12 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
+    <meta charset="UTF-8" />
     <title>Основная информация</title>
 
     <script src="/Scripts/jquery-1.10.2.min.js"></script>
     <script src="/Scripts/knockout-3.4.0.js"></script>
+    <script src="/Scripts/moment.min.js"></script>
 
     <script src="/Scripts/AdminGame/ViewGamePage.js"></script>
 </head>
@@ -51,12 +53,12 @@
 
     <div>
         <span>Начало игры</span>
-        <input type="datetime-local" name="startGame">
+        <input type="datetime-local" data-bind="value: startGame">
     </div>
 
     <div>
         <span>Окончание игры</span>
-        <input type="datetime-local" name="endGame">
+        <input type="datetime-local" data-bind="value: endGame">
     </div>
 
     <div>
@@ -67,8 +69,32 @@
     </div>
 
     <div>
-        <button>Сохранить</button>
+        <button id="btn-save" data-bind="click: save">Сохранить</button>
     </div>
+
+<table border="1">
+    <tr>
+        <th>Номер</th>
+        <th>Название</th>
+        <th>Действие</th>
+    </tr>
+    <tr>
+        <td>1</td>
+        <td>Первый уровень</td>
+        <td>
+            <a href="" target="_blank">Удалить(Возможно не стоит тут удалять)</a>
+            <a href="" target="_blank">Редактировать</a>
+        </td>
+    </tr>
+    <tr>
+        <td>2</td>
+        <td>Вротой уровень</td>
+        <td>
+            <a href="" target="_blank">Удалить(Возможно не стоит тут удалять)</a>
+            <a href="" target="_blank">Редактировать</a>
+        </td>
+    </tr>
+</table>
 
     <script>
         window.currentGameId = @ViewBag.Id;
