@@ -206,6 +206,16 @@ namespace Dplm
                     controller = "AdminGame",
                     action = "GetLevelPage"
                 });
+
+            // Для запроса на получение списка ответов
+            routes.MapRoute(
+                name: "GetAnswersOnLvl",
+                url: "Administration/EditGameInformation/GetAnswersOnLvl",
+                defaults: new
+                {
+                    controller = "AdminGame",
+                    action = "GetAnswersOnLvl"
+                });
         }
     }
 }

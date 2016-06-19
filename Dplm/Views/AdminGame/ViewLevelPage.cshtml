@@ -36,7 +36,13 @@
             </div>
         </div>
 
+        Answer
 
+        <div class="input-group" data-bind="foreach: questAnswers ">
+            <div>
+                <input type="text" class="form-control" placeholder="Ответ" data-bind="value: Answer" />
+            </div>
+        </div>
 
         <div>
             <button id="btn-save" data-bind="click: save">Сохранить</button>

@@ -6,6 +6,7 @@ using System.Text;
 using System.Web;
 using System.Web.Mvc;
 using Dplm.Models;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
 namespace Dplm.Controllers
@@ -88,8 +89,8 @@ namespace Dplm.Controllers
             //game.Info = Encoding.UTF8.GetString(buffer);
 
             // TODO переделать логику получения старой информации об игре (или же обновлять ВСЕ и полностью!!!)
-            return DatabaseND.UpdateInfoGame(DatabaseND.GetGame(game.Id), game) 
-                ? new HttpStatusCodeResult(200) 
+            return DatabaseND.UpdateInfoGame(DatabaseND.GetGame(game.Id), game)
+                ? new HttpStatusCodeResult(200)
                 : new HttpStatusCodeResult(500);
         }
 
@@ -114,9 +115,17 @@ namespace Dplm.Controllers
 
             Quest data = DatabaseND.GetQuest(gameId, lvl);
 
-            var jData = Json(data,JsonRequestBehavior.AllowGet);
+            var jData = Json(data, JsonRequestBehavior.AllowGet);
 
             return jData;
+        }
+
+        public ActionResult GetAnswersOnLvl()
+        {
+            int questId = Int32.Parse(Request.Params["questId"]);
+            List<Answers> answers = new List<Answers>();
+            answers = DatabaseND.GetListAnswersOnLvl(questId);
+            return Json(answers, JsonRequestBehavior.AllowGet);
         }
     }
 }

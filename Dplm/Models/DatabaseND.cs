@@ -970,6 +970,48 @@ namespace Dplm.Models
                 }
             }
         }
+
+
+        /// <summary>
+        /// Получить список ответов на уровень
+        /// </summary>
+        /// <returns></returns>
+        public static List<Answers> GetListAnswersOnLvl(int questId)
+        {
+            using (var connection = new SqlConnection(ConnectionString))
+            {
+                connection.Open();
+
+                using (var cmd = connection.CreateCommand())
+                {
+                    cmd.CommandType = CommandType.Text;
+
+                    cmd.CommandText = "SELECT * " +
+                                      "FROM Answers " +
+                                      "WHERE questId = @questId;";
+
+                    cmd.Parameters.AddWithValue("@questId", questId);
+
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        var result = new List<Answers>();
+
+                        while (reader.Read())
+                        {
+                            Answers game = new Answers();
+
+                            game.Id = (int)reader["Id"];
+                            game.Answer = (string)reader["answer"];
+                            game.QuestId = (int)reader["questId"];
+
+                            result.Add(game);
+                        }
+
+                        return result;
+                    }
+                }
+            }
+        }
     }
 }
 

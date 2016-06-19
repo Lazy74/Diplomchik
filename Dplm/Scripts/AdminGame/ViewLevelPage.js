@@ -1,7 +1,11 @@
 ﻿var model = {
     getContentLvl: function () {
-        console.log("getContent");
+        console.log("getContentLVL");
         return $.get('/Administration/EditGameInformation/GetLevelPage', { gameId: window.gameId, lvl: window.lvl });
+    },
+    getContentAnswer: function () {
+        console.log("getContentAnswers");
+        return $.get('/Administration/EditGameInformation/GetAnswersOnLvl', { questId: window.lvlId });
     }
 }
 
@@ -12,11 +16,13 @@ function loadPage() {
 }
 
 var that;
+//window.lvlId = 0;
 
 function ViewModel1() {
     this.authorComment = ko.observable();
     this.timeout = ko.observable();
     this.textQuest = ko.observable();
+    this.questAnswers = ko.observableArray();
 
     that = this;
 
@@ -31,6 +37,14 @@ function loadContent() {
         that.authorComment(content.AuthorComment);
         that.timeout(content.TimeOut);
         that.textQuest(content.TextQuest);
+        window.lvlId = content.Id;
+
+        model.getContentAnswer()
+        .done(function (data) {
+                viewModel1.questAnswers(data);
+            })
+        .fail(function (data) {
+        });
     })
     .fail(function (content) {
         alert("не удалось получить данные об игре!");
