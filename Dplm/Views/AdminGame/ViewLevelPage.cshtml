@@ -41,11 +41,16 @@
         <div class="input-group" data-bind="foreach: questAnswers ">
             <div>
                 <input type="text" class="form-control" placeholder="Ответ" data-bind="value: Answer" />
+                <button>удалить</button>
             </div>
+        </div>
+        <div>
+            <button>Создать еще 1 ответ</button>
         </div>
 
         <div>
-            <button id="btn-save" data-bind="click: save">Сохранить</button>
+            </br>
+            <button id="btn-save" data-bind="click: save">Сохранить все изменения</button>
         </div>
     </div>
 
