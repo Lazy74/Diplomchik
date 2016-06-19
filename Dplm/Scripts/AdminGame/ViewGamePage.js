@@ -1,7 +1,7 @@
 ﻿var model = {
     getContent: function () {
         console.log("getContent");
-        return $.get('/GetFullInfoGame/id=' + window.currentGameId);
+        return $.get('/Administration/GetFullInfoGame/id=' + window.currentGameId);
     },
 
     saveContent: function(nameGame, sequence, distance, startGame, endGame, infoContent) {

@@ -34,7 +34,7 @@ namespace Dplm.Controllers
 
                 foreach (Game game in games)
                 {
-                    tableRows.Add("<tr><td><a href=\"/EditGameInformation/id=" + game.Id + "\">" + game.NameGame + "</a></td><td>" + game.StartGame + "</td></tr>");
+                    tableRows.Add("<tr><td><a href=\"/Administration/EditGameInformation/id=" + game.Id + "\">" + game.NameGame + "</a></td><td>" + game.StartGame + "</td></tr>");
                 }
             }
 

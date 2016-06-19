@@ -156,10 +156,10 @@ namespace Dplm
                     action = "HomePage"
                 });
 
-            // Настройка описания игры (начальная страница)
+            // Страница редактирования описания игры (начальная страница)
             routes.MapRoute(
                 name: "EditGameInformation",
-                url: "EditGameInformation/id={id}",
+                url: "Administration/EditGameInformation/id={id}",
                 defaults: new
                 {
                     controller = "AdminGame",
@@ -169,7 +169,7 @@ namespace Dplm
             // Отправить полную информацию об игре
             routes.MapRoute(
                 name: "GetFullInfoGame",
-                url: "GetFullInfoGame/id={id}",
+                url: "Administration/GetFullInfoGame/id={id}",
                 defaults: new
                 {
                     controller = "AdminGame",
@@ -179,7 +179,7 @@ namespace Dplm
             // Получить обновленную информацию об игре 
             routes.MapRoute(
                 name: "UpdateInfoGame",
-                url: "UpdateInfoGame",
+                url: "Administration/UpdateInfoGame",
                 defaults: new
                 {
                     controller = "AdminGame",
