@@ -29,6 +29,14 @@ function ViewModel1() {
     this.save = function () {
         //model.saveContent();
     }
+
+    this.remove = function (obj) {
+        that.questAnswers.remove(obj);
+    }
+
+    this.add = function () {
+        this.questAnswers.push({ Answer: '' });
+    }
 }
 
 function loadContent() {

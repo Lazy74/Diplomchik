@@ -36,16 +36,15 @@
             </div>
         </div>
 
-        Answer
-
+        <span>Ответы</span>
         <div class="input-group" data-bind="foreach: questAnswers ">
             <div>
                 <input type="text" class="form-control" placeholder="Ответ" data-bind="value: Answer" />
-                <button>удалить</button>
+                <button data-bind="click: $parent.remove">Удалить</button>
             </div>
         </div>
         <div>
-            <button>Создать еще 1 ответ</button>
+            <button data-bind="click: add">Добавить ответ</button>
         </div>
 
         <div>
