@@ -92,5 +92,31 @@ namespace Dplm.Controllers
                 ? new HttpStatusCodeResult(200) 
                 : new HttpStatusCodeResult(500);
         }
+
+        public ActionResult ViewLevelPage()
+        {
+            int gameId = Int32.Parse(Request.Params["gameId"]);
+            int lvl = Int32.Parse(Request.Params["lvl"]);
+
+            ViewBag.gameId = gameId;
+            ViewBag.lvl = lvl;
+
+            return View();
+        }
+
+        public ActionResult GetLevelPage()
+        {
+            int gameId = Int32.Parse(Request.Params["gameId"]);
+            int lvl = Int32.Parse(Request.Params["lvl"]);
+
+            ViewBag.gameId = gameId;
+            ViewBag.lvl = lvl;
+
+            Quest data = DatabaseND.GetQuest(gameId, lvl);
+
+            var jData = Json(data,JsonRequestBehavior.AllowGet);
+
+            return jData;
+        }
     }
 }

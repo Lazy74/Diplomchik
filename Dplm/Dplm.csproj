@@ -111,6 +111,7 @@
     <Content Include="Content\Site.css" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
+    <Content Include="Scripts\AdminGame\ViewLevelPage.js" />
     <Content Include="Scripts\AdminGame\ViewGamePage.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\Command\CommandCreatePage.js" />
@@ -171,6 +172,7 @@
     <Content Include="Views\Gameplay\NoGamePage.cshtml" />
     <Content Include="Views\AdminGame\HomePage.cshtml" />
     <Content Include="Views\AdminGame\ViewGamePage.cshtml" />
+    <Content Include="Views\AdminGame\ViewLevelPage.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -185,6 +185,27 @@ namespace Dplm
                     controller = "AdminGame",
                     action = "UpdateInfoGame"
                 });
+
+            // Страница редактирования уровня
+            routes.MapRoute(
+                name: "ViewLevelPage",
+                url: "Administration/EditGameInformation/ViewLevelPage",
+                //url: "Administration/EditGameInformation/ViewLevelPage?gameId={gameId}&lvl={lvl}",
+                defaults: new
+                {
+                    controller = "AdminGame",
+                    action = "ViewLevelPage"
+                });
+
+            // Для запроса на получение информации об уровне
+            routes.MapRoute(
+                name: "GetLevelPage",
+                url: "Administration/EditGameInformation/GetLevelPage",
+                defaults: new
+                {
+                    controller = "AdminGame",
+                    action = "GetLevelPage"
+                });
         }
     }
 }
