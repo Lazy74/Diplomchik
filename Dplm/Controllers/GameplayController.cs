@@ -100,6 +100,7 @@ namespace Dplm.Controllers
             ViewBag.commentAuthor = quest.AuthorComment;  // Коментарий автора
             ViewBag.quest = quest.TextQuest;    // Текст задания
             ViewBag.Id = game.Id;
+            ViewBag.nameLevel = quest.NameLevel;
 
             ViewBag.TimeTransition = Helper.GetTimeTransition(lvlDB.EndLVL);
             // TODO придумать как выводить N количество подсказок
