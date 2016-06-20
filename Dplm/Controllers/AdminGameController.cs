@@ -138,16 +138,16 @@ namespace Dplm.Controllers
         }
 
         [ValidateInput(false)]
-        public ActionResult UpdateLevel()
+        public ActionResult UpdateLevel(Quest quest)
         {
-            Quest quest = new Quest();
+            //Quest quest = new Quest();
 
-            quest.NameLevel = Request.Params["nameLevel"];      // Есть
-            quest.AuthorComment = Request.Params["authorComment"];      // Есть
-            quest.GameId = Int32.Parse(Request.Params["gameId"]);
-            quest.NumberLevel = Int32.Parse(Request.Params["lvl"]);
-            quest.TextQuest = Request.Params["textQuest"];              // Есть
-            quest.TimeOut = Int32.Parse(Request.Params["timeout"]);     // Есть
+            //quest.NameLevel = Request.Params["nameLevel"];      // Есть
+            //quest.AuthorComment = Request.Params["authorComment"];      // Есть
+            //quest.GameId = Int32.Parse(Request.Params["gameId"]);
+            //quest.NumberLevel = Int32.Parse(Request.Params["lvl"]);
+            //quest.TextQuest = Request.Params["textQuest"];              // Есть
+            //quest.TimeOut = Int32.Parse(Request.Params["timeout"]);     // Есть
             return DatabaseND.UpdateQuest(quest)
                 ? new HttpStatusCodeResult(200)
                 : new HttpStatusCodeResult(500);

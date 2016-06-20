@@ -16,7 +16,7 @@
             timeout: timeout,
             textQuest: textQuest,
             gameId: window.gameId,
-            lvl: window.lvl
+            numberLevel: window.lvl
         })
             .done(function () {
                 //var lvlText = "Информация об уровне обновлена!";
