@@ -120,5 +120,34 @@ namespace Dplm.Models
                 
         //    }
         //}
+
+        /// <summary>
+        /// Обновить информацию об ответах
+        /// </summary>
+        /// <param name="oldAnswers"></param>
+        /// <param name="newAnswers"></param>
+        /// <returns></returns>
+        public static bool UpdateAnswer(List<Answer> oldAnswers, List<Answer> newAnswers, int questId)
+        {
+            bool Flag = true;
+
+            foreach (Answer oldAnswer in oldAnswers)
+            {
+                if (!DatabaseND.UpdateAnswers(oldAnswer.Id, oldAnswer.TextAnswer))
+                {
+                    Flag = false;
+                }
+            }
+
+            foreach (Answer newAnswer in newAnswers)
+            {
+                if (!DatabaseND.CreateAnswers(questId, newAnswer.TextAnswer))
+                {
+                    Flag = false;
+                }
+            }
+
+            return Flag;
+        }
     }
 }

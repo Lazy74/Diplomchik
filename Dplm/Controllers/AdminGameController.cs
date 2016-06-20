@@ -127,5 +127,121 @@ namespace Dplm.Controllers
             answers = DatabaseND.GetListAnswersOnLvl(questId);
             return Json(answers, JsonRequestBehavior.AllowGet);
         }
+
+        public ActionResult UpdateLevel()
+        {
+            var r = Request.Params;
+            return new HttpStatusCodeResult(200);
+        }
+
+        public ActionResult UpdateAnswersOnLvl()
+        {
+            int gameId = Int32.Parse(Request.Params["gameId"]);
+            int lvl = Int32.Parse(Request.Params["lvl"]);
+
+            int currentQuestId = DatabaseND.GetQuest(gameId, lvl).Id;
+
+            List<Answer> oldAnswers = new List<Answer>();
+            List<Answer> newAnswers = new List<Answer>();
+
+            bool Flag;
+            int i = 0;
+            do
+            {
+                int id;
+                int questId;
+                string textAnswer;
+
+                try
+                {
+                    id = Int32.Parse(Request.Params["Answer[" + i + "][Id]"]);
+                }
+                catch (Exception)
+                {
+                    id = 0;
+                }
+
+                try
+                {
+                    questId = Int32.Parse(Request.Params["Answer[" + i + "][QuestId]"]);
+                }
+                catch (Exception)
+                {
+                    questId = 0;
+                }
+
+                textAnswer = Request.Params["Answer[" + i + "][TextAnswer]"];
+
+                Answer item = new Answer();
+                if (textAnswer == null)
+                {
+                    Flag = false;
+                }
+                else if (textAnswer == "")
+                {
+                    Flag = true;
+                    //Было пустое поле с ответом
+                    // TODO возможно этот ответ есть в базе и игрок просто удалил ответ из поля, оставив при этом чистое поле
+                }
+                else if (id != 0 || questId != 0)
+                {
+                    item.Id = id;
+                    item.QuestId = questId;
+                    item.TextAnswer = Helper.RemoveExtraCharacters(textAnswer);
+
+                    oldAnswers.Add(item);
+                    Flag = true;
+                }
+                else
+                {
+                    item.Id = id;
+                    item.QuestId = questId;
+                    item.TextAnswer = Helper.RemoveExtraCharacters(textAnswer);
+
+                    newAnswers.Add(item);
+                    Flag = true;
+                }
+                i++;
+            } while (Flag);
+
+            return Helper.UpdateAnswer(oldAnswers, newAnswers, currentQuestId)
+                ? new HttpStatusCodeResult(200)
+                : new HttpStatusCodeResult(500);
+        }
+
+        public ActionResult DeleteAnswer()
+        {
+            var r = Request.Params;
+            int questId, id;
+
+            try
+            {
+                id = Int32.Parse(Request.Params["Answer[Id]"]);
+            }
+            catch (Exception)
+            {
+                id = 0;
+            }
+
+            try
+            {
+                questId = Int32.Parse(Request.Params["Answer[QuestId]"]);
+            }
+            catch (Exception)
+            {
+                questId = 0;
+            }
+
+            string textAnswer = Request.Params["Answer[TextAnswer]"];
+
+            if (id != 0 || questId != 0)
+            {
+                return DatabaseND.DeleteAnswers(id)
+                    ? new HttpStatusCodeResult(200)
+                    : new HttpStatusCodeResult(500);
+            }
+
+            return new HttpStatusCodeResult(200);
+        }
     }
 }

@@ -1011,6 +1011,111 @@ namespace Dplm.Models
                 }
             }
         }
+
+        /// <summary>
+        /// Создать ответ на задание
+        /// </summary>
+        /// <param name="questId">id задания</param>
+        /// <param name="answer">текст ответа</param>
+        /// <returns></returns>
+        public static bool CreateAnswers(int questId, string answer)
+        {
+            using (var connection = new SqlConnection(ConnectionString))
+            {
+                connection.Open();
+
+                using (var cmd = connection.CreateCommand())
+                {
+                    cmd.CommandType = CommandType.Text;
+                    cmd.CommandText = "INSERT INTO [Answers] (questId, answer) " +
+                                      "VALUES(@questId, @answer) ";
+
+                    cmd.Parameters.AddWithValue("@questId", questId);
+                    cmd.Parameters.AddWithValue("@answer", answer);
+
+                    try
+                    {
+                        cmd.ExecuteNonQuery();
+                        return true;
+                    }
+                    catch
+                    {
+                        return false;
+                        // TODO сделать лог
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Обновить ответ на задание
+        /// </summary>
+        /// <param name="answerId">id ответа</param>
+        /// <param name="answer">Текст ответа</param>
+        /// <returns></returns>
+        public static bool UpdateAnswers(int answerId, string answer)
+        {
+            using (var connection = new SqlConnection(ConnectionString))
+            {
+                connection.Open();
+
+                using (var cmd = connection.CreateCommand())
+                {
+                    cmd.CommandType = CommandType.Text;
+                    cmd.CommandText = "UPDATE [Answers] " +
+                                      "SET answer = @answer " +
+                                      "WHERE Id = @answerId";
+
+                    cmd.Parameters.AddWithValue("@answer", answer);
+                    cmd.Parameters.AddWithValue("@answerId", answerId);
+
+                    try
+                    {
+                        cmd.ExecuteNonQuery();
+                        return true;
+                    }
+                    catch
+                    {
+                        return false;
+                        // TODO сделать лог
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Удалить ответ на задание
+        /// </summary>
+        /// <param name="answerId">Id ответа</param>
+        /// <returns></returns>
+        public static bool DeleteAnswers(int answerId)
+        {
+            using (var connection = new SqlConnection(ConnectionString))
+            {
+                connection.Open();
+
+                using (var cmd = connection.CreateCommand())
+                {
+                    cmd.CommandType = CommandType.Text;
+                    cmd.CommandText = "DELETE " +
+                                      "FROM [Answers] " +
+                                      "WHERE Id = @answerId";
+
+                    cmd.Parameters.AddWithValue("@answerId", answerId);
+
+                    try
+                    {
+                        cmd.ExecuteNonQuery();
+                        return true;
+                    }
+                    catch
+                    {
+                        return false;
+                        // TODO сделать лог
+                    }
+                }
+            }
+        }
     }
 }
 

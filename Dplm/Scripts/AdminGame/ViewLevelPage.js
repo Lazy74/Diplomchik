@@ -3,9 +3,30 @@
         console.log("getContentLVL");
         return $.get('/Administration/EditGameInformation/GetLevelPage', { gameId: window.gameId, lvl: window.lvl });
     },
+
     getContentAnswer: function () {
         console.log("getContentAnswers");
         return $.get('/Administration/EditGameInformation/GetAnswersOnLvl', { questId: window.lvlId });
+    },
+
+    updateContentAnswer: function (datas) {
+
+        for (var i = 0; i < datas.length; i++) {
+            console.log(datas[i]);
+        }
+
+        $.post('/Administration/EditGameInformation/UpdateAnswersOnLvl', { Answer: datas, gameId: window.gameId, lvl: window.lvl })
+        .done(function () {
+            alert("Ответы обновлены");
+            loadContent();
+        })
+        .fail(function () {
+            alert("Ошибка во время сохранения ответов");
+        });
+    },
+
+    deleteAnswer: function (data) {
+        $.post('/Administration/EditGameInformation/DeleteAnswer', { Answer: data });
     }
 }
 
@@ -27,9 +48,14 @@ function ViewModel1() {
 
     this.save = function () {
         //model.saveContent();
+
+        var Answ = this.questAnswers();
+
+        model.updateContentAnswer(Answ);
     }
 
     this.remove = function (obj) {
+        model.deleteAnswer(obj);
         that.questAnswers.remove(obj);
     }
 
@@ -46,10 +72,10 @@ function loadContent() {
         that.textQuest(content.TextQuest);
         window.lvlId = content.Id;
 
-        model.getContentAnswer()
+        model.getContentAnswer(that.questAnswers())
         .done(function (data) {
-                viewModel1.questAnswers(data);
-            })
+            viewModel1.questAnswers(data);
+        })
         .fail(function (data) {
         });
     })

@@ -216,6 +216,37 @@ namespace Dplm
                     controller = "AdminGame",
                     action = "GetAnswersOnLvl"
                 });
+
+            // Для запроса на обновление уровня
+            routes.MapRoute(
+                name: "UpdateLevel",
+                url: "Administration/EditGameInformation/UpdateLevel",
+                defaults: new
+                {
+                    controller = "AdminGame",
+                    action = "UpdateLevel"
+                });
+
+            // Для запроса на обновление списка ответов
+            routes.MapRoute(
+                name: "UpdateAnswersOnLvl",
+                url: "Administration/EditGameInformation/UpdateAnswersOnLvl",
+                defaults: new
+                {
+                    controller = "AdminGame",
+                    action = "UpdateAnswersOnLvl"
+                });
+
+
+            // Для запроса на удаление ответа
+            routes.MapRoute(
+                name: "DeleteAnswer",
+                url: "Administration/EditGameInformation/DeleteAnswer",
+                defaults: new
+                {
+                    controller = "AdminGame",
+                    action = "DeleteAnswer"
+                });
         }
     }
 }
