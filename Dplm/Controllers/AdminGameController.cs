@@ -130,8 +130,16 @@ namespace Dplm.Controllers
 
         public ActionResult UpdateLevel()
         {
-            var r = Request.Params;
-            return new HttpStatusCodeResult(200);
+            Quest quest = new Quest();
+
+            quest.AuthorComment = Request.Params["authorComment"];      // Есть
+            quest.GameId = Int32.Parse(Request.Params["gameId"]);
+            quest.NumberLevel = Int32.Parse(Request.Params["lvl"]);
+            quest.TextQuest = Request.Params["textQuest"];              // Есть
+            quest.TimeOut = Int32.Parse(Request.Params["timeout"]);     // Есть
+            return DatabaseND.UpdateQuest(quest)
+                ? new HttpStatusCodeResult(200)
+                : new HttpStatusCodeResult(500);
         }
 
         public ActionResult UpdateAnswersOnLvl()

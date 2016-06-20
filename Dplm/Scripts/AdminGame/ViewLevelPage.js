@@ -3,28 +3,38 @@
         console.log("getContentLVL");
         return $.get('/Administration/EditGameInformation/GetLevelPage', { gameId: window.gameId, lvl: window.lvl });
     },
-
     getContentAnswer: function () {
         console.log("getContentAnswers");
         return $.get('/Administration/EditGameInformation/GetAnswersOnLvl', { questId: window.lvlId });
     },
-
-    updateContentAnswer: function (datas) {
-
-        for (var i = 0; i < datas.length; i++) {
-            console.log(datas[i]);
-        }
-
-        $.post('/Administration/EditGameInformation/UpdateAnswersOnLvl', { Answer: datas, gameId: window.gameId, lvl: window.lvl })
-        .done(function () {
-            alert("Ответы обновлены");
-            loadContent();
+    saveContent: function (answer, authorComment, timeout, textQuest) {
+        //new Promise(function () {
+        //});
+        var s1 = $.post('/Administration/EditGameInformation/UpdateLevel', {
+            authorComment: authorComment,
+            timeout: timeout,
+            textQuest: textQuest,
+            gameId: window.gameId,
+            lvl: window.lvl
         })
-        .fail(function () {
-            alert("Ошибка во время сохранения ответов");
+            .done(function () {
+                //var lvlText = "Информация об уровне обновлена!";
+            })
+            .fail(function () {
+                alert("Ошибка во время сохранения информации об уровне");
+                //var lvlText = "Информация об уровне не обновлена!";
+            });
+        var s2 = $.post('/Administration/EditGameInformation/UpdateAnswersOnLvl', { Answer: answer, gameId: window.gameId, lvl: window.lvl })
+            .done(function () {
+            })
+            .fail(function () {
+                alert("Ошибка во время сохранения ответов");
+            });
+        $.when(s1, s2).then(function() {
+            alert("Информация обновлена!");
+            loadContent();
         });
     },
-
     deleteAnswer: function (data) {
         $.post('/Administration/EditGameInformation/DeleteAnswer', { Answer: data });
     }
@@ -47,11 +57,11 @@ function ViewModel1() {
     that = this;
 
     this.save = function () {
-        //model.saveContent();
+        //model.updateContentLvl();
+        //var Answ = this.questAnswers();
+        //model.updateContentAnswer(Answ);
 
-        var Answ = this.questAnswers();
-
-        model.updateContentAnswer(Answ);
+        model.saveContent(that.questAnswers(), that.authorComment(), that.timeout(), that.textQuest());
     }
 
     this.remove = function (obj) {
@@ -84,3 +94,28 @@ function loadContent() {
     });
 }
 
+
+
+//Возможно больше не пригодится
+//updateContentAnswer: function (answer) {
+
+//    for (var i = 0; i < answer.length; i++) {
+//        console.log(answer[i]);
+//    }
+
+//    $.post('/Administration/EditGameInformation/UpdateAnswersOnLvl', { Answer: answer, gameId: window.gameId, lvl: window.lvl })
+//    .done(function () {
+//        alert("Ответы обновлены");
+//        loadContent();
+//    })
+//    .fail(function () {
+//        alert("Ошибка во время сохранения ответов");
+//    });
+//},
+//updateContentLvl: function (authorComment, timeout, textQuest) {
+//    $.post('/Administration/EditGameInformation/UpdateLevel', {
+//        authorComment: authorComment,
+//        timeout: timeout,
+//        textQuest: textQuest
+//    });
+//},

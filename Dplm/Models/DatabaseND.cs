@@ -891,7 +891,6 @@ namespace Dplm.Models
             }
         }
 
-
         /// <summary>
         /// Обновить информацию об игре
         ///</summary>
@@ -967,6 +966,49 @@ namespace Dplm.Models
                         // TODO сделать лог
                     }
 
+                }
+            }
+        }
+
+        /// <summary>
+        /// Обновить ответ на задание
+        /// </summary>
+        /// <param name="answerId">id ответа</param>
+        /// <param name="answer">Текст ответа</param>
+        /// <returns></returns>
+        public static bool UpdateQuest(Quest quest)
+        {
+            using (var connection = new SqlConnection(ConnectionString))
+            {
+                connection.Open();
+
+                using (var cmd = connection.CreateCommand())
+                {
+                    cmd.CommandType = CommandType.Text;
+                    cmd.CommandText = "UPDATE [Quest] " +
+                                      "SET " +
+                                      "authorComment = @authorComment," +
+                                      "timeout = @timeout, " +
+                                      "textQuest = @textQuest " +
+                                      "WHERE " +
+                                      "gameId = @gameId and numberLevel = @numberLevel";
+
+                    cmd.Parameters.AddWithValue("@authorComment", quest.AuthorComment);
+                    cmd.Parameters.AddWithValue("@timeout", quest.TimeOut);
+                    cmd.Parameters.AddWithValue("@textQuest", quest.TextQuest);
+                    cmd.Parameters.AddWithValue("@gameId", quest.GameId);
+                    cmd.Parameters.AddWithValue("@numberLevel", quest.NumberLevel);
+
+                    try
+                    {
+                        cmd.ExecuteNonQuery();
+                        return true;
+                    }
+                    catch (Exception e)
+                    {
+                        return false;
+                        // TODO сделать лог
+                    }
                 }
             }
         }
