@@ -6,7 +6,7 @@
 
     saveContent: function(nameGame, sequence, distance, startGame, endGame, infoContent) {
         debugger;
-        $.post('/UpdateInfoGame/', {
+        $.post('/Administration/UpdateInfoGame/', {
             id: window.currentGameId,
             nameGame: nameGame,
             sequence: sequence,
