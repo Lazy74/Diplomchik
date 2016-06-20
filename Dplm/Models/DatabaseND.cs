@@ -68,8 +68,8 @@ namespace Dplm.Models
                 {
                     cmd.CommandType = CommandType.Text;
 
-                    cmd.CommandText = "SELECT * " + 
-                        "FROM [users] " + 
+                    cmd.CommandText = "SELECT * " +
+                        "FROM [users] " +
                         " WHERE userLogin = @login";
 
                     cmd.Parameters.AddWithValue("@login", Login.ToLower());
@@ -106,7 +106,7 @@ namespace Dplm.Models
                     }
                 }
             }
-                return null; 
+            return null;
         }
 
         /// <summary>
@@ -239,14 +239,14 @@ namespace Dplm.Models
                     cmd.Parameters.AddWithValue("@birth", oldPeople.Birthday);
                     cmd.Parameters.AddWithValue("@vk", oldPeople.LinkVK);
                     cmd.Parameters.AddWithValue("@Id", oldPeople.Id);
-                    
+
 
                     try
                     {
                         cmd.ExecuteNonQuery();     // синхронно
                         return true;
                     }
-                    catch(Exception e)
+                    catch (Exception e)
                     {
                         return false;
                         // TODO сделать лог
@@ -255,7 +255,7 @@ namespace Dplm.Models
                 }
             }
         }
-        
+
         /// <summary>
         /// Получить соотношение игрока к команде. -1 если нигде не состоит
         ///</summary>
@@ -506,7 +506,7 @@ namespace Dplm.Models
             //quest.TimeOut = 40;
 
             return quest;
-            }
+        }
 
         /// <summary>
         /// Получить список команд, которые играют в эту игру
@@ -572,14 +572,14 @@ namespace Dplm.Models
 
                     using (var reader = cmd.ExecuteReader())
                     {
-                        List<LvlAndTime> foo =new List<LvlAndTime>();
+                        List<LvlAndTime> foo = new List<LvlAndTime>();
 
                         while (reader.Read())
                         {
                             //foo.Add((int) reader["numberLevel"]);
                             LvlAndTime buff = new LvlAndTime();
-                            buff.numburLVL = 1 + (int) reader["numberLevel"];
-                            buff.StartLVL = (DateTime) reader["answerTime"];
+                            buff.numburLVL = 1 + (int)reader["numberLevel"];
+                            buff.StartLVL = (DateTime)reader["answerTime"];
                             foo.Add(buff);
                         }
 
@@ -635,7 +635,7 @@ namespace Dplm.Models
 
                     using (var reader = cmd.ExecuteReader())
                     {
-                        if(reader.Read())
+                        if (reader.Read())
                         {
                             return true;
                         }
@@ -653,7 +653,7 @@ namespace Dplm.Models
         /// </summary>
         /// <param name="gameId">ID игры</param>
         /// <returns></returns>
-        public static List<int> GetTimeoutAllQuest (int gameId)
+        public static List<int> GetTimeoutAllQuest(int gameId)
         {
             using (var connection = new SqlConnection(ConnectionString))
             {
@@ -753,7 +753,7 @@ namespace Dplm.Models
                         {
                             Game game = new Game();
 
-                            game.Id = (int) reader["Id"];
+                            game.Id = (int)reader["Id"];
                             game.NameGame = (string)reader["nameGame"];
                             game.AmountLevels = (int)reader["authorId"];
                             game.Sequence = (string)reader["sequence"];
@@ -792,7 +792,7 @@ namespace Dplm.Models
 
                     cmd.Parameters.AddWithValue("@playerId", peopleId);
                     cmd.Parameters.AddWithValue("@teamId", teamId);
-                    
+
                     try
                     {
                         cmd.ExecuteNonQuery();
@@ -971,12 +971,11 @@ namespace Dplm.Models
             }
         }
 
-
         /// <summary>
         /// Получить список ответов на уровень
         /// </summary>
         /// <returns></returns>
-        public static List<Answers> GetListAnswersOnLvl(int questId)
+        public static List<Answer> GetListAnswersOnLvl(int questId)
         {
             using (var connection = new SqlConnection(ConnectionString))
             {
@@ -994,14 +993,14 @@ namespace Dplm.Models
 
                     using (var reader = cmd.ExecuteReader())
                     {
-                        var result = new List<Answers>();
+                        var result = new List<Answer>();
 
                         while (reader.Read())
                         {
-                            Answers game = new Answers();
+                            Answer game = new Answer();
 
                             game.Id = (int)reader["Id"];
-                            game.Answer = (string)reader["answer"];
+                            game.TextAnswer = (string)reader["answer"];
                             game.QuestId = (int)reader["questId"];
 
                             result.Add(game);

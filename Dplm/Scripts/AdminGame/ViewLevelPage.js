@@ -16,7 +16,6 @@ function loadPage() {
 }
 
 var that;
-//window.lvlId = 0;
 
 function ViewModel1() {
     this.authorComment = ko.observable();
@@ -35,7 +34,7 @@ function ViewModel1() {
     }
 
     this.add = function () {
-        this.questAnswers.push({ Answer: '' });
+        this.questAnswers.push({ TextAnswer: '' });
     }
 }
 

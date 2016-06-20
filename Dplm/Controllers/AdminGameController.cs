@@ -110,8 +110,8 @@ namespace Dplm.Controllers
             int gameId = Int32.Parse(Request.Params["gameId"]);
             int lvl = Int32.Parse(Request.Params["lvl"]);
 
-            ViewBag.gameId = gameId;
-            ViewBag.lvl = lvl;
+            //ViewBag.gameId = gameId;
+            //ViewBag.lvl = lvl;
 
             Quest data = DatabaseND.GetQuest(gameId, lvl);
 
@@ -123,7 +123,7 @@ namespace Dplm.Controllers
         public ActionResult GetAnswersOnLvl()
         {
             int questId = Int32.Parse(Request.Params["questId"]);
-            List<Answers> answers = new List<Answers>();
+            List<Answer> answers = new List<Answer>();
             answers = DatabaseND.GetListAnswersOnLvl(questId);
             return Json(answers, JsonRequestBehavior.AllowGet);
         }
