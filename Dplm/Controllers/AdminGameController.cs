@@ -52,6 +52,15 @@ namespace Dplm.Controllers
 
             //ViewBag.game = res.Data;
 
+            List<Quest> quests = DatabaseND.GetListQuest(gameId);
+
+            List<string> tableRows = new List<string>();
+            foreach (Quest quest in quests)
+            {
+                tableRows.Add("<tr><td>" + quest.NumberLevel + "</td><td>" + quest.NameLevel + "</td><td><a href=\"/Administration/EditGameInformation/ViewLevelPage?gameId=" + gameId + "&lvl=" + quest.NumberLevel + "\">Редактировать</a></td></tr>");
+            }
+
+            ViewBag.TableRows = tableRows;
             ViewBag.Id = gameId;
 
             return View();
@@ -128,10 +137,12 @@ namespace Dplm.Controllers
             return Json(answers, JsonRequestBehavior.AllowGet);
         }
 
+        [ValidateInput(false)]
         public ActionResult UpdateLevel()
         {
             Quest quest = new Quest();
 
+            quest.NameLevel = Request.Params["nameLevel"];      // Есть
             quest.AuthorComment = Request.Params["authorComment"];      // Есть
             quest.GameId = Int32.Parse(Request.Params["gameId"]);
             quest.NumberLevel = Int32.Parse(Request.Params["lvl"]);

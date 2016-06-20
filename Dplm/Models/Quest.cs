@@ -7,7 +7,6 @@ namespace Dplm.Models
 {
     public class Quest
     {
-
         /// <summary>
         /// ID задания
         /// </summary>
@@ -17,6 +16,11 @@ namespace Dplm.Models
         /// Порядковый номер уровня в игре
         /// </summary>
         public int NumberLevel { get; set; }
+
+        /// <summary>
+        /// Название уровня
+        /// </summary>
+        public string NameLevel { get; set; }
 
         /// <summary>
         /// Коментарий автора

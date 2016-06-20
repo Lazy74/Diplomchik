@@ -491,6 +491,7 @@ namespace Dplm.Models
                             quest.AuthorComment = (string)reader["authorComment"];
                             quest.TimeOut = (int)reader["timeout"];
                             quest.TextQuest = (string)reader["textQuest"];
+                            quest.NameLevel = (string)reader["nameLevel"];
                         }
                         return quest;
                     }
@@ -973,8 +974,7 @@ namespace Dplm.Models
         /// <summary>
         /// Обновить ответ на задание
         /// </summary>
-        /// <param name="answerId">id ответа</param>
-        /// <param name="answer">Текст ответа</param>
+        /// <param name="quest">Модель уровня</param>
         /// <returns></returns>
         public static bool UpdateQuest(Quest quest)
         {
@@ -987,12 +987,14 @@ namespace Dplm.Models
                     cmd.CommandType = CommandType.Text;
                     cmd.CommandText = "UPDATE [Quest] " +
                                       "SET " +
+                                      "nameLevel = @nameLevel," +
                                       "authorComment = @authorComment," +
                                       "timeout = @timeout, " +
                                       "textQuest = @textQuest " +
                                       "WHERE " +
                                       "gameId = @gameId and numberLevel = @numberLevel";
 
+                    cmd.Parameters.AddWithValue("@nameLevel", quest.NameLevel);
                     cmd.Parameters.AddWithValue("@authorComment", quest.AuthorComment);
                     cmd.Parameters.AddWithValue("@timeout", quest.TimeOut);
                     cmd.Parameters.AddWithValue("@textQuest", quest.TextQuest);
@@ -1154,6 +1156,52 @@ namespace Dplm.Models
                     {
                         return false;
                         // TODO сделать лог
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Получить список уровней в задании
+        /// </summary>
+        /// <param name="gameId">Id игры</param>
+        /// <returns></returns>
+        public static List<Quest> GetListQuest(int gameId)
+        {
+            using (var connection = new SqlConnection(ConnectionString))
+            {
+                connection.Open();
+
+                using (var cmd = connection.CreateCommand())
+                {
+                    cmd.CommandType = CommandType.Text;
+
+                    cmd.CommandText = "SELECT * " +
+                                      "FROM [Quest] " +
+                                      "WHERE gameId = @gameId;";
+
+                    cmd.Parameters.AddWithValue("@gameId", gameId);
+
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        var result = new List<Quest>();
+
+                        while (reader.Read())
+                        {
+                            Quest quest = new Quest();
+
+                            quest.Id = (int)reader["Id"];
+                            quest.GameId = (int)reader["gameId"];
+                            quest.NumberLevel = (int)reader["numberLevel"];
+                            quest.NameLevel = (string)reader["nameLevel"];
+                            quest.AuthorComment = (string)reader["authorComment"];
+                            quest.TimeOut = (int)reader["timeout"];
+                            quest.TextQuest = (string)reader["textQuest"];
+
+                            result.Add(quest);
+                        }
+
+                        return result;
                     }
                 }
             }

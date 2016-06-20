@@ -78,22 +78,12 @@
         <th>Название</th>
         <th>Действие</th>
     </tr>
-    <tr>
-        <td>1</td>
-        <td>Первый уровень</td>
-        <td>
-            <a href="" target="_blank">Удалить(Возможно не стоит тут удалять)</a>
-            <a href="" target="_blank">Редактировать</a>
-        </td>
-    </tr>
-    <tr>
-        <td>2</td>
-        <td>Вротой уровень</td>
-        <td>
-            <a href="" target="_blank">Удалить(Возможно не стоит тут удалять)</a>
-            <a href="" target="_blank">Редактировать</a>
-        </td>
-    </tr>
+    @{
+        foreach (var tableRow in ViewBag.TableRows)
+        {
+            @Html.Raw(tableRow)
+        }
+    }
 </table>
 
     <script>

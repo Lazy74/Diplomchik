@@ -7,10 +7,11 @@
         console.log("getContentAnswers");
         return $.get('/Administration/EditGameInformation/GetAnswersOnLvl', { questId: window.lvlId });
     },
-    saveContent: function (answer, authorComment, timeout, textQuest) {
+    saveContent: function (answer, authorComment, timeout, textQuest, nameLevel) {
         //new Promise(function () {
         //});
         var s1 = $.post('/Administration/EditGameInformation/UpdateLevel', {
+            nameLevel: nameLevel,
             authorComment: authorComment,
             timeout: timeout,
             textQuest: textQuest,
@@ -30,7 +31,7 @@
             .fail(function () {
                 alert("Ошибка во время сохранения ответов");
             });
-        $.when(s1, s2).then(function() {
+        $.when(s1, s2).then(function () {
             alert("Информация обновлена!");
             loadContent();
         });
@@ -52,6 +53,7 @@ function ViewModel1() {
     this.authorComment = ko.observable();
     this.timeout = ko.observable();
     this.textQuest = ko.observable();
+    this.nameLevel = ko.observable();
     this.questAnswers = ko.observableArray();
 
     that = this;
@@ -61,7 +63,7 @@ function ViewModel1() {
         //var Answ = this.questAnswers();
         //model.updateContentAnswer(Answ);
 
-        model.saveContent(that.questAnswers(), that.authorComment(), that.timeout(), that.textQuest());
+        model.saveContent(that.questAnswers(), that.authorComment(), that.timeout(), that.textQuest(), that.nameLevel());
     }
 
     this.remove = function (obj) {
@@ -80,6 +82,7 @@ function loadContent() {
         that.authorComment(content.AuthorComment);
         that.timeout(content.TimeOut);
         that.textQuest(content.TextQuest);
+        that.nameLevel(content.NameLevel);
         window.lvlId = content.Id;
 
         model.getContentAnswer(that.questAnswers())
