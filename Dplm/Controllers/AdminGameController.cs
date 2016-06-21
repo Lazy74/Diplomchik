@@ -36,7 +36,7 @@ namespace Dplm.Controllers
 
                 foreach (Game game in games)
                 {
-                    tableRows.Add("<tr><td><a href=\"/Administration/EditGameInformation/id=" + game.Id + "\">" + game.NameGame + "</a></td><td>" + game.StartGame + "</td><td><a href=\"ManagementTeamPlay?gameId="+game.Id+"\">Принять команды к участию</a></td></tr>");
+                    tableRows.Add("<tr><td><a href=\"/Administration/EditGameInformation/id=" + game.Id + "\">" + game.NameGame + "</a></td><td>" + game.StartGame + "</td><td><a href=\"ManagementTeamPlay?gameId=" + game.Id + "\">Принять команды к участию</a></td></tr>");
                 }
             }
 
@@ -326,6 +326,24 @@ namespace Dplm.Controllers
             return Flag
                 ? new HttpStatusCodeResult(200)
                 : new HttpStatusCodeResult(500);
+        }
+
+        public ActionResult CreateGame()
+        {
+            if (Response.Cookies["hash"].Value == null)
+            {
+                return new HttpUnauthorizedResult();
+            }
+
+            People people = new People();
+
+            Authorizated.Data.TryGetValue(Response.Cookies["hash"].Value, out people);
+
+            int gameId = DatabaseND.CreateGame(people.Id);
+
+            DatabaseND.AddAuthorGame(people.Id, gameId);
+
+            return Json(gameId,JsonRequestBehavior.AllowGet);
         }
     }
 }

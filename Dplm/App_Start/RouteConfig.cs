@@ -174,8 +174,8 @@ namespace Dplm
                 {
                     controller = "AdminGame",
                     action = "GetFullInfoGame"
-                });            
-            
+                });
+
             // Получить обновленную информацию об игре 
             routes.MapRoute(
                 name: "UpdateInfoGame",
@@ -276,7 +276,17 @@ namespace Dplm
                 {
                     controller = "AdminGame",
                     action = "AddOrRemoveApplication"
-                }); 
+                });
+
+            // Для запроса на создание игры
+            routes.MapRoute(
+                name: "CreateGame",
+                url: "Administration/CreateGame",
+                defaults: new
+                {
+                    controller = "AdminGame",
+                    action = "CreateGame"
+                });
         }
     }
 }

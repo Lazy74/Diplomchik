@@ -112,6 +112,7 @@
     <Content Include="Content\Site.css" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
+    <Content Include="Scripts\AdminGame\HomePage.js" />
     <Content Include="Scripts\AdminGame\ViewLevelPage.js" />
     <Content Include="Scripts\AdminGame\ViewGamePage.js" />
     <Content Include="Scripts\bootstrap.min.js" />

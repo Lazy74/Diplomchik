@@ -1355,6 +1355,72 @@ namespace Dplm.Models
                 }
             }
         }
+
+        public static int CreateGame(int id)
+        {
+            using (var connection = new SqlConnection(ConnectionString))
+            {
+                connection.Open();
+
+                using (var cmd = connection.CreateCommand())
+                {
+                    cmd.CommandType = CommandType.Text;
+                    cmd.CommandText = "INSERT INTO [Game] (nameGame, authorId, sequence, distance, startGame, endGame, info, amountLevels ) " +
+                                      "VALUES(@nameGame, @authorId, @sequence, @distance, @startGame, @endGame, @info, @amountLevels) " +
+                                      "SELECT SCOPE_IDENTITY() as 'Id'";
+
+                    cmd.Parameters.AddWithValue("@nameGame", "New Game");
+                    cmd.Parameters.AddWithValue("@authorId", id);
+                    cmd.Parameters.AddWithValue("@sequence", "Линейная");
+                    cmd.Parameters.AddWithValue("@distance", 50);
+                    cmd.Parameters.AddWithValue("@startGame", new DateTime(2000, 1, 1, 20, 00, 00));
+                    cmd.Parameters.AddWithValue("@endGame", new DateTime(2000, 1, 1, 20, 00, 00));
+                    cmd.Parameters.AddWithValue("@info", "");
+                    cmd.Parameters.AddWithValue("@amountLevels", 1);
+
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        int gameId = -1;
+
+                        if (reader.Read())
+                        {
+                            gameId = Convert.ToInt32(reader["Id"]);
+                            return gameId;
+                        }
+                        return gameId;
+                    }
+                }
+            }
+        }
+
+        public static bool AddAuthorGame(int idAuthor, int idGame)
+        {
+            using (var connection = new SqlConnection(ConnectionString))
+            {
+                connection.Open();
+
+                using (var cmd = connection.CreateCommand())
+                {
+                    cmd.CommandType = CommandType.Text;
+                    cmd.CommandText = "INSERT INTO [AuthorGame] (idAuthor, idGame) " +
+                                      "VALUES(@idAuthor, @idGame) ";
+
+                    cmd.Parameters.AddWithValue("@idAuthor", idAuthor);
+                    cmd.Parameters.AddWithValue("@idGame", idGame);
+
+                    try
+                    {
+                        cmd.ExecuteNonQuery();
+                        return true;
+                    }
+                    catch (Exception e)
+                    {
+                        return false;
+                        // TODO сделать лог
+                    }
+                }
+            }
+        }
     }
 }
 
