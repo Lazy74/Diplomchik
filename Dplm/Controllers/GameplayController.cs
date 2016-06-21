@@ -79,6 +79,11 @@ namespace Dplm.Controllers
                 }
                 //time = lvlDB.StartLVL;
             }
+            if (lvlDB.numburLVL > game.AmountLevels)
+            {
+                ViewBag.Message = "Игра окончена";
+                return View("NoGamePage");
+            }
 
             LvlAndTime currentLvl = Helper.CorrectionLevel(game, lvlDB);
 

@@ -57,7 +57,7 @@ namespace Dplm.Models
             if (lvlAndTime.numburLVL == 1)
             {
                 // Если команда на 1 уровне, старт берем от начала игры
-                timeStartLvl = game.StartGame; 
+                timeStartLvl = game.StartGame;
                 timeEndLvl = timeStartLvl.AddMinutes(timeout[i]);
             }
             else
@@ -66,14 +66,12 @@ namespace Dplm.Models
                 i = lvlAndTime.numburLVL - 1;
                 timeStartLvl = lvlAndTime.StartLVL;
                 timeEndLvl = timeStartLvl.AddMinutes(timeout[i]);
-
-                // Ошибка если последнее задание в игре
             }
 
 
             i++;
 
-            while (!(timeStartLvl< DateTime.Now & timeEndLvl>DateTime.Now) & i < timeout.Count)
+            while (!(timeStartLvl < DateTime.Now & timeEndLvl > DateTime.Now) & i < timeout.Count)
             {
                 timeStartLvl = timeEndLvl;
                 timeEndLvl = timeStartLvl.AddMinutes(timeout[i]);
@@ -117,7 +115,7 @@ namespace Dplm.Models
 
         //    foreach (Game game in games)
         //    {
-                
+
         //    }
         //}
 
