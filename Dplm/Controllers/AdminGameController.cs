@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Mime;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Web;
 using System.Web.Mvc;
@@ -35,7 +36,7 @@ namespace Dplm.Controllers
 
                 foreach (Game game in games)
                 {
-                    tableRows.Add("<tr><td><a href=\"/Administration/EditGameInformation/id=" + game.Id + "\">" + game.NameGame + "</a></td><td>" + game.StartGame + "</td></tr>");
+                    tableRows.Add("<tr><td><a href=\"/Administration/EditGameInformation/id=" + game.Id + "\">" + game.NameGame + "</a></td><td>" + game.StartGame + "</td><td><a href=\"ManagementTeamPlay?gameId="+game.Id+"\">Принять команды к участию</a></td></tr>");
                 }
             }
 
@@ -230,7 +231,6 @@ namespace Dplm.Controllers
 
         public ActionResult DeleteAnswer()
         {
-            var r = Request.Params;
             int questId, id;
 
             try
@@ -255,12 +255,77 @@ namespace Dplm.Controllers
 
             if (id != 0 || questId != 0)
             {
-                return DatabaseND.DeleteAnswers(id)
+                return DatabaseND.RemoveAnswers(id)
                     ? new HttpStatusCodeResult(200)
                     : new HttpStatusCodeResult(500);
             }
 
             return new HttpStatusCodeResult(200);
+        }
+
+        public ActionResult ManagementTeamPlayPage()
+        {
+            int gameId = Int32.Parse(Request.Params["gameId"]);
+            List<string> tableRows = new List<string>();
+
+            List<TeamPlay> teamPlays = DatabaseND.GetListTeamPlay(gameId);
+
+            foreach (TeamPlay teamPlay in teamPlays)
+            {
+                string textPlay = teamPlay.Access ? "Приняты" : "Не приняты";
+                string href = teamPlay.Access ? "ManagementTeamPlay/UpdateTeamPlay?Id=" + teamPlay.Id + "&access=0" : "ManagementTeamPlay/UpdateTeamPlay?Id=" + teamPlay.Id + "&access=1";
+
+                tableRows.Add("<tr><td>" + DatabaseND.GetTeam(teamPlay.TeamId).Name + "</td><td>" + textPlay + "</td><td><a href=\"" + href + "\">Изменить</a></td></tr>");
+            }
+
+            ViewBag.TableRows = tableRows;
+
+            return View();
+        }
+
+        public ActionResult UpdateTeamPlay()
+        {
+            int id = Int32.Parse(Request.Params["Id"]);
+            bool access = Int32.Parse(Request.Params["access"]) != 0;
+
+            DatabaseND.UpdateTeamPlay(id, access);
+            // Administration/ManagementTeamPlay/UpdateTeamPlay?Id=2&access=1
+            return new HttpStatusCodeResult(200);
+        }
+
+        public ActionResult AddOrRemoveApplication()
+        {
+            int gameId = Int32.Parse(Request.Params["gameId"]);
+
+            if (Response.Cookies["hash"].Value == null)
+            {
+                return new HttpUnauthorizedResult();
+            }
+
+            People people = new People();
+
+            Authorizated.Data.TryGetValue(Response.Cookies["hash"].Value, out people);
+
+            int teamId = DatabaseND.ComplianceTeamPlayer(people.Id);
+
+            List<TeamPlay> teamPlays = new List<TeamPlay>();
+            teamPlays = DatabaseND.GetListTeamPlay(gameId);
+
+            bool access = teamPlays.Any(t => t.TeamId == teamId);
+
+            bool Flag;
+            if (access)
+            {
+                Flag = DatabaseND.RemoveApplication(gameId, teamId);
+            }
+            else
+            {
+                Flag = DatabaseND.AddApplication(gameId, teamId);
+            }
+
+            return Flag
+                ? new HttpStatusCodeResult(200)
+                : new HttpStatusCodeResult(500);
         }
     }
 }

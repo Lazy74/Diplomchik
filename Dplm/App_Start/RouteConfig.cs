@@ -247,6 +247,36 @@ namespace Dplm
                     controller = "AdminGame",
                     action = "DeleteAnswer"
                 });
+
+            // Страница управления игроющими командами
+            routes.MapRoute(
+                name: "ManagementTeamPlayPage",
+                url: "Administration/ManagementTeamPlay",
+                defaults: new
+                {
+                    controller = "AdminGame",
+                    action = "ManagementTeamPlayPage"
+                });
+
+            // Для изменения записи об игроющей команде
+            routes.MapRoute(
+                name: "UpdateTeamPlay",
+                url: "Administration/ManagementTeamPlay/UpdateTeamPlay",
+                defaults: new
+                {
+                    controller = "AdminGame",
+                    action = "UpdateTeamPlay"
+                });
+
+            // Для запроса на добавление или удаление заявки
+            routes.MapRoute(
+                name: "AddOrRemoveApplication",
+                url: "Administration/ManagementTeamPlay/Application",
+                defaults: new
+                {
+                    controller = "AdminGame",
+                    action = "AddOrRemoveApplication"
+                }); 
         }
     }
 }

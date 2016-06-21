@@ -1132,7 +1132,7 @@ namespace Dplm.Models
         /// </summary>
         /// <param name="answerId">Id ответа</param>
         /// <returns></returns>
-        public static bool DeleteAnswers(int answerId)
+        public static bool RemoveAnswers(int answerId)
         {
             using (var connection = new SqlConnection(ConnectionString))
             {
@@ -1202,6 +1202,155 @@ namespace Dplm.Models
                         }
 
                         return result;
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Получить команд подавших заявки
+        /// </summary>
+        /// <param name="gameId">Id игры</param>
+        /// <returns></returns>
+        public static List<TeamPlay> GetListTeamPlay(int gameId)
+        {
+            using (var connection = new SqlConnection(ConnectionString))
+            {
+                connection.Open();
+
+                using (var cmd = connection.CreateCommand())
+                {
+                    cmd.CommandType = CommandType.Text;
+
+                    cmd.CommandText = "SELECT * " +
+                                      "FROM [GamingTeam] " +
+                                      "WHERE gameId = @gameId;";
+
+                    cmd.Parameters.AddWithValue("@gameId", gameId);
+
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        var result = new List<TeamPlay>();
+
+                        while (reader.Read())
+                        {
+                            TeamPlay quest = new TeamPlay();
+
+                            quest.Id = (int)reader["Id"];
+                            quest.GameId = (int)reader["gameId"];
+                            quest.TeamId = (int)reader["teamId"];
+                            quest.Access = (bool)reader["access"];
+
+                            result.Add(quest);
+                        }
+
+                        return result;
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Изменить запись по заявке на игру
+        /// </summary>
+        /// <returns></returns>
+        public static bool UpdateTeamPlay(int id, bool access)
+        {
+            using (var connection = new SqlConnection(ConnectionString))
+            {
+                connection.Open();
+
+                using (var cmd = connection.CreateCommand())
+                {
+                    cmd.CommandType = CommandType.Text;
+                    cmd.CommandText = "UPDATE [GamingTeam] " +
+                                      "SET access = @access " +
+                                      "WHERE Id = @Id";
+
+                    cmd.Parameters.AddWithValue("@access", access);
+                    cmd.Parameters.AddWithValue("@Id", id);
+
+                    try
+                    {
+                        cmd.ExecuteNonQuery();
+                        return true;
+                    }
+                    catch
+                    {
+                        return false;
+                        // TODO сделать лог
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Удалить заявку о участии в игре
+        /// </summary>
+        /// <param name="gameId">Id игры</param>
+        /// <param name="teamId">Id команды</param>
+        /// <returns></returns>
+        public static bool RemoveApplication(int gameId, int teamId)
+        {
+            using (var connection = new SqlConnection(ConnectionString))
+            {
+                connection.Open();
+
+                using (var cmd = connection.CreateCommand())
+                {
+                    cmd.CommandType = CommandType.Text;
+                    cmd.CommandText = "DELETE " +
+                                      "FROM [GamingTeam] " +
+                                      "WHERE gameId = @gameId and teamId = @teamId";
+
+                    cmd.Parameters.AddWithValue("@teamId", teamId);
+                    cmd.Parameters.AddWithValue("@gameId", gameId);
+
+                    try
+                    {
+                        cmd.ExecuteNonQuery();
+                        return true;
+                    }
+                    catch
+                    {
+                        return false;
+                        // TODO сделать лог
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Записать заявку на участие в игре
+        /// </summary>
+        /// <param name="gameId">id игры</param>
+        /// <param name="teamId">id команды</param>
+        /// <returns></returns>
+        public static bool AddApplication(int gameId, int teamId)
+        {
+            using (var connection = new SqlConnection(ConnectionString))
+            {
+                connection.Open();
+
+                using (var cmd = connection.CreateCommand())
+                {
+                    cmd.CommandType = CommandType.Text;
+                    cmd.CommandText = "INSERT INTO [GamingTeam] (gameId, teamId, access) " +
+                                      "VALUES(@gameId, @teamId, @access) ";
+
+                    cmd.Parameters.AddWithValue("@gameId", gameId);
+                    cmd.Parameters.AddWithValue("@teamId", teamId);
+                    cmd.Parameters.AddWithValue("@access", false);
+
+                    try
+                    {
+                        cmd.ExecuteNonQuery();
+                        return true;
+                    }
+                    catch
+                    {
+                        return false;
+                        // TODO сделать лог
                     }
                 }
             }

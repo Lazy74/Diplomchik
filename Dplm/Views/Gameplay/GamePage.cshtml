@@ -38,12 +38,28 @@
     <div>
         <span>Время по автопереходам: (Время вычисленное автоматически)</span>
     </div>
+    <table border="1">
+        <tr>
+            <caption>Информация по командам</caption>
+            <th>Название команды</th>
+            <th>Участие</th>
+        </tr>
+        @{
+            foreach (var tableRow in ViewBag.TableRows)
+            {
+                @Html.Raw(tableRow)
+            }
+        }
+    </table>
+    <button id="btn-application" data-bind="click: application">Подать\снять заявку</button>
+
     <div>
         <h2>Информация по игре от авторов</h2>
     </div>
     <div>
         <span>@Html.Raw(ViewBag.Info)</span>
     </div>
+
     <button id="btn-game" data-bind="click: enterTheGame">Вход в игру</button>
 
     <script>

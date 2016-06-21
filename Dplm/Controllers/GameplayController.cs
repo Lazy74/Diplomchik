@@ -135,6 +135,18 @@ namespace Dplm.Controllers
             ViewBag.EndGame = game.EndGame;
             ViewBag.Info = game.Info;
 
+            List<string> tableRows = new List<string>();
+
+            List<TeamPlay> teamPlays = DatabaseND.GetListTeamPlay(gameId);
+
+            foreach (TeamPlay teamPlay in teamPlays)
+            {
+                string textPlay = teamPlay.Access ? "Приняты" : "Не приняты";
+                tableRows.Add("<tr><td>" + DatabaseND.GetTeam(teamPlay.TeamId).Name + "</td><td>" + textPlay + "</td></tr>");
+            }
+
+            ViewBag.TableRows = tableRows;
+
             return View();
         }
 

@@ -2,6 +2,15 @@
     EnterTheGame: function () {
         console.log("2");
         location.pathname = "Gameplay/id=" + window.currentGameId;
+    },
+    ApplicationTeam: function () {
+        $.get('/Administration/ManagementTeamPlay/Application', { gameId: window.currentGameId })
+        .done(function () {
+            location.reload();
+        })
+        .fail(function () {
+            alert("Не удалось выполнить заявку");
+        });
     }
 }
 
@@ -12,9 +21,11 @@ function loadPage() {
 }
 
 function ViewModel() {
+    this.application = function () {
+        model.ApplicationTeam();
+    }
 
     this.enterTheGame = function () {
         model.EnterTheGame();
-        console.log("1");
     }
 }
