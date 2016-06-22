@@ -994,10 +994,10 @@ namespace Dplm.Models
                                       "WHERE " +
                                       "gameId = @gameId and numberLevel = @numberLevel";
 
-                    cmd.Parameters.AddWithValue("@nameLevel", quest.NameLevel);
-                    cmd.Parameters.AddWithValue("@authorComment", quest.AuthorComment);
+                    cmd.Parameters.AddWithValue("@nameLevel", quest.NameLevel ?? "");
+                    cmd.Parameters.AddWithValue("@authorComment", quest.AuthorComment ?? "");
                     cmd.Parameters.AddWithValue("@timeout", quest.TimeOut);
-                    cmd.Parameters.AddWithValue("@textQuest", quest.TextQuest);
+                    cmd.Parameters.AddWithValue("@textQuest", quest.TextQuest ?? "");
                     cmd.Parameters.AddWithValue("@gameId", quest.GameId);
                     cmd.Parameters.AddWithValue("@numberLevel", quest.NumberLevel);
 
