@@ -1178,7 +1178,8 @@ namespace Dplm.Models
 
                     cmd.CommandText = "SELECT * " +
                                       "FROM [Quest] " +
-                                      "WHERE gameId = @gameId;";
+                                      "WHERE gameId = @gameId " +
+                                      "ORDER BY numberLevel; ";
 
                     cmd.Parameters.AddWithValue("@gameId", gameId);
 
