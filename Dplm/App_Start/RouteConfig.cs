@@ -287,6 +287,26 @@ namespace Dplm
                     controller = "AdminGame",
                     action = "CreateGame"
                 });
+
+            // Для запроса на создание уровня
+            routes.MapRoute(
+                name: "CreateLvl",
+                url: "Administration/EditGameInformation/CreateLvl",
+                defaults: new
+                {
+                    controller = "AdminGame",
+                    action = "CreateLvl"
+                });
+
+            // Для запроса на удаление уровня
+            routes.MapRoute(
+                name: "RemoveLvl",
+                url: "Administration/EditGameInformation/RemoveLvl",
+                defaults: new
+                {
+                    controller = "AdminGame",
+                    action = "RemoveLvl"
+                });
         }
     }
 }

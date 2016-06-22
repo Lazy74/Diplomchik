@@ -1422,6 +1422,148 @@ namespace Dplm.Models
                 }
             }
         }
+
+        /// <summary>
+        /// Создать уровень
+        /// </summary>
+        /// <param name="gameId">id игры</param>
+        /// <param name="numberLevel">Номер уровня</param>
+        /// <returns></returns>
+        public static bool CreateQuest(int gameId, int numberLevel)
+        {
+            using (var connection = new SqlConnection(ConnectionString))
+            {
+                connection.Open();
+
+                using (var cmd = connection.CreateCommand())
+                {
+                    cmd.CommandType = CommandType.Text;
+                    cmd.CommandText = "INSERT INTO [Quest] (gameId, numberLevel, nameLevel, authorComment, timeout, textQuest) " +
+                                      "VALUES(@gameId, @numberLevel, @nameLevel, @authorComment, @timeout, @textQuest) ";
+
+                    cmd.Parameters.AddWithValue("@gameId", gameId);
+                    cmd.Parameters.AddWithValue("@numberLevel", numberLevel);
+                    cmd.Parameters.AddWithValue("@nameLevel", "");
+                    cmd.Parameters.AddWithValue("@authorComment", "");
+                    cmd.Parameters.AddWithValue("@timeout", 10);
+                    cmd.Parameters.AddWithValue("@textQuest", "");
+
+                    try
+                    {
+                        cmd.ExecuteNonQuery();
+                        return true;
+                    }
+                    catch
+                    {
+                        return false;
+                        // TODO сделать лог
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Изменить запись о количестве уровней в игре
+        /// </summary>
+        /// <param name="gameId">id игры</param>
+        /// <param name="add">true - добавить 1 уровень: false - отнять 1 уровень</param>
+        public static bool ChangeGameAmountLvl(int gameId, bool add)
+        {
+            using (var connection = new SqlConnection(ConnectionString))
+            {
+                connection.Open();
+
+                using (var cmd = connection.CreateCommand())
+                {
+                    cmd.CommandType = CommandType.Text;
+                    cmd.CommandText = "UPDATE [Game] " +
+                                      "SET amountLevels = amountLevels + @number " +
+                                      "WHERE Id = @Id";
+
+                    cmd.Parameters.AddWithValue("@number", add ? 1 : -1);
+                    cmd.Parameters.AddWithValue("@Id", gameId);
+
+                    try
+                    {
+                        cmd.ExecuteNonQuery();
+                        return true;
+                    }
+                    catch
+                    {
+                        return false;
+                        // TODO сделать лог
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Удалить все ответы на задание
+        /// </summary>
+        /// <param name="questId">id уровня</param>
+        public static bool RemoveAllAnswersToQuest(int questId)
+        {
+            using (var connection = new SqlConnection(ConnectionString))
+            {
+                connection.Open();
+
+                using (var cmd = connection.CreateCommand())
+                {
+                    cmd.CommandType = CommandType.Text;
+                    cmd.CommandText = "DELETE " +
+                                      "FROM [Answers] " +
+                                      "WHERE questId = @questId";
+
+                    cmd.Parameters.AddWithValue("@questId", questId);
+
+                    try
+                    {
+                        cmd.ExecuteNonQuery();
+                        return true;
+                    }
+                    catch
+                    {
+                        return false;
+                        // TODO сделать лог
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Удалить уровень
+        /// </summary>
+        /// <param name="gameId">id игры</param>
+        /// <param name="numberLevel">Номер уровня</param>
+        public static bool RemoveQuest(int gameId, int numberLevel)
+        {
+            using (var connection = new SqlConnection(ConnectionString))
+            {
+                connection.Open();
+
+                using (var cmd = connection.CreateCommand())
+                {
+                    cmd.CommandType = CommandType.Text;
+                    cmd.CommandText = "DELETE " +
+                                      "FROM [Quest] " +
+                                      "WHERE gameId = @gameId and numberLevel = @numberLevel";
+
+                    cmd.Parameters.AddWithValue("@gameId", gameId);
+                    cmd.Parameters.AddWithValue("@numberLevel", numberLevel);
+
+                    try
+                    {
+                        cmd.ExecuteNonQuery();
+                        return true;
+                    }
+                    catch
+                    {
+                        return false;
+                        // TODO сделать лог
+                    }
+                }
+            }
+        }
     }
 }
 

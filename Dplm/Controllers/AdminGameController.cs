@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Net.Mime;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Web;
+using System.Web.Http.Results;
 using System.Web.Mvc;
 using Dplm.Models;
 using Newtonsoft.Json;
@@ -343,7 +345,54 @@ namespace Dplm.Controllers
 
             DatabaseND.AddAuthorGame(people.Id, gameId);
 
-            return Json(gameId,JsonRequestBehavior.AllowGet);
+            return Json(gameId, JsonRequestBehavior.AllowGet);
+        }
+
+        /// <summary>
+        /// Создание уровня
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult CreateLvl()
+        {
+            int gameId = Int32.Parse(Request.Params["gameId"]);
+
+            int amounthLvl = DatabaseND.GetGame(gameId).AmountLevels + 1;
+
+            // Нужен id игры, номер уровня
+            // Пока берем последний номер + 1
+            DatabaseND.CreateQuest(gameId, amounthLvl);
+
+            // нужен id игры и знать добавляем или удаляем уровень
+            DatabaseND.ChangeGameAmountLvl(gameId, true);
+
+            return new HttpStatusCodeResult(HttpStatusCode.OK);
+        }
+
+        /// <summary>
+        /// Удаление уровня
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult RemoveLvl()
+        {
+            // TODO возможно стоит восстанавливать данные если хотя бы один запрос завершился с ошибкой
+
+            int gameId = Int32.Parse(Request.Params["gameId"]);
+            int amountLevels = DatabaseND.GetGame(gameId).AmountLevels;
+            if (amountLevels == 0)
+            {
+                return new HttpStatusCodeResult(412);   // условие ложно
+            }
+            int questId = DatabaseND.GetQuest(gameId, amountLevels).Id;
+
+            DatabaseND.RemoveAllAnswersToQuest(questId);
+
+            // Нужен id игры, номер уровня
+            // Пока берем последний номер
+            DatabaseND.RemoveQuest(gameId, amountLevels);
+
+            DatabaseND.ChangeGameAmountLvl(gameId, false);
+
+            return new HttpStatusCodeResult(HttpStatusCode.OK);
         }
     }
 }

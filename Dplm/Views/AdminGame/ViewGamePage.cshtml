@@ -69,22 +69,28 @@
     </div>
 
     <div>
-        <button id="btn-save" data-bind="click: save">Сохранить</button>
+        <button id="btn-save" data-bind="click: save">Сохранить изменения</button>
     </div>
 
-<table border="1">
-    <tr>
-        <th>Номер</th>
-        <th>Название</th>
-        <th>Действие</th>
-    </tr>
-    @{
-        foreach (var tableRow in ViewBag.TableRows)
-        {
-            @Html.Raw(tableRow)
+    <table border="1">
+        <tr>
+            <th>Номер</th>
+            <th>Название</th>
+            <th>Действие</th>
+        </tr>
+        @{
+            foreach (var tableRow in ViewBag.TableRows)
+            {
+                @Html.Raw(tableRow)
+            }
         }
-    }
-</table>
+    </table>
+
+    <div>
+        <button data-bind="click: createLvl">Добавить</button>
+        <button data-bind="click: removeLvl">Удалить</button>
+    </div>
+
 
     <script>
         window.currentGameId = @ViewBag.Id;
