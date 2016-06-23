@@ -24,15 +24,18 @@ namespace Dplm.Controllers
         /// <returns></returns>
         public ActionResult GameplayPage(string id)
         {
-            //int gameId = 2;     // TODO эту инфу получаем из браузера!
-
             int gameId = Convert.ToInt32(id);
 
             var cookie = MyCookies.UpdateCookieSession(Request.Cookies["hash"]);
 
             if (cookie.Value == null)
             {
-                return new HttpUnauthorizedResult();
+                // TODO здесь пока пишем, что игрок не авторизован!
+                //return new HttpUnauthorizedResult();        // Если команды нет в списке выдаем ошибку!
+                ViewBag.Message = "Вы не авторизованны! Для игры нужно авторизоваться!";
+                return View("NoGamePage");
+
+                //return new HttpUnauthorizedResult();    // Представляет результат несанкционированного HTTP-запроса.
             }
 
             People people = new People();

@@ -379,8 +379,6 @@ namespace Dplm.Models
                     }
                 }
             }
-
-            return null;    // На случай если что-то пойдет не так
         }
 
         /// <summary>
@@ -392,7 +390,6 @@ namespace Dplm.Models
         {
             Game game = new Game();
 
-            // Тут запрос в БД!
             using (var connection = new SqlConnection(ConnectionString))
             {
                 connection.Open();
@@ -426,28 +423,7 @@ namespace Dplm.Models
                     }
                 }
             }
-
             return game;
-
-            //game.Id = gameId;
-            //game.NameGame = "Первая игра \"движка\"";
-            //game.IdАuthor = new[] {1, 5};
-            //game.Sequence = "Линейная";
-            //game.Distance = 50;
-            //game.AmountLevels = 10;
-
-            //DateTime dateTime = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day+1, 22, 35, 00);
-            //game.StartGame = dateTime;
-
-            //// TODO Не забывать, что переносы в THML не работают! весь текст нужно как-то конвертировать в формат HTML
-            //game.Info = "появившаяся в 2005 году российская командная игра в формате ночных поисковых игр, включающая в себя " +
-            //            "соревнование по городскому ориентированию, актерские и ролевые уровни, экстремальные и логические " +
-            //            "задания. В основе лежит американский паззлхант и его вариации (Форт Боярд, Fear Factor, и др.) \n" +
-            //            "Игра состоит из 10 основных заданий, в каждом из которых зашифровано местоположение локации " +
-            //            "(заброса), где находятся коды или человек в городе. " +
-            //            "Задача — пройти последовательно все 10 уровней раньше других команд, выполнить все дополнительные задания";
-
-            //return game;
         }
 
         /// <summary>
@@ -459,8 +435,6 @@ namespace Dplm.Models
         public static Quest GetQuest(int gameId, int NumberLevel)
         {
             Quest quest = new Quest();
-
-            #region БД
 
             using (var connection = new SqlConnection(ConnectionString))
             {
@@ -497,16 +471,6 @@ namespace Dplm.Models
                     }
                 }
             }
-
-            #endregion
-
-            //quest.Id = 1;
-            //quest.AuthorComment = "Код синим маркером<br>Подробности по телефону 8-909-076-75-06";
-            //quest.NumberLevel = NumberLevel;
-            //quest.TextQuest = "\"...Мы с сестрой с детства мечтали о своём бизнесе. Эми помогла нам осуществить нашу мечту. И вот несколько месяцев назад мы открылись.Удалось ухватить площадь на месте бывшего гальванического цеха...\" <br /> <br />  Примечание: спросить мою сестру Марго.";
-            //quest.TimeOut = 40;
-
-            return quest;
         }
 
         /// <summary>
@@ -1357,6 +1321,11 @@ namespace Dplm.Models
             }
         }
 
+        /// <summary>
+        /// Создание игры
+        /// </summary>
+        /// <param name="id">Id автора (игрока)</param>
+        /// <returns></returns>
         public static int CreateGame(int id)
         {
             using (var connection = new SqlConnection(ConnectionString))
@@ -1394,6 +1363,12 @@ namespace Dplm.Models
             }
         }
 
+        /// <summary>
+        /// Добавить авторов к игре
+        /// </summary>
+        /// <param name="idAuthor">Id автора</param>
+        /// <param name="idGame">Id игры</param>
+        /// <returns></returns>
         public static bool AddAuthorGame(int idAuthor, int idGame)
         {
             using (var connection = new SqlConnection(ConnectionString))
@@ -1566,7 +1541,3 @@ namespace Dplm.Models
         }
     }
 }
-
-
-//DELETE FROM ND.dbo.users
-//WHERE Id = 2

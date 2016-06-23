@@ -15,6 +15,7 @@ using Newtonsoft.Json.Linq;
 namespace Dplm.Controllers
 {
     [CookieFilter]
+    [AuthorizatedFilter]
     public class AdminGameController : Controller
     {
         // TODO ВО ВСЕХ КОНТРОЛЛЕРАХ ПРОВЕРЯТЬ МОЖЕТ ЛИ ЭТОТ ПОЛЬЗОВАТЕЛЬ ИМЕТЬ АДМИНИСТРАТИВНЫЕ ПРАВА В ЭТОЙ ИГРЕ
@@ -75,19 +76,6 @@ namespace Dplm.Controllers
             int gameId = Convert.ToInt32(id);
 
             Game data = DatabaseND.GetGame(gameId);
-
-            // TODO Сделать отправку времени с сервера!!!
-
-            //string strData = "{" +
-            //                 "'test': 'test'}";
-
-            //var jddata = Json(strData);
-
-            //string json = @"{
-            //    'Email': 'james@example.com',
-            //    'Active': true,
-            //    'CreatedDate': '2013-01-20T00:00:00Z',
-            //}";
 
             var jData = Json(data, JsonRequestBehavior.AllowGet);
 
