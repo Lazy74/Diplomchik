@@ -21,7 +21,7 @@ namespace Dplm.Models
         public static HttpCookie UpdateCookieSession(HttpCookie oldCookie)
         {
             People authorizationPeople = Authorizated.AuthorizationCheck(oldCookie?.Value);
-            
+
             HttpCookie updateCookie;
 
             if (authorizationPeople != null)

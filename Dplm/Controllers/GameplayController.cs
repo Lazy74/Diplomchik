@@ -12,12 +12,6 @@ namespace Dplm.Controllers
     [CookieFilter]
     public class GameplayController : Controller
     {
-        //public ActionResult GameplayPage()
-        //{
-        //    return View();
-        //}
-
-
         /// <summary>
         /// Контроллер отвечающий за выдачу пользователю игровой странички
         /// </summary>
@@ -26,7 +20,7 @@ namespace Dplm.Controllers
         {
             int gameId = Convert.ToInt32(id);
 
-            var cookie = MyCookies.UpdateCookieSession(Request.Cookies["hash"]);
+            var cookie = Response.Cookies["hash"];
 
             if (cookie.Value == null)
             {
@@ -65,7 +59,7 @@ namespace Dplm.Controllers
 
             LvlAndTime lvlDB = DatabaseND.GetPositionInGame(teamId, gameId);        // Узнаем на каком уровне сейчас команда по данным из БД
 
-            DateTime time;
+            //DateTime time;
 
             if (lvlDB == null)
             {
@@ -115,23 +109,23 @@ namespace Dplm.Controllers
             return View();
         }
 
-        //public ActionResult GamePage()
-        //{
-        //    return View();
-        //}
-
-
         /// <summary>
         /// Контроллер отвечающий за отображение общей информации об игре
         /// </summary>
         /// <returns></returns>
         public ActionResult GamePage(string id)
         {
-            int gameId = Convert.ToInt32(id);
+            int gameId;
+            try
+            {
+                gameId = Int32.Parse(id);
+            }
+            catch (Exception)
+            {
+                // на случай если id игры не корректный
+                return new HttpStatusCodeResult(413);
+            }
 
-            var cookie = MyCookies.UpdateCookieSession(Request.Cookies["hash"]);
-
-            //int gameId = 2;     // TODO эту инфу получаем из браузера!
             Game game = DatabaseND.GetGame(gameId);
 
             ViewBag.NameGame = game.NameGame;
