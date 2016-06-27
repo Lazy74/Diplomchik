@@ -19,9 +19,30 @@ namespace Dplm.Controllers
     public class AdminGameController : Controller
     {
         // TODO ВО ВСЕХ КОНТРОЛЛЕРАХ ПРОВЕРЯТЬ МОЖЕТ ЛИ ЭТОТ ПОЛЬЗОВАТЕЛЬ ИМЕТЬ АДМИНИСТРАТИВНЫЕ ПРАВА В ЭТОЙ ИГРЕ
-        // GET: AdminGame
+        //authorization check for id games
+
+        /// <summary>
+        /// Проверка на авторизацию по id игры
+        /// </summary>
+        /// <param name="hash">Cookies["hash"]</param>
+        /// <param name="gameId">Id игры</param>
+        /// <returns></returns>
+        private bool AuthorizationCheckForGameId(string hash, int gameId)
+        {
+            People people = new People();
+
+            Authorizated.Data.TryGetValue(hash, out people);
+
+            return DatabaseND.CheckAuthorInGame(people.Id, gameId) ? true : false;
+        }
+
+        /// <summary>
+        /// Главная страница в радактировании игры
+        /// </summary>
+        /// <returns></returns>
         public ActionResult HomePage()
         {
+            //Здесь проверяем только авторизаван ли человек или нет!
             if (Response.Cookies["hash"].Value == null)
             {
                 return new HttpUnauthorizedResult();
@@ -48,13 +69,27 @@ namespace Dplm.Controllers
             return View();
         }
 
+        /// <summary>
+        /// Страница изменения информации об игре
+        /// </summary>
+        /// <param name="id">Id игры</param>
+        /// <returns></returns>
         public ActionResult ViewGamePage(string id)
         {
-            int gameId = Convert.ToInt32(id);
+            int gameId;
+            try
+            {
+                gameId = Convert.ToInt32(id);
+            }
+            catch (Exception)
+            {
+                gameId = 0;
+            }
 
-            //var res = Json(DatabaseND.GetGame(gameId));
-
-            //ViewBag.game = res.Data;
+            if (!AuthorizationCheckForGameId(Request.Cookies["hash"]?.Value, gameId))
+            {
+                return new HttpUnauthorizedResult();
+            }
 
             List<Quest> quests = DatabaseND.GetListQuest(gameId);
 
@@ -70,10 +105,27 @@ namespace Dplm.Controllers
             return View();
         }
 
-        //[HttpGet]
+        /// <summary>
+        /// Для запроса на получение полной информации об игре
+        /// </summary>
+        /// <param name="id">Id игры</param>
+        /// <returns></returns>
         public ActionResult GetFullInfoGame(string id)
         {
-            int gameId = Convert.ToInt32(id);
+            int gameId;
+            try
+            {
+                gameId = Convert.ToInt32(id);
+            }
+            catch (Exception)
+            {
+                gameId = 0;
+            }
+
+            if (!AuthorizationCheckForGameId(Request.Cookies["hash"]?.Value, gameId))
+            {
+                return new HttpUnauthorizedResult();
+            }
 
             Game data = DatabaseND.GetGame(gameId);
 
@@ -82,9 +134,19 @@ namespace Dplm.Controllers
             return jData;
         }
 
+        /// <summary>
+        /// Для запроса об обновлении информации по игре
+        /// </summary>
+        /// <param name="game"></param>
+        /// <returns></returns>
         [ValidateInput(false)]
         public ActionResult UpdateInfoGame(Game game)
         {
+            if (!AuthorizationCheckForGameId(Request.Cookies["hash"]?.Value, game.Id))
+            {
+                return new HttpUnauthorizedResult();
+            }
+
             //byte[] buffer = Convert.FromBase64String(game.Info);
             //game.Info = Encoding.UTF8.GetString(buffer);
 
@@ -94,10 +156,36 @@ namespace Dplm.Controllers
                 : new HttpStatusCodeResult(500);
         }
 
+        /// <summary>
+        /// Страница редактирования уровня
+        /// </summary>
+        /// <returns></returns>
         public ActionResult ViewLevelPage()
         {
-            int gameId = Int32.Parse(Request.Params["gameId"]);
-            int lvl = Int32.Parse(Request.Params["lvl"]);
+            int gameId;
+            try
+            {
+                gameId = Int32.Parse(Request.Params["gameId"]);
+            }
+            catch (Exception)
+            {
+                gameId = 0;
+            }
+
+            if (!AuthorizationCheckForGameId(Request.Cookies["hash"]?.Value, gameId))
+            {
+                return new HttpUnauthorizedResult();
+            }
+
+            int lvl;
+            try
+            {
+                lvl = Int32.Parse(Request.Params["lvl"]);
+            }
+            catch (Exception)
+            {
+                lvl = 0;
+            }
 
             ViewBag.gameId = gameId;
             ViewBag.lvl = lvl;
@@ -105,13 +193,36 @@ namespace Dplm.Controllers
             return View();
         }
 
+        /// <summary>
+        /// Для запроса на получение всей информации об уровне
+        /// </summary>
+        /// <returns></returns>
         public ActionResult GetLevelPage()
         {
-            int gameId = Int32.Parse(Request.Params["gameId"]);
-            int lvl = Int32.Parse(Request.Params["lvl"]);
+            int gameId;
+            try
+            {
+                gameId = Int32.Parse(Request.Params["gameId"]);
+            }
+            catch (Exception)
+            {
+                gameId = 0;
+            }
 
-            //ViewBag.gameId = gameId;
-            //ViewBag.lvl = lvl;
+            if (!AuthorizationCheckForGameId(Request.Cookies["hash"]?.Value, gameId))
+            {
+                return new HttpUnauthorizedResult();
+            }
+
+            int lvl;
+            try
+            {
+                lvl = Int32.Parse(Request.Params["lvl"]);
+            }
+            catch (Exception)
+            {
+                lvl = 0;
+            }
 
             Quest data = DatabaseND.GetQuest(gameId, lvl);
 
@@ -120,17 +231,45 @@ namespace Dplm.Controllers
             return jData;
         }
 
+        /// <summary>
+        /// Получить список ответов на уровень
+        /// </summary>
+        /// <returns></returns>
         public ActionResult GetAnswersOnLvl()
         {
-            int questId = Int32.Parse(Request.Params["questId"]);
+            int questId;
+            try
+            {
+                questId = Int32.Parse(Request.Params["questId"]);
+            }
+            catch (Exception)
+            {
+                questId = 0;
+            }
+
+            if (!AuthorizationCheckForGameId(Request.Cookies["hash"]?.Value, DatabaseND.GetIdGameOnQuest(questId)))
+            {
+                return new HttpUnauthorizedResult();
+            }
+
             List<Answer> answers = new List<Answer>();
             answers = DatabaseND.GetListAnswersOnLvl(questId);
             return Json(answers, JsonRequestBehavior.AllowGet);
         }
 
+        /// <summary>
+        /// Для запроса на обновление информации по уровню
+        /// </summary>
+        /// <param name="quest"></param>
+        /// <returns></returns>
         [ValidateInput(false)]
         public ActionResult UpdateLevel(Quest quest)
         {
+            if (!AuthorizationCheckForGameId(Request.Cookies["hash"]?.Value, quest.GameId))
+            {
+                return new HttpUnauthorizedResult();
+            }
+
             //Quest quest = new Quest();
 
             //quest.NameLevel = Request.Params["nameLevel"];      // Есть
@@ -144,10 +283,36 @@ namespace Dplm.Controllers
                 : new HttpStatusCodeResult(500);
         }
 
+        /// <summary>
+        /// Для запроса на обновление ответов на уровень
+        /// </summary>
+        /// <returns></returns>
         public ActionResult UpdateAnswersOnLvl()
         {
-            int gameId = Int32.Parse(Request.Params["gameId"]);
-            int lvl = Int32.Parse(Request.Params["lvl"]);
+            int gameId;
+            try
+            {
+                gameId = Int32.Parse(Request.Params["gameId"]);
+            }
+            catch (Exception)
+            {
+                gameId = 0;
+            }
+
+            int lvl;
+            try
+            {
+                lvl = Int32.Parse(Request.Params["lvl"]);
+            }
+            catch (Exception)
+            {
+                lvl = 0;
+            }
+
+            if (!AuthorizationCheckForGameId(Request.Cookies["hash"]?.Value, gameId))
+            {
+                return new HttpUnauthorizedResult();
+            }
 
             int currentQuestId = DatabaseND.GetQuest(gameId, lvl).Id;
 
@@ -219,6 +384,10 @@ namespace Dplm.Controllers
                 : new HttpStatusCodeResult(500);
         }
 
+        /// <summary>
+        /// Для удаление ответа на уровень
+        /// </summary>
+        /// <returns></returns>
         public ActionResult DeleteAnswer()
         {
             int questId, id;
@@ -243,6 +412,11 @@ namespace Dplm.Controllers
 
             string textAnswer = Request.Params["Answer[TextAnswer]"];
 
+            if (!AuthorizationCheckForGameId(Request.Cookies["hash"]?.Value, DatabaseND.GetIdGameOnQuest(questId)))
+            {
+                return new HttpUnauthorizedResult();
+            }
+
             if (id != 0 || questId != 0)
             {
                 return DatabaseND.RemoveAnswers(id)
@@ -250,12 +424,31 @@ namespace Dplm.Controllers
                     : new HttpStatusCodeResult(500);
             }
 
+            // Так как данные без id, то говорим клиенту что все удалено :)
             return new HttpStatusCodeResult(200);
         }
 
+        /// <summary>
+        /// Страница управления игроющими командами
+        /// </summary>
+        /// <returns></returns>
         public ActionResult ManagementTeamPlayPage()
         {
-            int gameId = Int32.Parse(Request.Params["gameId"]);
+            int gameId;
+            try
+            {
+                gameId = Int32.Parse(Request.Params["gameId"]);
+            }
+            catch (Exception)
+            {
+                gameId = 0;
+            }
+
+            if (!AuthorizationCheckForGameId(Request.Cookies["hash"]?.Value, gameId))
+            {
+                return new HttpUnauthorizedResult();
+            }
+
             List<string> tableRows = new List<string>();
 
             List<TeamPlay> teamPlays = DatabaseND.GetListTeamPlay(gameId);
@@ -273,8 +466,13 @@ namespace Dplm.Controllers
             return View();
         }
 
+        /// <summary>
+        /// Для запроса на изменение решения по игре
+        /// </summary>
+        /// <returns></returns>
         public ActionResult UpdateTeamPlay()
         {
+            // TODO Имеем только id записи, прдумать как проверить права доступа
             int id = Int32.Parse(Request.Params["Id"]);
             bool access = Int32.Parse(Request.Params["access"]) != 0;
 
@@ -283,10 +481,30 @@ namespace Dplm.Controllers
             return new HttpStatusCodeResult(200);
         }
 
+        /// <summary>
+        /// Добавить\удалить заявку по игре
+        /// </summary>
+        /// <returns></returns>
         public ActionResult AddOrRemoveApplication()
         {
-            int gameId = Int32.Parse(Request.Params["gameId"]);
+            // TODO права доступа: заявку может оставить\удалить только капитан команды!
+            // TODO возможно перенести в контроллер Gameplay
+            int gameId;
+            try
+            {
+                gameId = Int32.Parse(Request.Params["gameId"]);
+            }
+            catch (Exception)
+            {
+                gameId = 0;
+            }
 
+            if (!AuthorizationCheckForGameId(Request.Cookies["hash"]?.Value, gameId))
+            {
+                return new HttpUnauthorizedResult();
+            }
+
+            // TODO Возможно это больше не нужно
             if (Response.Cookies["hash"].Value == null)
             {
                 return new HttpUnauthorizedResult();
@@ -318,6 +536,10 @@ namespace Dplm.Controllers
                 : new HttpStatusCodeResult(500);
         }
 
+        /// <summary>
+        /// Создание игры
+        /// </summary>
+        /// <returns></returns>
         public ActionResult CreateGame()
         {
             if (Response.Cookies["hash"].Value == null)
@@ -342,7 +564,20 @@ namespace Dplm.Controllers
         /// <returns></returns>
         public ActionResult CreateLvl()
         {
-            int gameId = Int32.Parse(Request.Params["gameId"]);
+            int gameId;
+            try
+            {
+                gameId = Int32.Parse(Request.Params["gameId"]);
+            }
+            catch (Exception)
+            {
+                gameId = 0;
+            }
+
+            if (!AuthorizationCheckForGameId(Request.Cookies["hash"]?.Value, gameId))
+            {
+                return new HttpUnauthorizedResult();
+            }
 
             int amounthLvl = DatabaseND.GetGame(gameId).AmountLevels + 1;
 
@@ -362,9 +597,23 @@ namespace Dplm.Controllers
         /// <returns></returns>
         public ActionResult RemoveLvl()
         {
-            // TODO возможно стоит восстанавливать данные если хотя бы один запрос завершился с ошибкой
+            int gameId;
+            try
+            {
+                gameId = Int32.Parse(Request.Params["gameId"]);
+            }
+            catch (Exception)
+            {
+                gameId = 0;
+            }
 
-            int gameId = Int32.Parse(Request.Params["gameId"]);
+            if (!AuthorizationCheckForGameId(Request.Cookies["hash"]?.Value, gameId))
+            {
+                return new HttpUnauthorizedResult();
+            }
+
+
+            // TODO возможно стоит восстанавливать данные если хотя бы один запрос завершился с ошибкой
             int amountLevels = DatabaseND.GetGame(gameId).AmountLevels;
             if (amountLevels == 0)
             {
