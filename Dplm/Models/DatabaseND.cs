@@ -583,21 +583,23 @@ namespace Dplm.Models
         /// <returns></returns>
         public static bool AnswerCheck(int questId, string answer)
         {
+            // Создание подключения
             using (var connection = new SqlConnection(ConnectionString))
             {
+                // Открытие подключения
                 connection.Open();
-
+                // Создание хранимой процедуры, выполняемой над базой данных SQL Server
                 using (var cmd = connection.CreateCommand())
                 {
                     cmd.CommandType = CommandType.Text;
-
+                    // Текст запроса
                     cmd.CommandText = "SELECT [id] " +
                                       "FROM [Answers] " +
                                       "WHERE questId = @questId and answer = @answer";
-
+                    // Объявление параметров, для исключения несанкционированного доступа к базе данных
                     cmd.Parameters.AddWithValue("@questId", questId);
                     cmd.Parameters.AddWithValue("@answer", answer);
-
+                    // Выполнение запроса
                     using (var reader = cmd.ExecuteReader())
                     {
                         if (reader.Read())
@@ -851,6 +853,41 @@ namespace Dplm.Models
                         }
 
                         return result;
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Проверить авторство в игре
+        /// </summary>
+        /// <param name="authorId">Id игрока</param>
+        /// <param name="gameId">Id игры</param>
+        /// <returns></returns>
+        public static bool CheckAuthorInGame(int authorId, int gameId)
+        {
+            using (var connection = new SqlConnection(ConnectionString))
+            {
+                connection.Open();
+
+                using (var cmd = connection.CreateCommand())
+                {
+                    cmd.CommandType = CommandType.Text;
+
+                    cmd.CommandText = "SELECT * " +
+                                      "FROM AuthorGame " +
+                                      "WHERE idAuthor = @idAuthor and idGame = @idGame;";
+
+                    cmd.Parameters.AddWithValue("@idAuthor", authorId);
+                    cmd.Parameters.AddWithValue("@idGame", gameId);
+
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            return true;
+                        }
+                        return false;
                     }
                 }
             }
@@ -1218,6 +1255,8 @@ namespace Dplm.Models
         /// <summary>
         /// Изменить запись по заявке на игру
         /// </summary>
+        /// <param name="id">id записи</param>
+        /// <param name="access">статус заявки</param>
         /// <returns></returns>
         public static bool UpdateTeamPlay(int id, bool access)
         {
@@ -1316,6 +1355,41 @@ namespace Dplm.Models
                     {
                         return false;
                         // TODO сделать лог
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Получить id игры по id уровня
+        /// </summary>
+        /// <param name="questId"></param>
+        /// <returns></returns>
+        public static int GetIdGameOnQuest(int questId)
+        {
+            using (var connection = new SqlConnection(ConnectionString))
+            {
+                connection.Open();
+
+                using (var cmd = connection.CreateCommand())
+                {
+                    cmd.CommandType = CommandType.Text;
+                    cmd.CommandText = "SELECT Quest.gameId " +
+                                      "FROM Quest " +
+                                      "where Id = @questId";
+
+                    cmd.Parameters.AddWithValue("@questId", questId);
+
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        int gameId = -1;
+
+                        if (reader.Read())
+                        {
+                            gameId = Convert.ToInt32(reader["gameId"]);
+                            return gameId;
+                        }
+                        return gameId;
                     }
                 }
             }
