@@ -51,7 +51,7 @@ namespace Dplm.Models
             DateTime timeStartLvl;
             DateTime timeEndLvl;
 
-            // timeLvl = DatabaseND.GetQuest(game.Id, lvl).TimeOut;    // Получаем время на уровнe. Здесь к времени старта прибавляем время таймаута N задания 
+            // Получаем время на уровнe. Здесь к времени старта прибавляем время таймаута N задания 
             List<int> timeout = DatabaseND.GetTimeoutAllQuest(game.Id);
 
             if (lvlAndTime.numburLVL == 1)
@@ -68,7 +68,6 @@ namespace Dplm.Models
                 timeEndLvl = timeStartLvl.AddMinutes(timeout[i]);
             }
 
-
             i++;
 
             while (!(timeStartLvl < DateTime.Now & timeEndLvl > DateTime.Now) & i < timeout.Count)
@@ -81,16 +80,6 @@ namespace Dplm.Models
             lvlAndTime.numburLVL = i;
             lvlAndTime.StartLVL = timeStartLvl;
             lvlAndTime.EndLVL = timeEndLvl;
-
-            //if (timeEndLvl > DateTime.Now)
-            //{
-            //    //return i;
-
-            //}
-            //else
-            //{
-            //    //return -1;
-            //}
 
             return lvlAndTime;
         }
