@@ -163,8 +163,6 @@ namespace Dplm.Controllers
 
             answer = Helper.RemoveExtraCharacters(answer);      // Удалене лишних символов
 
-            //int gameId = 2;     // TODO эту инфу получаем из браузера!
-
             Game game = DatabaseND.GetGame(gameId);
 
             var cookie = MyCookies.UpdateCookieSession(Request.Cookies["hash"]);

@@ -42,7 +42,6 @@ namespace Dplm.Models
         /// </summary>
         public string TextQuest { get; set; }
 
-        // TODO Сделать картинки к заданиям
         // TODO Добавить штрафы и вывод информации о них!
     }
 }

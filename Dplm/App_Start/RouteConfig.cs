@@ -310,28 +310,3 @@ namespace Dplm
         }
     }
 }
-
-
-
-
-
-// Страница регистрации команды
-// Возможно она мне и не нужна
-//routes.MapRoute(
-//    name: "CreateCommandPage",
-//    url: "User/NewCommand",
-//    defaults: new
-//    {
-//        controller = "Command",
-//        action = "CommandCreatePage"
-//    });
-
-// TODO Страница изменения данных о команде
-//routes.MapRoute(
-//    name: "CreateCommandPage",
-//    url: "User/NewCommand",
-//    defaults: new
-//    {
-//        controller = "Command",
-//        action = "CommandUpdatePage"
-//    });

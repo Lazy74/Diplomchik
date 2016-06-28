@@ -566,9 +566,7 @@ namespace Dplm.Models
                                     maxi = i;
                                 }
                             }
-
                             return foo[maxi];
-                            // TODO Найти максимальный уровень и вернуть это значение!
                         }
                     }
                 }
@@ -922,11 +920,8 @@ namespace Dplm.Models
                 oldGame.Sequence = updateGame.Sequence;
             }
 
-            // TODO Для начала сделать передачу времени на клиента, а уже потом изменения 
             oldGame.StartGame = updateGame.StartGame;
             oldGame.EndGame = updateGame.EndGame;
-            //oldGame.StartGame;
-            //oldGame.EndGame;
 
             using (var connection = new SqlConnection(ConnectionString))
             {

@@ -52,7 +52,7 @@ function ViewModel() {
     this.userPass = ko.observable();
 
     this.Authr = function() {
-        // TODO надоело авторизоваться
+        // TODO надоело авторизоваться. к показу убрать эту кнопку
         model.authorizeUser("lazy_74", "qweqwe");
     }
 
