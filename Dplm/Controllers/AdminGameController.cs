@@ -18,9 +18,6 @@ namespace Dplm.Controllers
     [AuthorizatedFilter]
     public class AdminGameController : Controller
     {
-        // TODO ВО ВСЕХ КОНТРОЛЛЕРАХ ПРОВЕРЯТЬ МОЖЕТ ЛИ ЭТОТ ПОЛЬЗОВАТЕЛЬ ИМЕТЬ АДМИНИСТРАТИВНЫЕ ПРАВА В ЭТОЙ ИГРЕ
-        //authorization check for id games
-
         /// <summary>
         /// Проверка на авторизацию по id игры
         /// </summary>
@@ -487,7 +484,6 @@ namespace Dplm.Controllers
         /// <returns></returns>
         public ActionResult AddOrRemoveApplication()
         {
-            // TODO права доступа: заявку может оставить\удалить только капитан команды!
             // TODO возможно перенести в контроллер Gameplay
             int gameId;
             try
@@ -515,6 +511,18 @@ namespace Dplm.Controllers
             Authorizated.Data.TryGetValue(Response.Cookies["hash"].Value, out people);
 
             int teamId = DatabaseND.ComplianceTeamPlayer(people.Id);
+
+            #region права доступа: заявку может оставить\удалить только капитан команды!
+
+            // TODO ПРОВЕРИТЬ ЭТУ ЧАСТЬ
+            Team team = DatabaseND.GetTeam(teamId);
+
+            if (team.IdCommander != people.Id)
+            {
+                return new HttpUnauthorizedResult();
+            }
+
+            #endregion
 
             List<TeamPlay> teamPlays = new List<TeamPlay>();
             teamPlays = DatabaseND.GetListTeamPlay(gameId);
