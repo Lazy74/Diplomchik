@@ -36,6 +36,18 @@ namespace Dplm.Controllers
             return View();
         }
 
+        public ActionResult RegPeople(People people)
+        {
+            people.UserPass = Helper.GetHashString(people.UserPass);
+
+            if (DatabaseND.AddUser(people))
+            {
+                Response.SetCookie(MyCookies.CreateCookie("hash", people));
+                return View("UserPage");
+            }
+            return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+        }
+
         public ActionResult RegistrationPage()
         {
             return View();

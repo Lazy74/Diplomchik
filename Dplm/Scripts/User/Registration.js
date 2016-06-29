@@ -3,7 +3,7 @@
         if (pass != repetPass) {
             alert("Пароли не совпадают!");
         }
-        return $.post("/api/Registration/RegPeople", {
+        return $.post("/Registration/NewPeople", {
             UserLogin: userLogin,
             UserPass: pass,
             PhoneNumber: phoneNumber,
@@ -31,7 +31,7 @@ function ViewModel() {
         model.createUser(this.userPass(), this.confirmUserPass(), this.userLogin(), this.phoneNumber(), this.email())
             .success(function () {
                 alert("пользователь создан!");
-                location.pathname = "";    // строка пути (относительно хоста)
+                location.pathname = "/User/";    // строка пути (относительно хоста)
             })
             .error(function () {
                 alert("Все пропало :(");

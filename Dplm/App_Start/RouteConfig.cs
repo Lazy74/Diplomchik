@@ -24,6 +24,16 @@ namespace Dplm
                     action = "StartPage",
                 });
 
+            // Стартовая страница
+            routes.MapRoute(
+                name: "RegPeople",
+                url: "Registration/NewPeople",
+                defaults: new
+                {
+                    controller = "Start",
+                    action = "RegPeople",
+                });
+
             // Страница регистрации
             routes.MapRoute(
                 name: "Registration",
