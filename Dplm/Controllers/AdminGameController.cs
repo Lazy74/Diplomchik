@@ -470,8 +470,31 @@ namespace Dplm.Controllers
         public ActionResult UpdateTeamPlay()
         {
             // TODO Имеем только id записи, прдумать как проверить права доступа
-            int id = Int32.Parse(Request.Params["Id"]);
+            //int id = Int32.Parse(Request.Params["Id"]);
             bool access = Int32.Parse(Request.Params["access"]) != 0;
+
+            int id;
+            try
+            {
+                id = Int32.Parse(Request.Params["Id"]);
+            }
+            catch (Exception)
+            {
+                id = 0;
+            }
+
+            int gameId = DatabaseND.GetOfGamingTeamIdGame(id);
+
+            if (gameId == -1)
+            {
+                // На случай если такой записи нет
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            if (!AuthorizationCheckForGameId(Request.Cookies["hash"]?.Value, gameId))
+            {
+                return new HttpUnauthorizedResult();
+            }
 
             DatabaseND.UpdateTeamPlay(id, access);
             // Administration/ManagementTeamPlay/UpdateTeamPlay?Id=2&access=1

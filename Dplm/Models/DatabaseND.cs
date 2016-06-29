@@ -1608,5 +1608,49 @@ namespace Dplm.Models
                 }
             }
         }
+
+        /// <summary>
+        /// Узнать к какой игре относится эта запись в таблице GamingTeam
+        /// </summary>
+        /// <param name="id">id записи</param>
+        /// <returns></returns>
+        public static int GetOfGamingTeamIdGame(int id)
+        {
+            using (var connection = new SqlConnection(ConnectionString))
+            {
+                connection.Open();
+
+                using (var cmd = connection.CreateCommand())
+                {
+                    cmd.CommandType = CommandType.Text;
+
+                    cmd.CommandText = "SELECT gameId " +
+                                      "FROM GamingTeam " +
+                                      "WHERE Id = @Id";
+
+                    cmd.Parameters.AddWithValue("@Id", id);
+
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            int teamId;
+
+                            try
+                            {
+                                teamId = Convert.ToInt32(reader["gameId"]);
+                            }
+                            catch (Exception)
+                            {
+                                teamId = -1;
+                            }
+
+                            return teamId;
+                        }
+                    }
+                }
+            }
+            return -1;    // На случай если что-то пойдет не так
+        }
     }
 }
