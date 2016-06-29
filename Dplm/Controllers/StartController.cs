@@ -128,6 +128,20 @@ namespace Dplm.Controllers
             }
         }
 
+        public ActionResult Logout()
+        {
+            var cookie = Request.Cookies["hash"];
+
+            if (cookie?.Value == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.OK);
+            }
+
+            return Authorizated.LogOut(cookie.Value)
+                ? new HttpStatusCodeResult(HttpStatusCode.OK)
+                : new HttpStatusCodeResult(HttpStatusCode.BadRequest) ;
+        }
+
         public ActionResult updateUserPage()
         {
             //var cookie = MyCookies.UpdateCookieSession(Request.Cookies["hash"]);

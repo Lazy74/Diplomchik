@@ -24,7 +24,7 @@ namespace Dplm
                     action = "StartPage",
                 });
 
-            // Стартовая страница
+            // Регистрация
             routes.MapRoute(
                 name: "RegPeople",
                 url: "Registration/NewPeople",
@@ -54,7 +54,7 @@ namespace Dplm
                     action = "UserPage"
                 });
 
-            // ?
+            // Авторизация
             routes.MapRoute(
                 name: "AuthorizeUser",
                 url: "AuthorizeUser/",
@@ -64,6 +64,15 @@ namespace Dplm
                     action = "AuthorizeUser"
                 });
 
+            // Разлогироваться
+            routes.MapRoute(
+                name: "Logout",
+                url: "Logout",
+                defaults: new
+                {
+                    controller = "Start",
+                    action = "Logout",
+                });
 
             // Страница обновления данных игрока
             routes.MapRoute(
