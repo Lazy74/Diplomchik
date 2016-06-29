@@ -101,7 +101,10 @@ namespace Dplm.Controllers
                 return new HttpUnauthorizedResult();
             }
 
-            if (people.UserLogin == Login && people.UserPass == Pass)    //
+            // Перевод пароля в hash
+            string hashPass = Helper.GetHashString(Pass);
+
+            if (people.UserLogin == Login && people.UserPass == hashPass)    //
             //if ("qwe" == Login && "qwe" == Pass)    // TODO здесь будет запрос в базу данных. Проверка есть ли такой user
             {
                 Response.SetCookie(MyCookies.CreateCookie("hash", people));

@@ -14,6 +14,9 @@ namespace Dplm.Controllers
     {
         public HttpResponseMessage RegPeople(People people)
         {
+            // Перевод пароля в hash
+            people.UserPass = Helper.GetHashString(people.UserPass);
+
             return DatabaseND.AddUser(people) ?
                 new HttpResponseMessage(HttpStatusCode.OK) : 
                 new HttpResponseMessage(HttpStatusCode.BadRequest);
