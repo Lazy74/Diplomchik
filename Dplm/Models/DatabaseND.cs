@@ -23,18 +23,18 @@ namespace Dplm.Models
             {
                 connection.Open();
 
-                using (var command = connection.CreateCommand())
+                using (var cmd = connection.CreateCommand())
                 {
-                    command.CommandType = CommandType.Text;
+                    cmd.CommandType = CommandType.Text;
                     //command.CommandText = "INSERT INTO [users] (userLogin, userPass, phoneNumber, email, lastName, firstName, birthday, linkVK)" +
                     //    " VALUES(@login, @pass, @phone, @email, @lastName, @firstName, @birth, @vk);";
-                    command.CommandText = "INSERT INTO [users] (userLogin, userPass, phoneNumber, email)" +
+                    cmd.CommandText = "INSERT INTO [users] (userLogin, userPass, phoneNumber, email)" +
                         " VALUES(@login, @pass, @phone, @email);";
 
-                    command.Parameters.AddWithValue("@login", people.UserLogin.ToLower());
-                    command.Parameters.AddWithValue("@pass", people.UserPass);
-                    command.Parameters.AddWithValue("@phone", people.PhoneNumber);
-                    command.Parameters.AddWithValue("@email", people.Email);
+                    cmd.Parameters.AddWithValue("@login", people.UserLogin.ToLower());
+                    cmd.Parameters.AddWithValue("@pass", people.UserPass);
+                    cmd.Parameters.AddWithValue("@phone", people.PhoneNumber);
+                    cmd.Parameters.AddWithValue("@email", people.Email);
                     //command.Parameters.AddWithValue("@lastName", people.FamiluName);
                     //command.Parameters.AddWithValue("@firstName", people.Name);
                     //command.Parameters.AddWithValue("@birth", people.Birthday);
@@ -43,7 +43,7 @@ namespace Dplm.Models
                     //command.ExecuteNonQueryAsync();     // асинхронно
                     try
                     {
-                        command.ExecuteNonQuery();     // синхронно
+                        cmd.ExecuteNonQuery();     // синхронно
                         return true;
                     }
                     catch
@@ -98,7 +98,7 @@ namespace Dplm.Models
                             people.Email = reader["email"].ToString().Trim();
                             people.Name = reader["lastName"].ToString().Trim();
                             people.FamiluName = reader["firstName"].ToString().Trim();
-                            people.Birthday = reader["birthday"].ToString().Trim();
+                            people.Birthday = (DateTime)reader["birthday"];
                             people.LinkVK = reader["linkVK"].ToString().Trim();
 
                             return people;
@@ -152,7 +152,7 @@ namespace Dplm.Models
                             people.Email = reader["email"].ToString().Trim();
                             people.Name = reader["lastName"].ToString().Trim();
                             people.FamiluName = reader["firstName"].ToString().Trim();
-                            people.Birthday = reader["birthday"].ToString().Trim();
+                            people.Birthday = (DateTime)reader["birthday"];
                             people.LinkVK = reader["linkVK"].ToString().Trim();
 
                             return people;
@@ -173,11 +173,10 @@ namespace Dplm.Models
                 oldPeople.UserLogin = updatePeople.UserLogin;
             }
 
-            // TODO нужно проверять вводилось ли что-то в поля для замены пароля и проверять введеный пароль для изменения данных
-            //if (!string.IsNullOrEmpty(updatePeople.UserPass))
-            //{
-            //    oldPeople.UserPass = updatePeople.UserPass;
-            //}
+            if (!string.IsNullOrEmpty(updatePeople.UserPass))
+            {
+                oldPeople.UserPass = updatePeople.UserPass;
+            }
 
             if (!string.IsNullOrEmpty(updatePeople.PhoneNumber))
             {
@@ -199,10 +198,11 @@ namespace Dplm.Models
                 oldPeople.Name = updatePeople.Name;
             }
 
-            if (!string.IsNullOrEmpty(updatePeople.Birthday))
-            {
-                oldPeople.Birthday = updatePeople.Birthday;
-            }
+            // TODO Сделать редактирование дня рождения
+            //if (!string.IsNullOrEmpty(updatePeople.Birthday))
+            //{
+            //    oldPeople.Birthday = updatePeople.Birthday;
+            //}
 
             if (!string.IsNullOrEmpty(updatePeople.LinkVK))
             {

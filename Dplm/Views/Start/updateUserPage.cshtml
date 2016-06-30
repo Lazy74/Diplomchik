@@ -8,31 +8,32 @@
 
     <script src="/Scripts/jquery-1.10.2.min.js"></script>
     <script src="/Scripts/knockout-3.4.0.js"></script>
+    <script src="/Scripts/moment.min.js"></script>
+
     <script src="/Scripts/User/userUpdate.js"></script>
 </head>
 <body>
 <div>
     <p>НЕЗАБЫТЬ ПРО ДАТУ РОЖДЕНИЯ</p>
     <p>Имя</p>
-    <input type="text" id="user-first-name" class="form-control" placeholder="@ViewBag.firstName" data-bind="value: firstName"/>
+    <input type="text" id="user-first-name" class="form-control" placeholder="" data-bind="value: firstName"/>
     <p>Фамилия</p>
-    <input type="text" id="user-last-name" class="form-control" placeholder="@ViewBag.lastName" data-bind="value: lastName"/>
+    <input type="text" id="user-last-name" class="form-control" placeholder="" data-bind="value: lastName"/>
     <p>Номер телефона</p>
-    <input type="text" id="phone-number" class="form-control" placeholder="@ViewBag.phoneNumber" data-bind="value: phoneNumber"/>
+    <input type="text" id="phone-number" class="form-control" placeholder="" data-bind="value: phoneNumber"/>
     <p>Логин</p>
-    <input type="text" id="user-login" class="form-control" placeholder="@ViewBag.userLogin" data-bind="value: userLogin"/>
+    <input type="text" id="user-login" class="form-control" placeholder="" data-bind="value: userLogin"/>
+    <p>Дата рождения</p>
+    <input type="date" id="user-birthday" class="form-control" placeholder="" data-bind="value: birthday"/>
     <p>Email</p>
-    <input type="text" id="email" class="form-control" placeholder="@ViewBag.email" data-bind="value: email"/>
+    <input type="text" id="email" class="form-control" placeholder="" data-bind="value: email"/>
     <p>Ссылка ВКонтакте</p>
-    <input type="text" id="link-vk" class="form-control" placeholder="@ViewBag.linkVK" data-bind="value: linkVK"/>
+    <input type="text" id="link-vk" class="form-control" placeholder="" data-bind="value: linkVK"/>
     <p></p>
-    <p>Если пароль менять не нужно, оставьте эти поля пустыми!</p>
     <p>Новый пароль</p>
     <input type="text" id="user-new-pass" class="form-control" placeholder="Новый пароль" data-bind="value: newUserPass"/>
     <p>Повторите новый пароль</p>
     <input type="text" id="repet-user-new-pass" class="form-control" placeholder="Повт. новый пароль" data-bind="value: newConfirmUserPass"/>
-    <p>Для сохранения введите старый пароль</p>
-    <input type="text" id="user-pass" class="form-control" placeholder="Ваш пароль" data-bind="value: userPass"/>
 
     <button id="btn-create" class="btn btn-success" data-bind="click: updateUser">Сохранить</button>
 </div>

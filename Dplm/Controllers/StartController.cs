@@ -28,7 +28,7 @@ namespace Dplm.Controllers
 
             foreach (Game game in games)
             {
-                tableRows.Add("<tr><td><a href=\"/Game/id=" + game.Id+ "\">" + game.NameGame + "</a></td><td>" + game.StartGame + "</td></tr>");
+                tableRows.Add("<tr><td><a href=\"/Game/id=" + game.Id + "\">" + game.NameGame + "</a></td><td>" + game.StartGame + "</td></tr>");
             }
 
             ViewBag.TableRows = tableRows;
@@ -73,7 +73,7 @@ namespace Dplm.Controllers
                 ViewBag.id = people.Id;
                 ViewBag.phoneNumber = people.PhoneNumber;
                 ViewBag.email = people.Email;
-                ViewBag.birthday = people.Birthday;
+                ViewBag.birthday = people.Birthday.ToString("dd MMMM yyyy");
                 ViewBag.linkVK = people.LinkVK;
 
                 return View();
@@ -113,6 +113,12 @@ namespace Dplm.Controllers
                 return new HttpUnauthorizedResult();
             }
 
+            List<People> peoples = Authorizated.Data.Values.ToList();
+            if (peoples.Exists(people1 => people1.Id == people.Id))
+            {
+                return new HttpStatusCodeResult(200);
+            }
+
             // Перевод пароля в hash
             string hashPass = Helper.GetHashStringSha1(Pass);
 
@@ -139,37 +145,60 @@ namespace Dplm.Controllers
 
             return Authorizated.LogOut(cookie.Value)
                 ? new HttpStatusCodeResult(HttpStatusCode.OK)
-                : new HttpStatusCodeResult(HttpStatusCode.BadRequest) ;
+                : new HttpStatusCodeResult(HttpStatusCode.BadRequest);
         }
 
         public ActionResult updateUserPage()
         {
-            //var cookie = MyCookies.UpdateCookieSession(Request.Cookies["hash"]);
-
-            //Response.SetCookie(cookie);
             var cookie = Response.Cookies["hash"];
 
-            if (cookie.Value != null)
+            if (cookie?.Value != null)
             {
                 People people = new People();
                 Authorizated.Data.TryGetValue(cookie.Value, out people);
 
-                ViewBag.userLogin = people.UserLogin;
-                //ViewBag.UserPass = people.UserPass;       // а надо ли видеть пароль на странице?
-                ViewBag.firstName = people.Name;
-                ViewBag.lastName = people.FamiluName;
-                ViewBag.id = people.Id;
-                ViewBag.phoneNumber = people.PhoneNumber;
-                ViewBag.email = people.Email;
-                ViewBag.birthday = people.Birthday;
-                ViewBag.linkVK = people.LinkVK;
+                if (people != null)
+                {
+                    return View();
+                }
 
-                return View();
+                //ViewBag.userLogin = people.UserLogin;
+                ////ViewBag.UserPass = people.UserPass;       // а надо ли видеть пароль на странице?
+                //ViewBag.firstName = people.Name;
+                //ViewBag.lastName = people.FamiluName;
+                //ViewBag.id = people.Id;
+                //ViewBag.phoneNumber = people.PhoneNumber;
+                //ViewBag.email = people.Email;
+                //ViewBag.birthday = people.Birthday;
+                //ViewBag.linkVK = people.LinkVK;
             }
-            else
+            return View("StartPage");
+        }
+
+        public ActionResult GetUserContent()
+        {
+            var cookie = Response.Cookies["hash"];
+
+            if (cookie?.Value != null)
             {
-                return View("StartPage");
+                People people;
+                Authorizated.Data.TryGetValue(cookie.Value, out people);
+
+                if (people == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+
+                people = DatabaseND.SearchPeopleById(people.Id);
+
+                people.UserPass = "secret";
+
+                var jData = Json(people, JsonRequestBehavior.AllowGet);
+
+                return jData;
             }
+
+            return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
         }
     }
 }

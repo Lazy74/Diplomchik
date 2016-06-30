@@ -10,8 +10,12 @@
     //        Email: email
     //    });
     //}
+    getContent: function () {
+        console.log("getContent");
+        return $.get('/User/update/GetUserContent');
+    },
 
-    updateUser: function(firstName, lastName, phoneNumber, userLogin, email, linkVK, newUserPass, userPass) {
+    updateUser: function (firstName, lastName, phoneNumber, userLogin, email, linkVK, newUserPass) {
         $.post("/api/UpdateUser/updatePeople", {
             UserLogin: userLogin,
             UserPass: newUserPass,
@@ -29,9 +33,11 @@ var viewModel = new ViewModel();
 
 function loadPage() {
     ko.applyBindings(viewModel);
+    loadContent();
 }
 
 function ViewModel() {
+    that = this;
 
     this.firstName = ko.observable();
     this.lastName = ko.observable();
@@ -39,27 +45,37 @@ function ViewModel() {
     this.userLogin = ko.observable();
     this.email = ko.observable();
     this.linkVK = ko.observable();
+    this.birthday = ko.observable();
     this.newUserPass = ko.observable();
     this.newConfirmUserPass = ko.observable();
-    this.userPass = ko.observable();
 
-    this.updateUser = function() {
-        // TODO сделать проверку ввели ли новый пароль. а пока пароль менять нельзя!
-        var newPass = this.userPass();
+    this.updateUser = function () {
+        var newUserPass = this.newUserPass() == this.newConfirmUserPass()
+            ? this.newUserPass()
+            : null;
 
-        model.updateUser(this.firstName(), this.lastName(), this.phoneNumber(), this.userLogin(), this.email(), this.linkVK(), newPass, this.userPass());
+        model.updateUser(this.firstName(), this.lastName(), this.phoneNumber(), this.userLogin(), this.email(), this.linkVK(), newUserPass);
         //model.updateUser("firstName", "lastName", "phoneNumber", "userLogin", "email", "linkVK", "newPass", "newPass");
     }
-
-    //this.createUser = function () {
-        //model.createUser(this.userPass(), this.confirmUserPass(), this.userLogin(), this.phoneNumber(), this.email())
-        //    .success(function () {
-        //        alert("пользователь создан!");
-        //        location.pathname = "";    // строка пути (относительно хоста)
-        //    })
-        //    .error(function () {
-        //        alert("Все пропало :(");
-        //    });
-
 }
 
+function loadContent() {
+    model.getContent()
+        .done(function (content) {
+            that.userLogin(content.UserLogin);
+            that.phoneNumber(content.PhoneNumber);
+            that.email(content.Email);
+            that.lastName(content.FamiluName);
+            that.firstName(content.Name);
+            that.linkVK(content.LinkVK);
+
+            var birthday = new Date(parseInt(content.Birthday.match(/\d+/)[0]));
+
+            birthday = moment(birthday).format('YYYY-MM-DD');
+
+            that.birthday(birthday);
+        })
+        .fail(function () {
+            alert("не удалось получить данные об игре!");
+        });
+}
