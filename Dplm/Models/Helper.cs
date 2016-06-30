@@ -137,7 +137,7 @@ namespace Dplm.Models
             return Flag;
         }
 
-        public static string GetHashString(string s)
+        public static string GetHashStringMD5(string s)
         {
             //переводим строку в байт-массим  
             byte[] bytes = Encoding.Unicode.GetBytes(s);
@@ -155,6 +155,16 @@ namespace Dplm.Models
                 hash += string.Format("{0:x2}", b);
 
             return hash;
+        }
+
+        public static string GetHashStringSha1(string s)
+        {
+            byte[] hash;
+            using (var sha1 = new SHA1CryptoServiceProvider())
+                hash = sha1.ComputeHash(Encoding.Unicode.GetBytes(s));
+            var result = new StringBuilder();
+            foreach (byte b in hash) result.AppendFormat("{0:x2}", b);
+            return result.ToString();
         }
     }
 }

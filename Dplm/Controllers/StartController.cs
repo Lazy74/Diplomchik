@@ -38,7 +38,7 @@ namespace Dplm.Controllers
 
         public ActionResult RegPeople(People people)
         {
-            people.UserPass = Helper.GetHashString(people.UserPass);
+            people.UserPass = Helper.GetHashStringSha1(people.UserPass);
 
             if (DatabaseND.AddUser(people))
             {
@@ -114,7 +114,7 @@ namespace Dplm.Controllers
             }
 
             // Перевод пароля в hash
-            string hashPass = Helper.GetHashString(Pass);
+            string hashPass = Helper.GetHashStringSha1(Pass);
 
             if (people.UserLogin == Login && people.UserPass == hashPass)    //
             //if ("qwe" == Login && "qwe" == Pass)    // TODO здесь будет запрос в базу данных. Проверка есть ли такой user
