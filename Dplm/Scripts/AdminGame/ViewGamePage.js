@@ -16,9 +16,9 @@
             //info: window.btoa(unescape(encodeURIComponent(infoContent)))
         })
             .done(function () {
-                alert("Данные обновлены");
+                notify.success("Данные обновлены");
             }).fail(function () {
-                alert("Ошибка вовремя обновления, данные остались без изменения");
+                notify.error("Ошибка вовремя обновления, данные остались без изменения");
             });
     },
 
@@ -61,7 +61,7 @@ function ViewModel1() {
                 location.reload();
             })
             .fail(function () {
-                alert("Не удалось выполнить добавление уровня");
+                notify.error("Не удалось выполнить добавление уровня");
             });
     }
 
@@ -72,9 +72,9 @@ function ViewModel1() {
             })
             .fail(function (data) {
                 if (data.status == 412) {
-                    alert("Уровней больше нет");
+                    notify.error("Уровней больше нет");
                 } else {
-                    alert("Не удалось выполнить удаление уровня");
+                    notify.error("Не удалось выполнить удаление уровня");
                 }
             });
     }
@@ -100,7 +100,7 @@ function loadContent() {
             that.endGame(entime);
         })
         .fail(function () {
-            alert("не удалось получить данные об игре!");
+            notify.error("не удалось получить данные об игре!");
         });
 }
 

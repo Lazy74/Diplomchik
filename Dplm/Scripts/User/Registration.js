@@ -1,7 +1,7 @@
 ﻿var model = {
     createUser: function (pass, repetPass, userLogin, phoneNumber, email) {
         if (pass != repetPass) {
-            alert("Пароли не совпадают!");
+            notify.error("Пароли не совпадают!");
         }
         return $.post("/Registration/NewPeople", {
             UserLogin: userLogin,
@@ -15,7 +15,7 @@
 var viewModel = new ViewModel();
 
 function loadPage() {
-    ko.applyBindings(viewModel);
+    ko.applyBindings(viewModel, $('#page-content').get(0));
 }
 
 function ViewModel() {
@@ -30,11 +30,11 @@ function ViewModel() {
     this.createUser = function () {
         model.createUser(this.userPass(), this.confirmUserPass(), this.userLogin(), this.phoneNumber(), this.email())
             .success(function () {
-                alert("пользователь создан!");
+                notify.success("пользователь создан!");
                 location.pathname = "/User/";    // строка пути (относительно хоста)
             })
             .error(function () {
-                alert("Все пропало :(");
+                notify.error("Все пропало :(");
             });
 
     }

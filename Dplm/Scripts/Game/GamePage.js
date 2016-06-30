@@ -9,7 +9,7 @@
             location.reload();
         })
         .fail(function () {
-            alert("Не удалось выполнить заявку");
+            notify.error("Не удалось выполнить заявку");
         });
     }
 }

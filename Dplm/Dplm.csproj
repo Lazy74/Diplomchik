@@ -109,6 +109,7 @@
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\ohSnap.css" />
     <Content Include="Content\Site.css" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -120,10 +121,12 @@
     <Content Include="Scripts\cookie.js" />
     <Content Include="Scripts\Game\GamePage.js" />
     <Content Include="Scripts\Global\main.js" />
+    <Content Include="Scripts\Global\notifications.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <Content Include="Scripts\knockout-3.4.0.js" />
     <Content Include="Scripts\Command\CommandPage.js" />
     <Content Include="Scripts\moment.min.js" />
+    <Content Include="Scripts\ohsnap.min.js" />
     <Content Include="Scripts\User\Registration.js" />
     <Content Include="Scripts\Game\GameplayPage.js" />
     <Content Include="Scripts\Start\StartPage.js" />

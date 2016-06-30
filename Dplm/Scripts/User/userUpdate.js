@@ -1,7 +1,7 @@
 ﻿var model = {
     //createUser: function (pass, repetPass, userLogin, phoneNumber, email) {
     //    if (pass != repetPass) {
-    //        alert("Пароли не совпадают!");
+    //        notify.error("Пароли не совпадают!");
     //    }
     //    return $.post("/api/Registration/RegPeople", {
     //        UserLogin: userLogin,
@@ -76,6 +76,6 @@ function loadContent() {
             that.birthday(birthday);
         })
         .fail(function () {
-            alert("не удалось получить данные об игре!");
+            notify.error("не удалось получить данные об игре!");
         });
 }

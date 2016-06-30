@@ -22,17 +22,17 @@
                 //var lvlText = "Информация об уровне обновлена!";
             })
             .fail(function () {
-                alert("Ошибка во время сохранения информации об уровне");
+                notify.error("Ошибка во время сохранения информации об уровне");
                 //var lvlText = "Информация об уровне не обновлена!";
             });
         var s2 = $.post('/Administration/EditGameInformation/UpdateAnswersOnLvl', { Answer: answer, gameId: window.gameId, lvl: window.lvl })
             .done(function () {
             })
             .fail(function () {
-                alert("Ошибка во время сохранения ответов");
+                notify.error("Ошибка во время сохранения ответов");
             });
         $.when(s1, s2).then(function () {
-            alert("Информация обновлена!");
+            notify.success("Информация обновлена!");
             loadContent();
         });
     },
@@ -93,7 +93,7 @@ function loadContent() {
         });
     })
     .fail(function (content) {
-        alert("не удалось получить данные об игре!");
+        notify.error("не удалось получить данные об игре!");
     });
 }
 
@@ -108,11 +108,11 @@ function loadContent() {
 
 //    $.post('/Administration/EditGameInformation/UpdateAnswersOnLvl', { Answer: answer, gameId: window.gameId, lvl: window.lvl })
 //    .done(function () {
-//        alert("Ответы обновлены");
+//        notify.success("Ответы обновлены");
 //        loadContent();
 //    })
 //    .fail(function () {
-//        alert("Ошибка во время сохранения ответов");
+//        notify.error("Ошибка во время сохранения ответов");
 //    });
 //},
 //updateContentLvl: function (authorComment, timeout, textQuest) {

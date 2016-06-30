@@ -6,7 +6,7 @@
                 location.href = "/Administration/EditGameInformation/id=" + data;
             })
             .fail(function () {
-                alert("Не удалось создать игру");
+                notify.error("Не удалось создать игру");
             });
     }
 }

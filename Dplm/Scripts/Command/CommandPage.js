@@ -1,18 +1,18 @@
 ﻿var model = {
     addNewPlayer: function (login) {
         if (login == null) {
-            alert("Введите логин");
+            notify.error("Введите логин");
             return;
         }
 
         $.get("/User/Command/AddPlayer/", { Login: login })
             .done(function () {
-                // TODO Убрать alert
-                alert("Ok");
+                // TODO Убрать notify
+                notify.success("Ok");
                 location.reload();
             })
             .fail(function () {
-                alert("Не удалось добавить игрока");
+                notify.error("Не удалось добавить игрока");
             });
     }
 }

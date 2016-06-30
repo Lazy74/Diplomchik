@@ -1,18 +1,18 @@
 ﻿var model = {
     createCommand: function (name) {
         if (name == null) {
-            alert("Введите название команды");
+            notify.error("Введите название команды");
             return;
         }
 
         $.get("/User/Command/CreateTeam/", { Name: name })
             .done(function () {
-                // TODO Убрать alert
-                alert("Ok");
+                // TODO Убрать notify
+                notify.success("Ok");
                 location.reload();
             })
             .fail(function () {
-                alert("Не удалось создать команду");
+                notify.error("Не удалось создать команду");
             });
     }
 }

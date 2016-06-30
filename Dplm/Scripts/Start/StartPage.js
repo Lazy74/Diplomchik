@@ -7,11 +7,11 @@
             Pass: pass
         })
             .done(function () {
-                alert("Авторизация прошла успешно");
+                notify.success("Авторизация прошла успешно");
                 location.pathname = "";    // строка пути (относительно хоста)
             })
             .fail(function () {
-                alert("Пользователь не найден!");
+                notify.error("Пользователь не найден!");
             });
         //$.ajax({
         //    url: "/AuthorizeUser/",
@@ -36,7 +36,7 @@
                 location.href = "/User/Command/";
             })
             .fail(function () {
-                alert("Для начала авторизуйтесь!");
+                notify.error("Для начала авторизуйтесь!");
             });
     }
 }

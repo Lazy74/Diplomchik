@@ -7,12 +7,12 @@
         })
             .done(function () {
                 ReloadPage();
-                alert("Ответ \"" + answer + "\" верный");
+                notify.success("Ответ \"" + answer + "\" верный");
                 location.reload();
                 //location.pathname = "";    // строка пути (относительно хоста)
             })
             .fail(function () {
-                alert("Ответ \"" + answer + "\" не верный");
+                notify.error("Ответ \"" + answer + "\" не верный");
             });
     }
 }
@@ -44,7 +44,7 @@ function ViewModel() {
 
 //var timerId = setTimeout(function () {
 //    //window.location.reload();
-//    alert("Перезагрузка!");
+//    notify.success("Перезагрузка!");
 //}, 5000);
 
 
