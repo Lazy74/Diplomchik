@@ -18,7 +18,19 @@ namespace Dplm.Controllers
         /// <returns></returns>
         public ActionResult GameplayPage(string id)
         {
-            int gameId = Convert.ToInt32(id);
+            // int gameId = Convert.ToInt32(id);
+
+            int gameId;
+            try
+            {
+                gameId = Convert.ToInt32(id);
+            }
+            catch (Exception)
+            {
+                gameId = 0;
+            }
+
+            ViewBag.gameId = gameId;
 
             var cookie = Response.Cookies["hash"];
 
