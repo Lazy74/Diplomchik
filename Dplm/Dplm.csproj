@@ -119,6 +119,7 @@
     <Content Include="Scripts\Command\CommandCreatePage.js" />
     <Content Include="Scripts\cookie.js" />
     <Content Include="Scripts\Game\GamePage.js" />
+    <Content Include="Scripts\Global\main.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <Content Include="Scripts\knockout-3.4.0.js" />
     <Content Include="Scripts\Command\CommandPage.js" />
