@@ -200,5 +200,40 @@ namespace Dplm.Controllers
 
             return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
         }
+
+        public ActionResult UpdateUser(People people)
+        {
+            return null;
+            //if (updatePeople == null)
+            //{
+            //    return new HttpResponseMessage(HttpStatusCode.OK);
+            //}
+
+            //var cookie = Request.Headers.GetCookies("hash");
+
+            //string hash = cookie[0].Cookies[0].Value;
+
+            //People people = new People();
+            //Authorizated.Data.TryGetValue(hash, out people);
+
+            //updatePeople.Id = people.Id;
+
+            //if (!string.IsNullOrEmpty(updatePeople.UserPass))
+            //{
+            //    updatePeople.UserPass = Helper.GetHashStringSha1(updatePeople.UserPass);
+            //}
+            //else
+            //{
+            //    updatePeople.UserPass = people.UserPass;
+            //}
+
+            //if (DatabaseND.UpdateUser(updatePeople))
+            //{
+            //    Authorizated.Data[hash] = people;
+            //    return new HttpResponseMessage(HttpStatusCode.OK);
+            //}
+
+            //return new HttpResponseMessage(HttpStatusCode.BadRequest);
+        }
     }
 }

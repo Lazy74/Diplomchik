@@ -161,7 +161,14 @@ namespace Dplm.Models
                             people.Email = reader["email"].ToString().Trim();
                             people.Name = reader["lastName"].ToString().Trim();
                             people.FamiluName = reader["firstName"].ToString().Trim();
-                            people.Birthday = (DateTime)reader["birthday"];
+                            try
+                            {
+                                people.Birthday = (DateTime)reader["birthday"];
+                            }
+                            catch (Exception)
+                            {
+                                people.Birthday = DateTime.MinValue;
+                            }
                             people.LinkVK = reader["linkVK"].ToString().Trim();
 
                             return people;
@@ -175,48 +182,54 @@ namespace Dplm.Models
         /// <summary>
         /// Обновить данные о игроке
         ///</summary>
-        public static bool UpdateUser(People oldPeople, People updatePeople)
+        public static bool UpdateUser(People people)
         {
-            if (!string.IsNullOrEmpty(updatePeople.UserLogin))
-            {
-                oldPeople.UserLogin = updatePeople.UserLogin;
-            }
-
-            if (!string.IsNullOrEmpty(updatePeople.UserPass))
-            {
-                oldPeople.UserPass = updatePeople.UserPass;
-            }
-
-            if (!string.IsNullOrEmpty(updatePeople.PhoneNumber))
-            {
-                oldPeople.PhoneNumber = updatePeople.PhoneNumber;
-            }
-
-            if (!string.IsNullOrEmpty(updatePeople.Email))
-            {
-                oldPeople.Email = updatePeople.Email;
-            }
-
-            if (!string.IsNullOrEmpty(updatePeople.FamiluName))
-            {
-                oldPeople.FamiluName = updatePeople.FamiluName;
-            }
-
-            if (!string.IsNullOrEmpty(updatePeople.Name))
-            {
-                oldPeople.Name = updatePeople.Name;
-            }
-
-            // TODO Сделать редактирование дня рождения
-            //if (!string.IsNullOrEmpty(updatePeople.Birthday))
+            //if (!string.IsNullOrEmpty(updatePeople.UserLogin))
             //{
-            //    oldPeople.Birthday = updatePeople.Birthday;
+            //    people.UserLogin = updatePeople.UserLogin;
             //}
 
-            if (!string.IsNullOrEmpty(updatePeople.LinkVK))
+            //if (!string.IsNullOrEmpty(updatePeople.UserPass))
+            //{
+            //    people.UserPass = updatePeople.UserPass;
+            //}
+
+            //if (!string.IsNullOrEmpty(updatePeople.PhoneNumber))
+            //{
+            //    people.PhoneNumber = updatePeople.PhoneNumber;
+            //}
+
+            //if (!string.IsNullOrEmpty(updatePeople.Email))
+            //{
+            //    people.Email = updatePeople.Email;
+            //}
+
+            //if (!string.IsNullOrEmpty(updatePeople.FamiluName))
+            //{
+            //    people.FamiluName = updatePeople.FamiluName;
+            //}
+
+            //if (!string.IsNullOrEmpty(updatePeople.Name))
+            //{
+            //    people.Name = updatePeople.Name;
+            //}
+
+            //// TODO Сделать редактирование дня рождения
+            ////if (!string.IsNullOrEmpty(updatePeople.Birthday))
+            ////{
+            ////    people.Birthday = updatePeople.Birthday;
+            ////}
+
+            //if (!string.IsNullOrEmpty(updatePeople.LinkVK))
+            //{
+            //    people.LinkVK = updatePeople.LinkVK;
+            //}
+            if (people.Birthday == DateTime.MinValue)
             {
-                oldPeople.LinkVK = updatePeople.LinkVK;
+                people.Birthday = new DateTime(2000,1,1);
             }
+
+
 
 
             using (var connection = new SqlConnection(ConnectionString))
@@ -229,7 +242,7 @@ namespace Dplm.Models
 
                     cmd.CommandText = "UPDATE [users] " +
                                       "SET " +
-                                            "userLogin = @login, " +
+                                            //"userLogin = @login, " +
                                             "userPass = @pass, " +
                                             "phoneNumber = @phone, " +
                                             "email = @email, " +
@@ -239,15 +252,15 @@ namespace Dplm.Models
                                             "birthday = @birth " +
                                       "WHERE Id = @Id;";
 
-                    cmd.Parameters.AddWithValue("@login", oldPeople.UserLogin.ToLower());
-                    cmd.Parameters.AddWithValue("@pass", oldPeople.UserPass);
-                    cmd.Parameters.AddWithValue("@phone", oldPeople.PhoneNumber);
-                    cmd.Parameters.AddWithValue("@email", oldPeople.Email);
-                    cmd.Parameters.AddWithValue("@lastName", oldPeople.FamiluName);
-                    cmd.Parameters.AddWithValue("@firstName", oldPeople.Name);
-                    cmd.Parameters.AddWithValue("@birth", oldPeople.Birthday);
-                    cmd.Parameters.AddWithValue("@vk", oldPeople.LinkVK);
-                    cmd.Parameters.AddWithValue("@Id", oldPeople.Id);
+                    //cmd.Parameters.AddWithValue("@login", people.UserLogin.ToLower());
+                    cmd.Parameters.AddWithValue("@pass", people.UserPass);
+                    cmd.Parameters.AddWithValue("@phone", people.PhoneNumber ?? "");
+                    cmd.Parameters.AddWithValue("@email", people.Email ?? "");
+                    cmd.Parameters.AddWithValue("@lastName", people.FamiluName ?? "");
+                    cmd.Parameters.AddWithValue("@firstName", people.Name ?? "");
+                    cmd.Parameters.AddWithValue("@birth", people.Birthday);
+                    cmd.Parameters.AddWithValue("@vk", people.LinkVK ?? "");
+                    cmd.Parameters.AddWithValue("@Id", people.Id);
 
 
                     try

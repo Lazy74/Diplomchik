@@ -54,6 +54,16 @@ namespace Dplm
                     action = "UserPage"
                 });
 
+            // Запрос на обновление данных об игроке
+            routes.MapRoute(
+                name: "UpdateUser",
+                url: "User/UpdateUser",
+                defaults: new
+                {
+                    controller = "Start",
+                    action = "UpdateUser"
+                });
+
             // Авторизация
             routes.MapRoute(
                 name: "AuthorizeUser",

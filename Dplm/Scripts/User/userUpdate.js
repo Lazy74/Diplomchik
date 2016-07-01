@@ -16,7 +16,7 @@
     },
 
     updateUser: function (firstName, lastName, phoneNumber, userLogin, email, linkVK, newUserPass) {
-        $.post("/api/UpdateUser/updatePeople", {
+        $.post("/User/UpdateUser", {
             UserLogin: userLogin,
             UserPass: newUserPass,
             PhoneNumber: phoneNumber,

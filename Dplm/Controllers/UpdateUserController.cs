@@ -13,32 +13,38 @@ namespace Dplm.Controllers
     public class UpdateUserController : ApiController
     {
         // Перенести в MVC
-        public HttpResponseMessage updatePeople(People updatePeople)
-        {
-            if (updatePeople == null)
-            {
-                return new HttpResponseMessage(HttpStatusCode.OK);
-            }
+        //public HttpResponseMessage updatePeople(People updatePeople)
+        //{
+        //    if (updatePeople == null)
+        //    {
+        //        return new HttpResponseMessage(HttpStatusCode.OK);
+        //    }
 
-            var cookie = Request.Headers.GetCookies("hash");
+        //    var cookie = Request.Headers.GetCookies("hash");
 
-            string hash = cookie[0].Cookies[0].Value;
+        //    string hash = cookie[0].Cookies[0].Value;
 
-            People people = new People();
-            Authorizated.Data.TryGetValue(hash, out people);
+        //    People people = new People();
+        //    Authorizated.Data.TryGetValue(hash, out people);
 
-            if (updatePeople.UserPass != null || updatePeople.UserPass != "")
-            {
-                updatePeople.UserPass = Helper.GetHashStringSha1(updatePeople.UserPass);
-            }
+        //    updatePeople.Id = people.Id;
 
-            if (DatabaseND.UpdateUser(people, updatePeople))
-            {
-                Authorizated.Data[hash] = people;
-                return new HttpResponseMessage(HttpStatusCode.OK);
-            }
+        //    if (!string.IsNullOrEmpty(updatePeople.UserPass))
+        //    {
+        //        updatePeople.UserPass = Helper.GetHashStringSha1(updatePeople.UserPass);
+        //    }
+        //    else
+        //    {
+        //        updatePeople.UserPass = people.UserPass;
+        //    }
 
-            return new HttpResponseMessage(HttpStatusCode.BadRequest);
-        }
+        //    if (DatabaseND.UpdateUser(updatePeople))
+        //    {
+        //        Authorizated.Data[hash] = people;
+        //        return new HttpResponseMessage(HttpStatusCode.OK);
+        //    }
+
+        //    return new HttpResponseMessage(HttpStatusCode.BadRequest);
+        //}
     }
 }
