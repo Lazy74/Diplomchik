@@ -24,7 +24,7 @@ function ReloadPage() {
 var viewModel = new ViewModel();
 
 function loadPage() {
-    ko.applyBindings(viewModel);
+    ko.applyBindings(viewModel, $('#page-content').get(0));
 }
 
 function ViewModel() {

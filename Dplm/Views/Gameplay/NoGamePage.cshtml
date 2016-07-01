@@ -1,22 +1,5 @@
-﻿
-@{
-    Layout = null;
-}
-
-<!DOCTYPE html>
-
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>NoGamePage</title>
-</head>
-<body>
+﻿<span>@ViewBag.Message</span>
 <div>
-    <span>@ViewBag.Message</span>
-    <div>
-        <a href="/Game/id=@ViewBag.gameId">Назад</a>
-    </div>
-    // TODO ссылка на инфу об игре
+    <a href="/Game/id=@ViewBag.gameId">Назад</a>
 </div>
-</body>
-</html>
+    // TODO ссылка на инфу об игре

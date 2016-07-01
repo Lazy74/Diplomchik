@@ -34,7 +34,7 @@
 var viewModel1 = new ViewModel1();
 
 function loadPage() {
-    ko.applyBindings(viewModel1);  //возможность работать с моделью представления
+    ko.applyBindings(viewModel1, $('#page-content').get(0));  //возможность работать с моделью представления
 }
 
 

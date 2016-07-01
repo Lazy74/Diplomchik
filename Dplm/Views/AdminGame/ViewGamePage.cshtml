@@ -1,101 +1,80 @@
-﻿
-@{
-    Layout = null;
-}
+﻿<script src="/Scripts/AdminGame/ViewGamePage.js"></script>
+<style>
+    div {
+        margin: 10px;
+    }
 
-<!DOCTYPE html>
+    input {
+        margin-left: 10px;
+    }
 
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <meta charset="UTF-8" />
-    <title>Основная информация</title>
+    textarea {
+        width: 100%;
+    }
+</style>
+<div>
+    @*TODO Сделать добавление авторов*@
+    <span>//Сделать добавление авторов</span>
+</div>
 
-    <script src="/Scripts/jquery-1.10.2.min.js"></script>
-    <script src="/Scripts/knockout-3.4.0.js"></script>
-    <script src="/Scripts/moment.min.js"></script>
+<div>
+    <span>Название игры</span>
+    <input type="text" class="form-control" placeholder="Название игры" data-bind="value: nameGame" />
+</div>
 
-    <script src="/Scripts/AdminGame/ViewGamePage.js"></script>
-</head>
-<body>
-    <style>
-        div {
-            margin: 10px;
+<div>
+    <span>Последовательность</span>
+    <input type="text" class="form-control" placeholder="Последовательность" data-bind="value: sequence" />
+</div>
+
+<div>
+    <span>Пробег</span>
+    <input type="text" class="form-control" placeholder="Пробег" data-bind="value: distance" />
+</div>
+
+<div>
+    <span>Начало игры</span>
+    <input type="datetime-local" data-bind="value: startGame">
+</div>
+
+<div>
+    <span>Окончание игры</span>
+    <input type="datetime-local" data-bind="value: endGame">
+</div>
+
+<div>
+    <span>Информация по игре от авторов</span>
+    <div>
+        <textarea rows="18" data-bind="value: infoContent" class="form-control"></textarea>
+    </div>
+</div>
+
+<div>
+    <button id="btn-save" data-bind="click: save">Сохранить изменения</button>
+</div>
+
+<table border="1">
+    <tr>
+        <th>Номер</th>
+        <th>Название</th>
+        <th>Действие</th>
+    </tr>
+    @{
+        foreach (var tableRow in ViewBag.TableRows)
+        {
+            @Html.Raw(tableRow)
         }
+    }
+</table>
 
-        input {
-            margin-left: 10px;
-        }
-
-        textarea {
-            width: 100%;
-        }
-    </style>
-    <div>
-        @*TODO Сделать добавление авторов*@
-        <span>//Сделать добавление авторов</span>
-    </div>
-
-    <div>
-        <span>Название игры</span>
-        <input type="text" class="form-control" placeholder="Название игры" data-bind="value: nameGame" />
-    </div>
-
-    <div>
-        <span>Последовательность</span>
-        <input type="text" class="form-control" placeholder="Последовательность" data-bind="value: sequence" />
-    </div>
-
-    <div>
-        <span>Пробег</span>
-        <input type="text" class="form-control" placeholder="Пробег" data-bind="value: distance" />
-    </div>
-
-    <div>
-        <span>Начало игры</span>
-        <input type="datetime-local" data-bind="value: startGame">
-    </div>
-
-    <div>
-        <span>Окончание игры</span>
-        <input type="datetime-local" data-bind="value: endGame">
-    </div>
-
-    <div>
-        <span>Информация по игре от авторов</span>
-        <div>
-            <textarea rows="18" data-bind="value: infoContent" class="form-control"></textarea>
-        </div>
-    </div>
-
-    <div>
-        <button id="btn-save" data-bind="click: save">Сохранить изменения</button>
-    </div>
-
-    <table border="1">
-        <tr>
-            <th>Номер</th>
-            <th>Название</th>
-            <th>Действие</th>
-        </tr>
-        @{
-            foreach (var tableRow in ViewBag.TableRows)
-            {
-                @Html.Raw(tableRow)
-            }
-        }
-    </table>
-
-    <div>
-        <button data-bind="click: createLvl">Добавить</button>
-        <button data-bind="click: removeLvl">Удалить</button>
-    </div>
+<div>
+    <button data-bind="click: createLvl">Добавить</button>
+    <button data-bind="click: removeLvl">Удалить</button>
+</div>
 
 
-    <script>
-        window.currentGameId = @ViewBag.Id;
-        loadPage();
-        loadContent();
-    </script>
-</body>
-</html>
+<script>
+    window.currentGameId = @ViewBag.Id;
+    loadPage();
+    loadContent();
+</script>

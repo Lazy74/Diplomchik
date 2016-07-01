@@ -1,33 +1,18 @@
-﻿
-@{
-    Layout = null;
-}
-
-<!DOCTYPE html>
-
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>CommandPage</title>
-
-    <script src="/Scripts/jquery-1.10.2.min.js"></script>
-    <script src="/Scripts/knockout-3.4.0.js"></script>
-    <script src="/Scripts/Command/CommandPage.js"></script>
-</head>
-<body>
+﻿<script src="/Scripts/Command/CommandPage.js"></script>
 <div>
 
+
     <div class="add-player">
-        <input type="text" id="player-name" placeholder="Логин игрока" data-bind="value: addNewPlayer"/>
+        <input type="text" id="player-name" placeholder="Логин игрока" data-bind="value: addNewPlayer" />
         <button id="btn-add-player" data-bind="click: addPlayer">Добавить игрока</button>
     </div>
 
     <span>Название команды: @ViewBag.teamName</span>
-    <br/>
+    <br />
     <span>@ViewBag.commander</span>
-    <br/>
+    <br />
     <span>id команды: @ViewBag.teamId</span>
-    
+
     <table>
         @{
             foreach (var name in ViewBag.playerName)
@@ -38,12 +23,10 @@
     </table>
 </div>
 
-    <div>
-        <button data-bind="click: outTeam">Выйти из команды</button>
-    </div>
+<div>
+    <button data-bind="click: outTeam">Выйти из команды</button>
+</div>
 
-    <script>
-        loadPage();
-    </script>
-</body>
-</html>
+<script>
+    loadPage();
+</script>

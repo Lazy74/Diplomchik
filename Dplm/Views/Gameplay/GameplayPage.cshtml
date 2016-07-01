@@ -1,60 +1,39 @@
-﻿
-@{
-    Layout = null;
-}
+﻿<script src="/Scripts/Game/GameplayPage.js"></script>
+<div class="content">
+    <h1>@ViewBag.nameGame</h1>
+    <h2>Уровень @ViewBag.lvl из @ViewBag.lvlLength: @ViewBag.nameLevel</h2>
 
-<!DOCTYPE html>
+    <input type="text" id="id-answer" class="form-control" placeholder="Ваш ответ" data-bind="value: playerAnswer" />
+    <button id="btn-answer" data-bind="click:toAnswer">Ответить</button>
+    <br>
+    <span>Ваш ответ или код</span>
 
-<html>
-<head>
-    @*<meta name="viewport" content="width=device-width"/>*@
+    <p>
+        @Html.Raw(ViewBag.commentAuthor)
+    </p>
 
-    <script src="/Scripts/jquery-1.10.2.min.js"></script>
-    <script src="/Scripts/knockout-3.4.0.js"></script>
+    <div class="spacer"></div>
+    <h3 class="timer">
+        <strong>Автопереход</strong> на следующий уровень через: <span data-bind="text: timeNextLvl"></span>
 
-    <script src="/Scripts/Game/GameplayPage.js"></script>
+        @*<strong>Автопереход</strong> на следующий уровень через: <span class="bold_off" id="time44554340"><b>n</b> м<b>m</b> с</span>*@
 
-    <title>GameplayPage</title>
-</head>
-<body>
-    <div class="content">
-        <h1>@ViewBag.nameGame</h1>
-        <h2>Уровень @ViewBag.lvl из @ViewBag.lvlLength: @ViewBag.nameLevel</h2>
+        <script>
+            var sec = @ViewBag.TimeTransition; // Здесь из контроллера получаем время до автоперехода
+            window.currentGameId = @ViewBag.Id
+        </script>
 
-        <input type="text" id="id-answer" class="form-control" placeholder="Ваш ответ" data-bind="value: playerAnswer" />
-        <button id="btn-answer" data-bind="click:toAnswer">Ответить</button>
-        <br>
-        <span>Ваш ответ или код</span>
+    </h3>
 
-        <p>
-            @Html.Raw(ViewBag.commentAuthor)
-        </p>
+    @*<span>штраф N минут (Если он есть)</span>*@
 
-        <div class="spacer"></div>
-        <h3 class="timer">
-            <strong>Автопереход</strong> на следующий уровень через: <span data-bind="text: timeNextLvl"></span>
+    <div class="spacer"></div>
+    <h3>Задание</h3>
+    <p>@Html.Raw(ViewBag.quest)</p>
 
-            @*<strong>Автопереход</strong> на следующий уровень через: <span class="bold_off" id="time44554340"><b>n</b> м<b>m</b> с</span>*@
+    @*не забыть про подсказки и бонусы!*@
+</div>
 
-            <script>
-                var sec = @ViewBag.TimeTransition;       // Здесь из контроллера получаем время до автоперехода
-                window.currentGameId = @ViewBag.Id
-            </script>
-
-        </h3>
-
-        @*<span>штраф N минут (Если он есть)</span>*@
-
-        <div class="spacer"></div>
-        <h3>Задание</h3>
-        <p>@Html.Raw(ViewBag.quest)</p>
-
-        @*не забыть про подсказки и бонусы!*@
-    </div>
-
-    <script>
-        loadPage();
-    </script>
-
-</body>
-</html>
+<script>
+    loadPage();
+</script>

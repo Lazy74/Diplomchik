@@ -1,43 +1,24 @@
-﻿
-@{
-    Layout = null;
-}
+﻿<script src="/Scripts/AdminGame/HomePage.js"></script>
+<div>
+    <button id="btn-create-game" data-bind="click: createGame">Создать новую игру</button>
+</div>
 
-<!DOCTYPE html>
+<table border="1">
+    <caption>Предстоящие игры</caption>
+    <tr>
+        <th>Название</th>
+        <th>Дата начала</th>
+    </tr>
 
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Управление играми</title>
-
-    <script src="/Scripts/jquery-1.10.2.min.js"></script>
-    <script src="/Scripts/knockout-3.4.0.js"></script>
-
-    <script src="/Scripts/AdminGame/HomePage.js"></script>
-</head>
-<body>
-    <div>
-        <button id="btn-create-game" data-bind="click: createGame">Создать новую игру</button>
-    </div>
-
-    <table border="1">
-        <caption>Предстоящие игры</caption>
-        <tr>
-            <th>Название</th>
-            <th>Дата начала</th>
-        </tr>
-
-        @{
-            foreach (var tableRow in ViewBag.TableRows)
-            {
-                @Html.Raw(tableRow)
-            }
+    @{
+        foreach (var tableRow in ViewBag.TableRows)
+        {
+            @Html.Raw(tableRow)
         }
+    }
 
-    </table>
+</table>
 
-    <script>
-        loadPage();
-    </script>
-</body>
-</html>
+<script>
+    loadPage();
+</script>

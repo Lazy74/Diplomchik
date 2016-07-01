@@ -1,45 +1,27 @@
-﻿
-<html>
-<head>
-    <title>Update</title>
+﻿<script src="/Scripts/User/userUpdate.js"></script>
 
-    <link href="/Content/bootstrap.min.css" rel="stylesheet"/>
-    <link href="/Content/Site.css" rel="stylesheet"/>
+<p>НЕЗАБЫТЬ ПРО ДАТУ РОЖДЕНИЯ</p>
+<p>Имя</p>
+<input type="text" id="user-first-name" class="form-control" placeholder="" data-bind="value: firstName" />
+<p>Фамилия</p>
+<input type="text" id="user-last-name" class="form-control" placeholder="" data-bind="value: lastName" />
+<p>Номер телефона</p>
+<input type="text" id="phone-number" class="form-control" placeholder="" data-bind="value: phoneNumber" />
+<p>Логин</p>
+<input type="text" id="user-login" class="form-control" placeholder="" data-bind="value: userLogin" />
+<p>Дата рождения</p>
+<input type="date" id="user-birthday" class="form-control" placeholder="" data-bind="value: birthday" />
+<p>Email</p>
+<input type="text" id="email" class="form-control" placeholder="" data-bind="value: email" />
+<p>Ссылка ВКонтакте</p>
+<input type="text" id="link-vk" class="form-control" placeholder="" data-bind="value: linkVK" />
+<p></p>
+<p>Новый пароль</p>
+<input type="text" id="user-new-pass" class="form-control" placeholder="Новый пароль" data-bind="value: newUserPass" />
+<p>Повторите новый пароль</p>
+<input type="text" id="repet-user-new-pass" class="form-control" placeholder="Повт. новый пароль" data-bind="value: newConfirmUserPass" />
 
-    <script src="/Scripts/jquery-1.10.2.min.js"></script>
-    <script src="/Scripts/knockout-3.4.0.js"></script>
-    <script src="/Scripts/moment.min.js"></script>
-
-    <script src="/Scripts/User/userUpdate.js"></script>
-</head>
-<body>
-<div>
-    <p>НЕЗАБЫТЬ ПРО ДАТУ РОЖДЕНИЯ</p>
-    <p>Имя</p>
-    <input type="text" id="user-first-name" class="form-control" placeholder="" data-bind="value: firstName"/>
-    <p>Фамилия</p>
-    <input type="text" id="user-last-name" class="form-control" placeholder="" data-bind="value: lastName"/>
-    <p>Номер телефона</p>
-    <input type="text" id="phone-number" class="form-control" placeholder="" data-bind="value: phoneNumber"/>
-    <p>Логин</p>
-    <input type="text" id="user-login" class="form-control" placeholder="" data-bind="value: userLogin"/>
-    <p>Дата рождения</p>
-    <input type="date" id="user-birthday" class="form-control" placeholder="" data-bind="value: birthday"/>
-    <p>Email</p>
-    <input type="text" id="email" class="form-control" placeholder="" data-bind="value: email"/>
-    <p>Ссылка ВКонтакте</p>
-    <input type="text" id="link-vk" class="form-control" placeholder="" data-bind="value: linkVK"/>
-    <p></p>
-    <p>Новый пароль</p>
-    <input type="text" id="user-new-pass" class="form-control" placeholder="Новый пароль" data-bind="value: newUserPass"/>
-    <p>Повторите новый пароль</p>
-    <input type="text" id="repet-user-new-pass" class="form-control" placeholder="Повт. новый пароль" data-bind="value: newConfirmUserPass"/>
-
-    <button id="btn-create" class="btn btn-success" data-bind="click: updateUser">Сохранить</button>
-</div>
+<button id="btn-create" class="btn btn-success" data-bind="click: updateUser">Сохранить</button>
 <script>
     loadPage();
 </script>
-</body>
-</html>
-

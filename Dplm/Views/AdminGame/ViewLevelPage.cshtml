@@ -1,68 +1,49 @@
-﻿
-@{
-    Layout = null;
-}
-
-<!DOCTYPE html>
-
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>ViewLevelPage</title>
-
-    <script src="/Scripts/jquery-1.10.2.min.js"></script>
-    <script src="/Scripts/knockout-3.4.0.js"></script>
-
-    <script src="/Scripts/AdminGame/ViewLevelPage.js"></script>
-</head>
-<body>
+﻿<script src="/Scripts/AdminGame/ViewLevelPage.js"></script>
+<div>
     <div>
-        <div>
-            <span>Название уровня</span>
-            <input type="text" class="form-control" placeholder="Название" data-bind="value: nameLevel" />
-        </div>
+        <span>Название уровня</span>
+        <input type="text" class="form-control" placeholder="Название" data-bind="value: nameLevel" />
+    </div>
 
+    <div>
+        <span>Коментарий автора</span>
         <div>
-            <span>Коментарий автора</span>
-            <div>
-                <textarea rows="5" data-bind="value: authorComment" class="form-control"></textarea>
-            </div>
-        </div>
-
-        <div>
-            <span>Время на уровень</span>
-            <input type="text" class="form-control" placeholder="Время на уровень" data-bind="value: timeout" />
-        </div>
-
-        <div>
-            <span>Задание</span>
-            <div>
-                <textarea rows="10" data-bind="value: textQuest" class="form-control"></textarea>
-            </div>
-        </div>
-
-        <span>Ответы</span>
-        <div class="input-group" data-bind="foreach: questAnswers ">
-            <div>
-                <input type="text" class="form-control" placeholder="Ответ" data-bind="value: TextAnswer" />
-                <button data-bind="click: $parent.remove">Удалить</button>
-            </div>
-        </div>
-        <div>
-            <button data-bind="click: add">Добавить ответ</button>
-        </div>
-
-        <div>
-            </br>
-            <button id="btn-save" data-bind="click: save">Сохранить все изменения</button>
+            <textarea rows="5" data-bind="value: authorComment" class="form-control"></textarea>
         </div>
     </div>
 
-    <script>
-        window.gameId = @ViewBag.gameId;
-        window.lvl = @ViewBag.lvl;
-        loadPage();
-        loadContent();
-    </script>
-</body>
-</html>
+    <div>
+        <span>Время на уровень</span>
+        <input type="text" class="form-control" placeholder="Время на уровень" data-bind="value: timeout" />
+    </div>
+
+    <div>
+        <span>Задание</span>
+        <div>
+            <textarea rows="10" data-bind="value: textQuest" class="form-control"></textarea>
+        </div>
+    </div>
+
+    <span>Ответы</span>
+    <div class="input-group" data-bind="foreach: questAnswers ">
+        <div>
+            <input type="text" class="form-control" placeholder="Ответ" data-bind="value: TextAnswer" />
+            <button data-bind="click: $parent.remove">Удалить</button>
+        </div>
+    </div>
+    <div>
+        <button data-bind="click: add">Добавить ответ</button>
+    </div>
+
+    <div>
+        </br>
+        <button id="btn-save" data-bind="click: save">Сохранить все изменения</button>
+    </div>
+</div>
+
+<script>
+    window.gameId = @ViewBag.gameId;
+    window.lvl = @ViewBag.lvl;
+    loadPage();
+    loadContent();
+</script>
