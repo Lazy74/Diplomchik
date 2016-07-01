@@ -98,7 +98,16 @@ namespace Dplm.Models
                             people.Email = reader["email"].ToString().Trim();
                             people.Name = reader["lastName"].ToString().Trim();
                             people.FamiluName = reader["firstName"].ToString().Trim();
-                            people.Birthday = (DateTime)reader["birthday"];
+                            try
+                            {
+
+                                people.Birthday = (DateTime)reader["birthday"];
+                            }
+                            catch (Exception)
+                            {
+
+                                people.Birthday = DateTime.MinValue;
+                            }
                             people.LinkVK = reader["linkVK"].ToString().Trim();
 
                             return people;
