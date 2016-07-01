@@ -4,7 +4,7 @@
             {
                 text: 'Моя команда',
                 action: function () {
-                    console.log('Click Моя команда');
+                    location.href = "/User/";
                 },
                 visible: true
             },
@@ -25,7 +25,13 @@
             {
                 text: 'Выход',
                 action: function () {
-
+                    $.get('/logout')
+                        .done(function () {
+                            location.pathname = '';
+                        })
+                        .fail(function () {
+                            // 
+                        });
                 },
                 visible: ko.observable(!!getCookie('hash'))
             }
