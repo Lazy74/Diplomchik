@@ -201,39 +201,34 @@ namespace Dplm.Controllers
             return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
         }
 
-        public ActionResult UpdateUser(People people)
+        public ActionResult UpdateUser(People newPeople)
         {
-            return null;
-            //if (updatePeople == null)
-            //{
-            //    return new HttpResponseMessage(HttpStatusCode.OK);
-            //}
+            var cookie = Response.Cookies["hash"];
+            if (cookie.Value == null)
+            {
+                return new HttpNotFoundResult();
+            }
 
-            //var cookie = Request.Headers.GetCookies("hash");
+            People people;
+            if (!Authorizated.Data.TryGetValue(cookie.Value, out people))
+            {
+                return new HttpNotFoundResult();
+            }
 
-            //string hash = cookie[0].Cookies[0].Value;
+            newPeople.Id = people.Id;
 
-            //People people = new People();
-            //Authorizated.Data.TryGetValue(hash, out people);
+            if (!string.IsNullOrEmpty(newPeople.UserPass))
+            {
+                newPeople.UserPass = Helper.GetHashStringSha1(newPeople.UserPass);
+            }
+            else
+            {
+                newPeople.UserPass = people.UserPass;
+            }
 
-            //updatePeople.Id = people.Id;
-
-            //if (!string.IsNullOrEmpty(updatePeople.UserPass))
-            //{
-            //    updatePeople.UserPass = Helper.GetHashStringSha1(updatePeople.UserPass);
-            //}
-            //else
-            //{
-            //    updatePeople.UserPass = people.UserPass;
-            //}
-
-            //if (DatabaseND.UpdateUser(updatePeople))
-            //{
-            //    Authorizated.Data[hash] = people;
-            //    return new HttpResponseMessage(HttpStatusCode.OK);
-            //}
-
-            //return new HttpResponseMessage(HttpStatusCode.BadRequest);
+            return DatabaseND.UpdateUser(newPeople)
+                ? new HttpStatusCodeResult(200)
+                : new HttpStatusCodeResult(HttpStatusCode.BadRequest);
         }
     }
 }

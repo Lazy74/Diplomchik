@@ -1437,7 +1437,7 @@ namespace Dplm.Models
                     cmd.Parameters.AddWithValue("@startGame", new DateTime(2000, 1, 1, 20, 00, 00));
                     cmd.Parameters.AddWithValue("@endGame", new DateTime(2000, 1, 1, 20, 00, 00));
                     cmd.Parameters.AddWithValue("@info", "");
-                    cmd.Parameters.AddWithValue("@amountLevels", 1);
+                    cmd.Parameters.AddWithValue("@amountLevels", 0);
 
                     using (var reader = cmd.ExecuteReader())
                     {
