@@ -12,7 +12,7 @@ namespace Dplm.Models
     ///</summary>
     public class DatabaseND
     {
-        private readonly static string ConnectionString = @"Data Source=.\SQLEXPRESS;Initial Catalog=ND;Integrated Security=SSPI;";
+        private readonly static string ConnectionString = @"Data Source=.;Initial Catalog=ND;Integrated Security=SSPI;";
 
         /// <summary>
         /// Добавить в базу нового пользователя

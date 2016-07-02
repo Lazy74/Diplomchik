@@ -25,6 +25,12 @@
             Name: firstName,
             //Birthday, 
             LinkVK: linkVK
+        })
+        .done(function () {
+            notify.success('Обновление прошло успешно');
+        })
+        .fail(function () {
+            notify.error('Ошибка при обновлении');
         });
     }
 }

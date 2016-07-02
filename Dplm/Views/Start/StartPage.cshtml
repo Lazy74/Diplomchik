@@ -1,18 +1,5 @@
 ﻿<script src="/Scripts/Start/StartPage.js"></script>
-<button id="authr" data-bind="click: Authr">Залогиниться</button>
-<p>cookie["hash"].value = @ViewBag.cookieHash</p>
-<div class="unknownUser">
-    <button id="input-site" data-bind="click: authorizeUser">Вход на сайт</button>
-    <input type="text" id="userLogin" class="form-control" placeholder="Логин" data-bind="value: userLogin" />
-    <input type="password" id="userPass" class="form-control" placeholder="Пароль" data-bind="value: userPass" />
-    <button id="registration" data-bind="click: createUser">Регистрация</button>
-    @*Возможно стоит сделать кнопку востановления пароля*@
-</div>
 
-<div class="User">
-    <button id="toUserPage" data-bind="click: toUserPage">Моя страница</button>
-    <button id="toUserTeam" data-bind="click: toUserTeam">Моя команда</button>
-</div>
 <div>
     <button id="toAdminGame" data-bind="click: toAdminGame">Администратор игр</button>
 </div>

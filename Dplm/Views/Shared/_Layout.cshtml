@@ -8,20 +8,28 @@
     <script src="/Scripts/jquery-1.10.2.min.js"></script>
     <script src="/Scripts/knockout-3.4.0.js"></script>
     <script src="/Scripts/cookie.js"></script>
+    <script src="/Scripts/moment.min.js"></script>
     <script src="/Scripts/ohsnap.min.js"></script>
 
     <script src="/Scripts/Global/main.js"></script>
     <script src="/Scripts/Global/notifications.js"></script>
 </head>
 <body>
-<div id="ohsnap"></div>
-<div id="menu-container">
-    <ul data-bind="foreach: menuItems">
-        <li data-bind="text: text, click: action, visible: visible"></li>
-    </ul>
+    <div id="ohsnap"></div>
+    <div id="dark-bg"></div>
+<div id="login-block">
+    <span>Авторизация</span>
+    <input type="text" id="userLogin" class="form-control" placeholder="Логин" data-bind="value: userLogin"/>
+    <input type="password" id="userPass" class="form-control" placeholder="Пароль" data-bind="value: userPass"/>
+    <button class="form-control btn-default" data-bind="click: authorizeUser">Войти</button>
 </div>
-<div id="page-content">
-    @RenderBody()
-</div>
+    <div id="menu-container">
+        <ul data-bind="foreach: menuItems">
+            <li data-bind="text: text, click: action, visible: visible"></li>
+        </ul>
+    </div>
+    <div id="page-content">
+        @RenderBody()
+    </div>
 </body>
 </html>
