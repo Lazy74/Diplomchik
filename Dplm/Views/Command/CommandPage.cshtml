@@ -1,10 +1,16 @@
 ﻿<script src="/Scripts/Command/CommandPage.js"></script>
 <div>
 
+    <style>
+        .add-player > input {
+            display: inline-block;
+            width: 200px;
+        }
+    </style>
 
     <div class="add-player">
-        <input type="text" id="player-name" placeholder="Логин игрока" data-bind="value: addNewPlayer" />
-        <button id="btn-add-player" data-bind="click: addPlayer">Добавить игрока</button>
+        <input type="text" id="player-name" placeholder="Логин игрока" data-bind="value: addNewPlayer" class="form-control" />
+        <button id="btn-add-player" data-bind="click: addPlayer" class="btn">Добавить игрока</button>
     </div>
 
     <span>Название команды: @ViewBag.teamName</span>
@@ -24,7 +30,7 @@
 </div>
 
 <div>
-    <button data-bind="click: outTeam">Выйти из команды</button>
+    <button data-bind="click: outTeam" class="btn btn-danger btn-block">Выйти из команды</button>
 </div>
 
 <script>

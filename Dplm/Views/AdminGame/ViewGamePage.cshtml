@@ -1,11 +1,12 @@
 ﻿<script src="/Scripts/AdminGame/ViewGamePage.js"></script>
 <style>
-    div {
+    #page-content > div {
         margin: 10px;
     }
 
     input {
         margin-left: 10px;
+        min-width: 600px;
     }
 
     textarea {
@@ -34,23 +35,23 @@
 
 <div>
     <span>Начало игры</span>
-    <input type="datetime-local" data-bind="value: startGame">
+    <input type="datetime-local" class="form-control" data-bind="value: startGame">
 </div>
 
 <div>
     <span>Окончание игры</span>
-    <input type="datetime-local" data-bind="value: endGame">
+    <input type="datetime-local" class="form-control" data-bind="value: endGame">
 </div>
 
 <div>
     <span>Информация по игре от авторов</span>
     <div>
-        <textarea rows="18" data-bind="value: infoContent" class="form-control"></textarea>
+        <textarea rows="12" data-bind="value: infoContent" class="form-control"></textarea>
     </div>
 </div>
 
 <div>
-    <button id="btn-save" data-bind="click: save">Сохранить изменения</button>
+    <button id="btn-save" class="btn btn-success btn-block" data-bind="click: save">Сохранить изменения</button>
 </div>
 
 <table border="1">
@@ -67,9 +68,9 @@
     }
 </table>
 
-<div>
-    <button data-bind="click: createLvl">Добавить</button>
-    <button data-bind="click: removeLvl">Удалить</button>
+<div class="btn-group">
+    <button data-bind="click: createLvl" class="btn btn-primary">Добавить</button>
+    <button data-bind="click: removeLvl" class="btn btn-danger">Удалить</button>
 </div>
 
 

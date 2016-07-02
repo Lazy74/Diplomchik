@@ -15,14 +15,14 @@
     <script src="/Scripts/Global/notifications.js"></script>
 </head>
 <body>
-    <div id="ohsnap"></div>
     <div id="dark-bg"></div>
-<div id="login-block">
-    <span>Авторизация</span>
-    <input type="text" id="userLogin" class="form-control" placeholder="Логин" data-bind="value: userLogin"/>
-    <input type="password" id="userPass" class="form-control" placeholder="Пароль" data-bind="value: userPass"/>
-    <button class="form-control btn-default" data-bind="click: authorizeUser">Войти</button>
-</div>
+    <div id="ohsnap"></div>
+    <div id="login-block">
+        <span>Авторизация</span>
+        <input type="text" id="userLogin" class="form-control" placeholder="Логин" data-bind="value: userLogin" />
+        <input type="password" id="userPass" class="form-control" placeholder="Пароль" data-bind="value: userPass" />
+        <button class="form-control btn-default" data-bind="click: authorizeUser">Войти</button>
+    </div>
     <div id="menu-container">
         <ul data-bind="foreach: menuItems">
             <li data-bind="text: text, click: action, visible: visible"></li>

@@ -1,11 +1,12 @@
 ﻿body {
     background-color: #f7f7f7;
-    font-family: Tahoma;
     font-size: 15px;
 }
 
 #page-content {
     padding: 10px;
+    display: table;
+    margin: 0 auto;
 }
 
 #dark-bg {
@@ -70,4 +71,15 @@
 
 #menu-container > ul > li:hover {
     background-color: rgba(255, 255, 255, 0.3);
+}
+
+.userPage > div {
+    padding: 5px 0;
+}
+td, th {
+    padding: 5px 10px;
+}
+
+table caption {
+    margin: 10px 0;
 }
