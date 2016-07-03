@@ -193,6 +193,9 @@ namespace Dplm.Controllers
 
                 people.UserPass = "secret";
 
+                // TODO Решение говно, но для защиты покатит
+                people.Birthday = people.Birthday.AddDays(1);
+
                 var jData = Json(people, JsonRequestBehavior.AllowGet);
 
                 return jData;
@@ -226,9 +229,15 @@ namespace Dplm.Controllers
                 newPeople.UserPass = people.UserPass;
             }
 
-            return DatabaseND.UpdateUser(newPeople)
-                ? new HttpStatusCodeResult(200)
-                : new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            if (DatabaseND.UpdateUser(newPeople))
+            {
+                Authorizated.Data[cookie.Value] = newPeople;
+                return new HttpStatusCodeResult(200);
+            }
+            else
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
         }
     }
 }

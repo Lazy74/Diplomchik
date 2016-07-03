@@ -15,7 +15,7 @@
         return $.get('/User/update/GetUserContent');
     },
 
-    updateUser: function (firstName, lastName, phoneNumber, userLogin, email, linkVK, newUserPass) {
+    updateUser: function (firstName, lastName, phoneNumber, userLogin, email, birthday, linkVK, newUserPass) {
         $.post("/User/UpdateUser", {
             UserLogin: userLogin,
             UserPass: newUserPass,
@@ -23,7 +23,7 @@
             Email: email,
             FamiluName: lastName,
             Name: firstName,
-            //Birthday, 
+            Birthday: birthday,
             LinkVK: linkVK
         })
         .done(function () {
@@ -60,7 +60,7 @@ function ViewModel() {
             ? this.newUserPass()
             : null;
 
-        model.updateUser(this.firstName(), this.lastName(), this.phoneNumber(), this.userLogin(), this.email(), this.linkVK(), newUserPass);
+        model.updateUser(this.firstName(), this.lastName(), this.phoneNumber(), this.userLogin(), this.email(), this.birthday(), this.linkVK(), newUserPass);
         //model.updateUser("firstName", "lastName", "phoneNumber", "userLogin", "email", "linkVK", "newPass", "newPass");
     }
 }
