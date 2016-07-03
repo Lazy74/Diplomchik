@@ -1,29 +1,31 @@
 ﻿<script src="/Scripts/Game/GameplayPage.js"></script>
 <div class="content">
-    <h1>@ViewBag.nameGame</h1>
-    <h2>Уровень @ViewBag.lvl из @ViewBag.lvlLength: @ViewBag.nameLevel</h2>
+    <h3>@ViewBag.nameGame. Уровень @ViewBag.lvl из @ViewBag.lvlLength: @ViewBag.nameLevel</h3>
 
     <input type="text" id="id-answer" class="form-control" placeholder="Ваш ответ" data-bind="value: playerAnswer" />
     <button id="btn-answer" data-bind="click:toAnswer">Ответить</button>
     <br>
     <span>Ваш ответ или код</span>
 
-    <p>
-        @Html.Raw(ViewBag.commentAuthor)
-    </p>
+    <h6>
+        <i>
+            Комментарий автора:
+            @Html.Raw(ViewBag.commentAuthor)
+        </i>
+    </h6>
 
     <div class="spacer"></div>
-    <h3 class="timer">
+    <h4 class="timer" style="color: orangered;">
         <strong>Автопереход</strong> на следующий уровень через: <span data-bind="text: timeNextLvl"></span>
 
         @*<strong>Автопереход</strong> на следующий уровень через: <span class="bold_off" id="time44554340"><b>n</b> м<b>m</b> с</span>*@
 
         <script>
             var sec = @ViewBag.TimeTransition; // Здесь из контроллера получаем время до автоперехода
-            window.currentGameId = @ViewBag.Id
+            window.currentGameId = @ViewBag.Id;
         </script>
 
-    </h3>
+    </h4>
 
     @*<span>штраф N минут (Если он есть)</span>*@
 
